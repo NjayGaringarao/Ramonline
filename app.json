@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ramonline",
+    "name": "Ramonline",
     "slug": "ramonline",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./assets/images/ramonline-icon.png",
+    "scheme": "ramonline",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/ramonline-adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
@@ -27,7 +27,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/ramonline-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ebbec764-fc88-4eff-a3eb-7eefe08e96e5"
+      }
+    },
+    "owner": "prmsu"
   }
 }

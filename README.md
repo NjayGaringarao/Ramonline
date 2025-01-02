@@ -1,50 +1,24 @@
-# Welcome to your Expo app 👋
+# Ramonline 🌟
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to **Ramonline**—the ultimate social network app crafted exclusively for the PRMSU - Castillejos Campus community! Stay connected and informed with real-time announcements and updates tailored just for you. **Coming Soon!**
 
-## Get started
+## App Features
 
-1. Install dependencies
+- **Stay Updated**: Effortlessly share and consume news and important updates, ensuring you’re always in the loop within our vibrant campus community.
+- **Instant Notifications**: Receive real-time push notifications for the latest announcements, so you never miss out on crucial information again!
+- **User-Friendly Interface**: Navigate with ease through our intuitive design, making it accessible for everyone.
 
-   ```bash
-   npm install
-   ```
+## Collaboration Opportunities
 
-2. Start the app
+We’re always eager to collaborate and hear from you! If you have inquiries or partnership opportunities, feel free to reach out:
 
-   ```bash
-    npx expo start
-   ```
+**Nino Jr Garingarao**
 
-In the output, you'll find options to open the app in a
+- **Email:** [ninogaringarao13@gmail.com](mailto:ninogaringarao13@gmail.com)
+- **Phone:** +63956 448 9292
+- **Connect on LinkedIn:** [Njay Garingarao](https://www.linkedin.com/in/njay-garingarao-9016302a0/)
+- **Connect on Facebook:** [Jr Garingarao](https://www.facebook.com/nigel.garingarao)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Join the Community
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Become an integral part of our PRMSU - Castillejos Campus community! Engage with fellow students, stay informed, and help us cultivate a connected campus experience. **Ramonline will be available soon, so stay tuned! Together, we can make a difference!**
