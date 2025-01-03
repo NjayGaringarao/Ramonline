@@ -16,7 +16,7 @@ import { getCurrentUser, getUserInfo } from "@/services/userServices";
 import { setupPushTarget } from "@/services/notificationServices";
 import { ExtendedUserType } from "@/constants/types";
 import { Models } from "react-native-appwrite";
-import { useNetInfo } from "@react-native-community/netinfo";
+import { useNetworkState } from "expo-network";
 
 type GlobalContextProps = {
   children: ReactNode;
@@ -73,7 +73,7 @@ export const GlobalContext =
 export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }: GlobalContextProps) => {
-  const { isInternetReachable } = useNetInfo();
+  const { isInternetReachable } = useNetworkState();
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
