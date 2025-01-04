@@ -1,72 +1,72 @@
-import { View, Text, TouchableOpacity, Modal } from "react-native";
-import { Image } from "expo-image";
-import React, { useState } from "react";
-import { colors, icons } from "@/constants";
-import CustomButton from "../CustomButton";
-import { SessionType } from "@/constants/types";
-import { confirmAction } from "@/lib/definedAlgo";
-import Toast from "react-native-root-toast";
-import { logoutUser } from "@/services/userServices";
+// import { View, Text, TouchableOpacity, Modal } from "react-native";
+// import { Image } from "expo-image";
+// import React, { useState } from "react";
+// import { colors, icons } from "@/constants";
+// import CustomButton from "../CustomButton";
+// import { SessionType } from "@/constants/types";
+// import { confirmAction } from "@/lib/definedAlgo";
+// import Toast from "react-native-root-toast";
+// import { logoutUser } from "@/services/userServices";
 
-interface IRenderSession {
-  session: SessionType;
-  setIsLoading: (isLoading: boolean) => void;
-}
+// interface IRenderSession {
+//   session: SessionType;
+//   setIsLoading: (isLoading: boolean) => void;
+// }
 
-const RenderSession = ({ session, setIsLoading }: IRenderSession) => {
-  const [isVisible, setIsVisible] = useState(true);
+// const RenderSession = ({ session, setIsLoading }: IRenderSession) => {
+//   const [isVisible, setIsVisible] = useState(true);
 
-  const deleteSessionHandle = async () => {
-    if (!(await confirmAction("Confirm Logout", "The session will be logout.")))
-      return;
+//   const deleteSessionHandle = async () => {
+//     if (!(await confirmAction("Confirm Logout", "The session will be logout.")))
+//       return;
 
-    try {
-      setIsLoading(true);
-      await logoutUser(session.id);
-      setIsVisible(false);
-    } catch (error) {
-      Toast.show(`Failed to delete session.`, {
-        duration: Toast.durations.LONG,
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//     try {
+//       setIsLoading(true);
+//       await logoutUser(session.id);
+//       setIsVisible(false);
+//     } catch (error) {
+//       Toast.show(`Failed to delete session.`, {
+//         duration: Toast.durations.LONG,
+//       });
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  return (
-    <View className={`${isVisible ? "visible" : "hidden"} mt-[2px]`}>
-      <View className="flex-row w-full px-3 py-3 items-center bg-panel">
-        <View className="flex-row gap-4 items-center justify-center">
-          <Image
-            source={session.osName == "Android" ? icons.android : icons.apple}
-            className="h-8 w-8"
-          />
-          <View>
-            <Text className="text-lg text-uBlack font-medium">{`${
-              session.deviceModel.length
-                ? session.deviceModel
-                : "Development Build"
-            } ${session.current ? "(Current)" : ""}`}</Text>
-            <Text className="text-gray-800 text-sm font-mono -mt-1">
-              {`${session.countryName} ${session.ip}`}
-            </Text>
-          </View>
-        </View>
-        {!session.current && (
-          <TouchableOpacity
-            onPress={deleteSessionHandle}
-            className="absolute right-3"
-          >
-            <Image
-              source={icons.close}
-              className="h-5 w-5"
-              tintColor={colors.uGray}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
-  );
-};
+//   return (
+//     <View className={`${isVisible ? "visible" : "hidden"} mt-[2px]`}>
+//       <View className="flex-row w-full px-3 py-3 items-center bg-panel">
+//         <View className="flex-row gap-4 items-center justify-center">
+//           <Image
+//             source={session.osName == "Android" ? icons.android : icons.apple}
+//             className="h-8 w-8"
+//           />
+//           <View>
+//             <Text className="text-lg text-uBlack font-medium">{`${
+//               session.deviceModel.length
+//                 ? session.deviceModel
+//                 : "Development Build"
+//             } ${session.current ? "(Current)" : ""}`}</Text>
+//             <Text className="text-gray-800 text-sm font-mono -mt-1">
+//               {`${session.countryName} ${session.ip}`}
+//             </Text>
+//           </View>
+//         </View>
+//         {!session.current && (
+//           <TouchableOpacity
+//             onPress={deleteSessionHandle}
+//             className="absolute right-3"
+//           >
+//             <Image
+//               source={icons.close}
+//               className="h-5 w-5"
+//               tintColor={colors.uGray}
+//             />
+//           </TouchableOpacity>
+//         )}
+//       </View>
+//     </View>
+//   );
+// };
 
-export default RenderSession;
+// export default RenderSession;

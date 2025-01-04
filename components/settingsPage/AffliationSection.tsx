@@ -1,140 +1,140 @@
-import { View, Text, Dimensions } from "react-native";
-import React, { useEffect, useState } from "react";
-import TextBox from "../TextBox";
-import CustomButton from "../CustomButton";
-import { AffiliationType, UserType } from "@/constants/types";
-import { Picker } from "@react-native-picker/picker";
-import { colors } from "@/constants";
-import RenderPicker from "./RenderPicker";
-import { confirmAction } from "@/lib/definedAlgo";
-import Toast from "react-native-root-toast";
-import Loading from "../Loading";
-import { updateRole } from "@/services/userServices";
+// import { View, Text, Dimensions } from "react-native";
+// import React, { useEffect, useState } from "react";
+// import TextBox from "../TextBox";
+// import CustomButton from "../CustomButton";
+// import { AffiliationType, UserType } from "@/constants/types";
+// import { Picker } from "@react-native-picker/picker";
+// import { colors } from "@/constants";
+// import RenderPicker from "./RenderPicker";
+// import { confirmAction } from "@/lib/definedAlgo";
+// import Toast from "react-native-root-toast";
+// import Loading from "../Loading";
+// import { updateRole } from "@/services/userServices";
 
-interface IAffliationSectionType {
-  userInfo: UserType;
-  refreshUserInfo: (refresh: boolean) => void;
-  isRefreshUserInfo: boolean;
-}
+// interface IAffliationSectionType {
+//   userInfo: UserType;
+//   refreshUserInfo: (refresh: boolean) => void;
+//   isRefreshUserInfo: boolean;
+// }
 
-const AffliationSection = ({
-  userInfo,
-  refreshUserInfo,
-  isRefreshUserInfo,
-}: IAffliationSectionType) => {
-  const [dimensions, setDimensions] = useState<AffiliationType>(Object);
-  const [isLoading, setIsLoading] = useState(false);
+// const AffliationSection = ({
+//   userInfo,
+//   refreshUserInfo,
+//   isRefreshUserInfo,
+// }: IAffliationSectionType) => {
+//   const [dimensions, setDimensions] = useState<AffiliationType>(Object);
+//   const [isLoading, setIsLoading] = useState(false);
 
-  const resetHandle = () => {
-    setDimensions({
-      first: userInfo.role[0] || null,
-      second: userInfo.role[1] || null,
-      third: userInfo.role[2] || null,
-      year: userInfo.role[3] || null,
-    });
-  };
+//   const resetHandle = () => {
+//     setDimensions({
+//       first: userInfo.role[0] || null,
+//       second: userInfo.role[1] || null,
+//       third: userInfo.role[2] || null,
+//       year: userInfo.role[3] || null,
+//     });
+//   };
 
-  useEffect(() => {
-    resetHandle();
-  }, [userInfo]);
+//   useEffect(() => {
+//     resetHandle();
+//   }, [userInfo]);
 
-  const handleUpdate = async () => {
-    if (
-      !(await confirmAction(
-        "Confirm Changes",
-        "Save changes that you've made?"
-      ))
-    )
-      return;
+//   const handleUpdate = async () => {
+//     if (
+//       !(await confirmAction(
+//         "Confirm Changes",
+//         "Save changes that you've made?"
+//       ))
+//     )
+//       return;
 
-    try {
-      setIsLoading(true);
-      if (!(await updateRole(userInfo.id, dimensions))) {
-        throw Error;
-      }
+//     try {
+//       setIsLoading(true);
+//       if (!(await updateRole(userInfo.id, dimensions))) {
+//         throw Error;
+//       }
 
-      Toast.show(`Succesfully applied changes.`, {
-        duration: Toast.durations.LONG,
-      });
-      refreshUserInfo(true);
-    } catch (error) {
-      Toast.show(`Failed to save changes.`, {
-        duration: Toast.durations.LONG,
-      });
-      resetHandle();
-    }
-  };
+//       Toast.show(`Succesfully applied changes.`, {
+//         duration: Toast.durations.LONG,
+//       });
+//       refreshUserInfo(true);
+//     } catch (error) {
+//       Toast.show(`Failed to save changes.`, {
+//         duration: Toast.durations.LONG,
+//       });
+//       resetHandle();
+//     }
+//   };
 
-  useEffect(() => {
-    if (!isRefreshUserInfo) setIsLoading(false);
-  }, [isRefreshUserInfo]);
+//   useEffect(() => {
+//     if (!isRefreshUserInfo) setIsLoading(false);
+//   }, [isRefreshUserInfo]);
 
-  return (
-    <View className="mb-4">
-      <View>
-        {/* First-Level Picker */}
-        <Text className="text-uGray text-sm font-bold">Select Role</Text>
-        <View className="h-9 rounded-lg justify-center bg-panel">
-          <Picker
-            selectedValue={dimensions.first}
-            onValueChange={(itemValue) =>
-              setDimensions({
-                first: itemValue,
-                second: null,
-                third: null,
-                year: null,
-              })
-            }
-            mode="dropdown"
-          >
-            <Picker.Item label="Insider" value={null} />
-            <Picker.Item label="Teaching Staff" value="Teaching Staff" />
-            <Picker.Item
-              label="Non-Teaching Staff"
-              value="Non-Teaching Staff"
-            />
-            <Picker.Item label="Student" value="Student" />
-          </Picker>
-        </View>
-      </View>
-      {/* Render the second, third, and fourth levels */}
-      {dimensions.first && (
-        <RenderPicker dimensions={dimensions} setDimensions={setDimensions} />
-      )}
+//   return (
+//     <View className="mb-4">
+//       <View>
+//         {/* First-Level Picker */}
+//         <Text className="text-uGray text-sm font-bold">Select Role</Text>
+//         <View className="h-9 rounded-lg justify-center bg-panel">
+//           <Picker
+//             selectedValue={dimensions.first}
+//             onValueChange={(itemValue) =>
+//               setDimensions({
+//                 first: itemValue,
+//                 second: null,
+//                 third: null,
+//                 year: null,
+//               })
+//             }
+//             mode="dropdown"
+//           >
+//             <Picker.Item label="Insider" value={null} />
+//             <Picker.Item label="Teaching Staff" value="Teaching Staff" />
+//             <Picker.Item
+//               label="Non-Teaching Staff"
+//               value="Non-Teaching Staff"
+//             />
+//             <Picker.Item label="Student" value="Student" />
+//           </Picker>
+//         </View>
+//       </View>
+//       {/* Render the second, third, and fourth levels */}
+//       {dimensions.first && (
+//         <RenderPicker dimensions={dimensions} setDimensions={setDimensions} />
+//       )}
 
-      {!(
-        dimensions.first === (userInfo.role[0] || null) &&
-        dimensions.second === (userInfo.role[1] || null) &&
-        dimensions.third === (userInfo.role[2] || null) &&
-        dimensions.year === (userInfo.role[3] || null)
-      ) && (
-        <View className="self-end mt-2 flex-row">
-          <CustomButton
-            title="Update"
-            handlePress={handleUpdate}
-            containerStyles="py-1"
-          />
-          <CustomButton
-            title="Reset"
-            handlePress={resetHandle}
-            containerStyles="ml-2 py-1 border-2 border-primary"
-            textStyles="text-primary"
-            withBackground={false}
-          />
-        </View>
-      )}
+//       {!(
+//         dimensions.first === (userInfo.role[0] || null) &&
+//         dimensions.second === (userInfo.role[1] || null) &&
+//         dimensions.third === (userInfo.role[2] || null) &&
+//         dimensions.year === (userInfo.role[3] || null)
+//       ) && (
+//         <View className="self-end mt-2 flex-row">
+//           <CustomButton
+//             title="Update"
+//             handlePress={handleUpdate}
+//             containerStyles="py-1"
+//           />
+//           <CustomButton
+//             title="Reset"
+//             handlePress={resetHandle}
+//             containerStyles="ml-2 py-1 border-2 border-primary"
+//             textStyles="text-primary"
+//             withBackground={false}
+//           />
+//         </View>
+//       )}
 
-      {isLoading && (
-        <View className="absolute items-center justify-center h-full w-full">
-          <View className="absolute h-full w-full bg-panel opacity-90"></View>
-          <Loading
-            loadingPrompt="Applying Changes"
-            containerStyles="absolute"
-          />
-        </View>
-      )}
-    </View>
-  );
-};
+//       {isLoading && (
+//         <View className="absolute items-center justify-center h-full w-full">
+//           <View className="absolute h-full w-full bg-panel opacity-90"></View>
+//           <Loading
+//             loadingPrompt="Applying Changes"
+//             containerStyles="absolute"
+//           />
+//         </View>
+//       )}
+//     </View>
+//   );
+// };
 
-export default AffliationSection;
+// export default AffliationSection;
