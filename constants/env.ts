@@ -1,6 +1,6 @@
 import { IENV } from "@/types/env";
 
-let env: IENV = {
+let variable: IENV = {
   APPWRITE_ENDPOINT: "",
   APPWRITE_PLATFORM: "",
   APPWRITE_PROJECT: "",
@@ -21,7 +21,7 @@ let env: IENV = {
 };
 
 if (__DEV__) {
-  env = {
+  variable = {
     APPWRITE_ENDPOINT: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     APPWRITE_PLATFORM: process.env.EXPO_PUBLIC_APPWRITE_PLATFORM!,
     APPWRITE_PROJECT: process.env.EXPO_PUBLIC_APPWRITE_PROJECT!,
@@ -46,7 +46,7 @@ if (__DEV__) {
     WEBAPP_ENDPOINT: process.env.EXPO_PUBLIC_WEBAPP_ENDPOINT!,
   };
 } else {
-  env = {
+  variable = {
     APPWRITE_ENDPOINT: process.env.APPWRITE_ENDPOINT!,
     APPWRITE_PLATFORM: process.env.APPWRITE_PLATFORM!,
     APPWRITE_PROJECT: process.env.APPWRITE_PROJECT!,
@@ -68,4 +68,4 @@ if (__DEV__) {
   };
 }
 
-export default env;
+export const env = variable;

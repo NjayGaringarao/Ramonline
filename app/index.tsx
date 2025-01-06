@@ -1,10 +1,11 @@
+import { env } from "@/constants/env";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 export default function Index() {
   const [variable, setVariable] = useState("");
 
   useEffect(() => {
-    setVariable(process.env.APPWRITE_ENDPOINT!);
+    setVariable(env.APPWRITE_ENDPOINT!);
   }, []);
 
   return (
