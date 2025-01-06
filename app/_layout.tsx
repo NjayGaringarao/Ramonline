@@ -2,12 +2,14 @@ import { Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootSiblingParent } from "react-native-root-siblings";
 import React from "react";
-
+import "@/global.css";
+import { StatusBar } from "expo-status-bar";
+import { colors } from "@/constants";
 export default function RootLayout() {
   return (
     <>
-      <SafeAreaView className="h-full w-full">
-        <RootSiblingParent>
+      <RootSiblingParent>
+        <SafeAreaView className="flex flex-1">
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
@@ -48,8 +50,9 @@ export default function RootLayout() {
               }}
             />
           </Stack>
-        </RootSiblingParent>
-      </SafeAreaView>
+        </SafeAreaView>
+      </RootSiblingParent>
+      <StatusBar backgroundColor={colors.background} style="light" />
     </>
   );
 }

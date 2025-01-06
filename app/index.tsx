@@ -1,6 +1,12 @@
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-
 export default function Index() {
+  const [variable, setVariable] = useState("");
+
+  useEffect(() => {
+    setVariable(process.env.APPWRITE_ENDPOINT!);
+  }, []);
+
   return (
     <View
       style={{
@@ -9,9 +15,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text className="text-xl">
-        Edit app/index.tsx to edit this screen.{`\N`}
-      </Text>
+      <Text className="text-xl">APPWRITE ENDPOINT :{` ${variable}`}</Text>
     </View>
   );
 }
