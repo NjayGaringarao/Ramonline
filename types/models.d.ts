@@ -54,7 +54,7 @@ export declare namespace LineType {
 
   type Subscription = {
     id: string;
-    user: UserType.Subscription[];
+    user: UserType.Info[];
   };
 }
 
