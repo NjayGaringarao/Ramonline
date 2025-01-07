@@ -6,6 +6,7 @@ export declare namespace UserType {
     avatar_url: string;
     picture_id?: string;
     role: [string?, string?, string?, string?];
+    created_at: Date;
   };
 
   type Content = {
