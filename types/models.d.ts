@@ -9,21 +9,19 @@ export declare namespace UserType {
     created_at: Date;
   };
 
-  type Content = {
-    id: string;
-    post: PostType.Info[];
-    line: LineType.Info[];
-  };
-
   type Subscription = {
     id: string;
-    line: LineType.Subscription[];
+    line_id: string[];
   };
 
   type Notification = {
     id: string;
+    notification_id: string[];
+  };
+
+  type Activity = {
+    id: string;
     viewed_notification_id: string[];
-    notification: NotificationType.Info[];
   };
 }
 
@@ -54,7 +52,7 @@ export declare namespace LineType {
 
   type Subscription = {
     id: string;
-    user: UserType.Info[];
+    user_id: string[];
   };
 }
 

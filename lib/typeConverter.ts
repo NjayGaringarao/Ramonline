@@ -1,208 +1,178 @@
-// import notification from "@/app/(tabs)/notification";
-// import {
-//   PostType,
-//   LineType,
-//   UserType,
-//   ExtendedUserType,
-//   NotificationType,
-//   SessionType,
-// } from "@/constants/types";
-// import { Models } from "react-native-appwrite";
+import { LineType, NotificationType, PostType, UserType } from "@/types/models";
+import { SessionType } from "@/types/utils";
+import { Models } from "react-native-appwrite";
 
-// //#region User
-// export const toUser = (document: Models.Document) => {
-//   const user: UserType = {
-//     id: document.$id,
-//     email: document.email,
-//     username: document.username,
-//     name: document.name,
-//     avatar_url: document.avatar_url,
-//     picture_id: document.picture_id,
-//     role: document.role,
-//     joined_at: document.joined_at,
-//   };
-//   return user;
-// };
+//#region User
+export const toUserInfo = (document: Models.Document) => {
+  const user: UserType.Info = {
+    id: document.$id,
+    username: document.username,
+    name: document.name,
+    avatar_url: document.avatar_url,
+    picture_id: document.picture_id,
+    role: document.role,
+    created_at: new Date(document.created_at),
+  };
+  return user;
+};
 
-// export const toExtendedUser = (
-//   document: Models.Document,
-//   userLines: LineType[]
-// ) => {
-//   const user: UserType = {
-//     id: document.$id,
-//     email: document.email,
-//     username: document.username,
-//     name: document.name,
-//     avatar_url: document.avatar_url,
-//     picture_id: document.picture_id,
-//     role: document.role,
-//     joined_at: document.joined_at,
-//   };
-//   const extendedUser: ExtendedUserType = {
-//     ...user,
-//     posts: extractToPostList(document.posts, user),
-//     subscriptions: toLineList(document.subscriptions),
-//     lines: userLines,
-//     viewed_notification_ids: document.viewed_notification_ids,
-//   };
+export const toUserInfoList = (documents: Models.Document[]) => {
+  const userList: UserType.Info[] = [];
 
-//   return extendedUser;
-// };
+  for (let i = 0; documents.length > i; i++) {
+    userList.push(toUserInfo(documents[i]));
+  }
 
-// //#endregion
+  return userList;
+};
 
-// //#region  Post
+export const toUserSubscription = (document: Models.Document) => {
+  const user: UserType.Subscription = {
+    id: document.$id,
+    line_id: document.line.map((obj: any) => obj.$id),
+  };
 
-// export const extractToPostList = (
-//   postDocuments: Models.Document[],
-//   user: UserType
-// ) => {
-//   let posts: PostType[] = [];
-//   for (let i = 0; postDocuments.length > i; i++) {
-//     const post: PostType = {
-//       id: postDocuments[i].$id,
-//       user: user,
-//       caption: postDocuments[i].caption,
-//       image_ids: postDocuments[i].image_ids,
-//       audio_id: postDocuments[i].audio_id,
-//       created_at: postDocuments[i].created_at,
-//     };
-//     posts.push(post);
-//   }
-//   return posts;
-// };
+  return user;
+};
 
-// export const toPostList = (postDocuments: Models.Document[]) => {
-//   let postList: PostType[] = [];
+export const toUserNotification = (document: Models.Document) => {
+  const user: UserType.Notification = {
+    id: document.$id,
+    notification_id: document.notification.map((obj: any) => obj.$id),
+  };
 
-//   for (let i = 0; postDocuments.length > i; i++) {
-//     const post: PostType = {
-//       id: postDocuments[i].$id,
-//       user: {
-//         id: postDocuments[i].user.$id,
-//         email: postDocuments[i].user.email,
-//         username: postDocuments[i].user.username,
-//         name: postDocuments[i].user.name,
-//         avatar_url: postDocuments[i].user.avatar_url,
-//         picture_id: postDocuments[i].user.picture_id,
-//         role: postDocuments[i].user.role,
-//         joined_at: postDocuments[i].user.joined_at,
-//       },
-//       caption: postDocuments[i].caption,
-//       image_ids: postDocuments[i].image_ids,
-//       audio_id: postDocuments[i].audio_id,
-//       created_at: postDocuments[i].created_at,
-//     };
-//     postList.push(post);
-//   }
+  return user;
+};
+export const toUserActivity = (document: Models.Document) => {
+  const user: UserType.Activity = {
+    id: document.$id,
+    viewed_notification_id: document.viewed_notification_id,
+  };
 
-//   return postList;
-// };
+  return user;
+};
 
-// export const toPost = (postDocument: Models.Document): PostType => {
-//   return {
-//     id: postDocument.$id,
-//     user: toUser(postDocument.user),
-//     caption: postDocument.caption,
-//     image_ids: postDocument.image_ids,
-//     audio_id: postDocument.audio_id,
-//     created_at: postDocument.created_at,
-//   };
-// };
+//#endregion
 
-// //#endregion
+//#region  Post
 
-// //#region Notification
+export const toPostInfo = (document: Models.Document) => {
+  const post: PostType.Info = {
+    id: document.$id,
+    caption: document.caption,
+    user_id: document.user_id,
+    image_id: document.image_id,
+    created_at: new Date(document.created_at),
+  };
 
-// export const toPushTargetList = (userTargets: Models.Target[]) => {
-//   const pushTargets: Models.Target[] = [];
-//   userTargets.forEach((target) => {
-//     if (target.providerType === "push") {
-//       pushTargets.push(target);
-//     }
-//   });
+  return post;
+};
 
-//   return pushTargets;
-// };
+export const toPostInfoList = (documents: Models.Document) => {
+  const postList: PostType.Info[] = [];
 
-// export const toNotificationList = (
-//   notificationDocuments: Models.Document[]
-// ) => {
-//   if (notificationDocuments && notificationDocuments.length) {
-//     let notificationList: NotificationType[] = [];
+  for (let i = 0; documents.length > i; i++) {
+    postList.push(toPostInfo(documents[i]));
+  }
 
-//     for (let i = 0; notificationDocuments.length > i; i++) {
-//       const notification = toNotification(notificationDocuments[i]);
-//       notificationList.push(notification);
-//     }
-//     return notificationList;
-//   } else {
-//     return [];
-//   }
-// };
+  return postList;
+};
 
-// export const toNotification = (notificationDocument: Models.Document) => {
-//   return {
-//     id: notificationDocument.$id,
-//     created_at: notificationDocument.created_at,
-//     title: notificationDocument.title,
-//     description: notificationDocument.description,
-//     line_id: notificationDocument.line_id,
-//     post_id: notificationDocument.post_id,
-//   };
-// };
+//#endregion
 
-// //#endregion
+//#region Notification
 
-// //#region Line
+export const toPushTargetList = (userTargets: Models.Target[]) => {
+  const pushTargets: Models.Target[] = [];
+  userTargets.forEach((target) => {
+    if (target.providerType === "push") {
+      pushTargets.push(target);
+    }
+  });
 
-// export const toLineList = (lineDocuments?: Models.Document[]) => {
-//   if (lineDocuments && lineDocuments.length) {
-//     let lineList: LineType[] = [];
+  return pushTargets;
+};
 
-//     for (let i = 0; lineDocuments.length > i; i++) {
-//       const line: LineType = toLine(lineDocuments[i]);
+export const toNotificationInfo = (document: Models.Document) => {
+  const notification: NotificationType.Info = {
+    id: document.$id,
+    title: document.title,
+    origin: [document.origin[0], document.origin[1]],
+    content: [document.content[0], document.content[1]],
+    created_at: new Date(document.created_at),
+  };
 
-//       lineList.push(line);
-//     }
-//     return lineList;
-//   } else {
-//     return [];
-//   }
-// };
+  return notification;
+};
 
-// export const toLine = (lineDocument: Models.Document) => {
-//   return {
-//     id: lineDocument.$id,
-//     created_at: lineDocument.created_at,
-//     name: lineDocument.name,
-//     description: lineDocument.description,
-//     user_id: lineDocument.user_id,
-//     banner_id: lineDocument.banner_id,
-//   };
-// };
-// //#endregion
+export const toNotificationInfoList = (documents: Models.Document[]) => {
+  const notificationList: NotificationType.Info[] = [];
 
-// //#region Other
-// export const toSessionList = (rawSession: Models.SessionList) => {
-//   let sessions: SessionType[] = [];
+  for (let i = 0; documents.length > i; i++) {
+    notificationList.push(toNotificationInfo(documents[i]));
+  }
 
-//   if (!rawSession.total) return [];
+  return notificationList;
+};
 
-//   for (let i = 0; rawSession.total > i; i++) {
-//     const session: SessionType = {
-//       id: rawSession.sessions[i].$id,
-//       current: rawSession.sessions[i].current,
-//       deviceModel: rawSession.sessions[i].deviceModel,
-//       osName: rawSession.sessions[i].osName,
-//       countryName: rawSession.sessions[i].countryName,
-//       ip: rawSession.sessions[i].ip,
-//     };
+//#endregion
 
-//     sessions.push(session);
-//   }
+//#region Line
 
-//   return sessions;
-// };
+export const toLineInfo = (document: Models.Document) => {
+  const line: LineType.Info = {
+    id: document.$id,
+    name: document.name,
+    description: document.description,
+    banner_id: document.banner_id,
+    user_id: document.user_id,
+    created_at: new Date(document.created_at),
+  };
 
-// //#endregion
+  return line;
+};
+
+export const toLineInfoList = (documents: Models.Document[]) => {
+  const lineList: LineType.Info[] = [];
+
+  for (let i = 0; documents.length > i; i++) {
+    lineList.push(toLineInfo(documents[i]));
+  }
+
+  return lineList;
+};
+
+export const toLineSubscription = (document: Models.Document) => {
+  const line: LineType.Subscription = {
+    id: document.$id,
+    user_id: document.user.map((obj: any) => obj.$id),
+  };
+
+  return line;
+};
+//#endregion
+
+//#region Other
+
+export const toSessionList = (rawSession: Models.SessionList) => {
+  let sessions: SessionType[] = [];
+
+  if (!rawSession.total) return [];
+
+  for (let i = 0; rawSession.total > i; i++) {
+    const session: SessionType = {
+      id: rawSession.sessions[i].$id,
+      current: rawSession.sessions[i].current,
+      deviceModel: rawSession.sessions[i].deviceModel,
+      osName: rawSession.sessions[i].osName,
+      countryName: rawSession.sessions[i].countryName,
+      ip: rawSession.sessions[i].ip,
+    };
+
+    sessions.push(session);
+  }
+
+  return sessions;
+};
+
+//#endregion
