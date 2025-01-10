@@ -9,11 +9,6 @@ export declare namespace UserType {
     created_at: Date;
   };
 
-  type Subscription = {
-    id: string;
-    line_id: string[];
-  };
-
   type Notification = {
     id: string;
     notification_id: string[];
