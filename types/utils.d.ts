@@ -1,4 +1,4 @@
-import { PostType, LineType } from "./models";
+import { PostType, LineType, UserType } from "./models";
 
 export interface AffiliationType {
   first: string | null;
@@ -24,4 +24,11 @@ export interface UserPostListType {
 export interface UserLineListType {
   total: number;
   line_info: LineType.Info[];
+}
+
+export interface UserRecordType {
+  info: UserType.Info;
+  activity: UserType.Activity;
+  line: UserLineListType;
+  post: UserPostListType;
 }
