@@ -27,7 +27,7 @@ import ModalOptions from "./ModalOptions";
 import ModalEditDescription from "./ModalEditDescription";
 
 type ILineViewProps = {
-  lineInfo: LineType.Info;
+  line: LineType.Info;
   userInfo: UserType.Info;
   isInModal?: boolean;
   isModifyable?: boolean;
@@ -35,7 +35,7 @@ type ILineViewProps = {
 };
 
 const LineView = ({
-  lineInfo,
+  line,
   userInfo,
   isInModal,
   isModifyable,
@@ -59,14 +59,10 @@ const LineView = ({
     }
   };
 
-  const getUser = async () => {
-    setOwner(await getUserInfo(lineInfo.user_id));
-  };
-
   const setupSubscriptionStatus = async () => {
     try {
       setIsLoading(true);
-      setIsSubscribed(await isUserSubscribed(userInfo.id, lineInfo.id));
+      setIsSubscribed(await isUserSubscribed(userInfo.id, line.id));
     } catch (error) {
       Alert.alert(
         "Error",
@@ -90,7 +86,7 @@ const LineView = ({
       setIsLoading(true);
       setIsModalOptionVisible(false);
       setIsThisVisible(false);
-      await deleteLine(lineInfo.id);
+      await deleteLine(line.id);
     } catch (error) {
       Alert.alert(
         "Failed",
@@ -116,9 +112,9 @@ const LineView = ({
       setIsModalOptionVisible(false);
       setIsModalEditVisible(false);
 
-      const result = await updateDescription(lineInfo.id, descriptionForm);
+      const result = await updateDescription(line.id, descriptionForm);
       if (result) {
-        lineInfo.description = descriptionForm;
+        line.description = descriptionForm;
         Toast.show(`Line updated`, {
           duration: Toast.durations.LONG,
         });
@@ -138,23 +134,20 @@ const LineView = ({
     try {
       setIsLoading(true);
       if (isSubscribed) {
-        const result = await unsubscribeLine(userInfo.id, lineInfo.id);
+        const result = await unsubscribeLine(userInfo.id, line.id);
         if (result) setIsSubscribed(false);
         Toast.show(
-          `You are unable to recieve notifications from ${lineInfo.name}.`,
+          `You are unable to recieve notifications from ${line.name}.`,
           {
             duration: Toast.durations.LONG,
           }
         );
       } else {
-        const result = await subscribeLine(userInfo.id, lineInfo.id);
+        const result = await subscribeLine(userInfo.id, line.id);
         if (result) setIsSubscribed(true);
-        Toast.show(
-          `You are able to recieve notifications from ${lineInfo.name}.`,
-          {
-            duration: Toast.durations.LONG,
-          }
-        );
+        Toast.show(`You are able to recieve notifications from ${line.name}.`, {
+          duration: Toast.durations.LONG,
+        });
       }
     } catch (error) {
       Alert.alert(
@@ -168,9 +161,15 @@ const LineView = ({
   };
 
   useEffect(() => {
-    setDescriptionForm(lineInfo.description);
+    setDescriptionForm(line.description);
     setupSubscriptionStatus();
-    getUser();
+    if (userInfo.id == line.user_id) {
+      setOwner(userInfo);
+    } else {
+      getUserInfo(line.user_id).then((e) => {
+        setOwner(e);
+      });
+    }
   }, []);
 
   return (
@@ -220,16 +219,16 @@ const LineView = ({
             contentFit="cover"
           />
           <Image
-            source={{ uri: renderImage(lineInfo.banner_id) }}
+            source={{ uri: renderImage(line.banner_id) }}
             className="w-full h-56"
             contentFit="cover"
           />
         </TouchableOpacity>
         <View className="h-auto w-full">
           <Text className="text-xl text-primary font-semibold py-2">
-            {lineInfo.name}
+            {line.name}
           </Text>
-          <DescriptionView line={lineInfo} isInModal={isInModal} />
+          <DescriptionView line={line} isInModal={isInModal} />
         </View>
         <CustomButton
           handlePress={subscriptionHandle}
@@ -257,14 +256,14 @@ const LineView = ({
               setIsModalOptionVisible(false);
             }}
             onDelete={deleteLineHandle}
-            line={lineInfo}
+            line={line}
             owner={owner}
           />
           <ModalEditDescription
             visible={isModalEditVisible}
             onClose={() => {
               setIsModalEditVisible(false);
-              setDescriptionForm(lineInfo.description);
+              setDescriptionForm(line.description);
             }}
             onSave={updateLineHandle}
             descriptionForm={descriptionForm}
@@ -289,7 +288,7 @@ const LineView = ({
           <WebView
             originWhitelist={["*"]}
             source={{
-              html: getHTMLImageRender(renderImage(lineInfo.banner_id)),
+              html: getHTMLImageRender(renderImage(line.banner_id)),
             }}
             scalesPageToFit={true}
             bounces={true}

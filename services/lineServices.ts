@@ -235,7 +235,7 @@ export const getLine = async (line_id: string) => {
   }
 };
 
-export const getUserLine = async (user_id: string) => {
+export const getUserLineList = async (user_id: string) => {
   try {
     const lineDoc = await _listDocuments(
       env.DATABASE_PRIMARY,
