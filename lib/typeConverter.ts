@@ -26,15 +26,6 @@ export const toUserInfoList = (documents: Models.Document[]) => {
   return userList;
 };
 
-export const toUserSubscription = (document: Models.Document) => {
-  const user: UserType.Subscription = {
-    id: document.$id,
-    line_id: document.line.map((obj: any) => obj.$id),
-  };
-
-  return user;
-};
-
 export const toUserNotification = (document: Models.Document) => {
   const user: UserType.Notification = {
     id: document.$id,
