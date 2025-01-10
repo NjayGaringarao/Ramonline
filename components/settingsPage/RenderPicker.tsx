@@ -1,4 +1,4 @@
-import { AffiliationType } from "@/constants/types";
+import { AffiliationType } from "@/types/utils";
 import { Picker } from "@react-native-picker/picker";
 import { View, Text } from "react-native";
 

@@ -1,66 +1,66 @@
-// import { View, Text, FlatList } from "react-native";
-// import React, { useEffect, useState } from "react";
-// import { SessionType, UserType } from "@/constants/types";
-// import { colors, icons } from "@/constants";
-// import RenderSession from "./RenderSession";
-// import CustomButton from "../CustomButton";
-// import Toast from "react-native-root-toast";
-// import { getUserSessions } from "@/services/userServices";
-// import Loading from "../Loading";
+import { View, Text, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SessionType } from "@/types/utils";
+import { colors, icons } from "@/constants";
+import RenderSession from "./RenderSession";
+import CustomButton from "../CustomButton";
+import Toast from "react-native-root-toast";
+import { getUserSessions } from "@/services/userServices";
+import Loading from "../Loading";
 
-// const SessionSection = () => {
-//   const [sessions, setSessions] = useState<SessionType[]>([]);
-//   const [isLoading, setIsLoading] = useState(false);
+const SessionSection = () => {
+  const [sessions, setSessions] = useState<SessionType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-//   const getSessionsHandle = async () => {
-//     try {
-//       setIsLoading(true);
+  const getSessionsHandle = async () => {
+    try {
+      setIsLoading(true);
 
-//       setSessions(await getUserSessions());
-//     } catch (error) {
-//       Toast.show(`Failed to load sessions.`, {
-//         duration: Toast.durations.LONG,
-//       });
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
+      setSessions(await getUserSessions());
+    } catch (error) {
+      Toast.show(`Failed to load sessions.`, {
+        duration: Toast.durations.LONG,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-//   useEffect(() => {
-//     getSessionsHandle();
-//   }, []);
+  useEffect(() => {
+    getSessionsHandle();
+  }, []);
 
-//   return (
-//     <View className="mb-4 gap-2">
-//       <View className="absolute -top-6 w-full items-end">
-//         <CustomButton
-//           handlePress={getSessionsHandle}
-//           imageOnly={icons.refresh}
-//           imageStyles="h-5 w-5"
-//           iconTint={colors.uGray}
-//           withBackground={false}
-//           containerStyles="-mr-1"
-//         />
-//       </View>
-//       <View className="rounded-lg overflow-hidden">
-//         {sessions
-//           .sort((a, b) => (b.current ? 1 : 0) - (a.current ? 1 : 0))
-//           .map((session) => (
-//             <RenderSession
-//               key={session.id}
-//               session={session}
-//               setIsLoading={(e) => setIsLoading(e)}
-//             />
-//           ))}
-//       </View>
-//       {isLoading && (
-//         <View className="absolute items-center justify-center h-full w-full">
-//           <View className="absolute h-full w-full bg-panel opacity-90"></View>
-//           <Loading loadingPrompt="Fetching" containerStyles="absolute" />
-//         </View>
-//       )}
-//     </View>
-//   );
-// };
+  return (
+    <View className="mb-4 gap-2">
+      <View className="absolute -top-6 w-full items-end">
+        <CustomButton
+          handlePress={getSessionsHandle}
+          imageOnly={icons.refresh}
+          imageStyles="h-5 w-5"
+          iconTint={colors.uGray}
+          withBackground={false}
+          containerStyles="-mr-1"
+        />
+      </View>
+      <View className="rounded-lg overflow-hidden">
+        {sessions
+          .sort((a, b) => (b.current ? 1 : 0) - (a.current ? 1 : 0))
+          .map((session) => (
+            <RenderSession
+              key={session.id}
+              session={session}
+              setIsLoading={(e) => setIsLoading(e)}
+            />
+          ))}
+      </View>
+      {isLoading && (
+        <View className="absolute items-center justify-center h-full w-full">
+          <View className="absolute h-full w-full bg-panel opacity-90"></View>
+          <Loading loadingPrompt="Fetching" containerStyles="absolute" />
+        </View>
+      )}
+    </View>
+  );
+};
 
-// export default SessionSection;
+export default SessionSection;
