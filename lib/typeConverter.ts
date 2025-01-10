@@ -59,7 +59,7 @@ export const toPostInfo = (document: Models.Document) => {
   return post;
 };
 
-export const toPostInfoList = (documents: Models.Document) => {
+export const toPostInfoList = (documents: Models.Document[]) => {
   const postList: PostType.Info[] = [];
 
   for (let i = 0; documents.length > i; i++) {
