@@ -9,11 +9,6 @@ export declare namespace UserType {
     created_at: Date;
   };
 
-  type Notification = {
-    id: string;
-    notification_id: string[];
-  };
-
   type Activity = {
     id: string;
     viewed_notification_id: string[];
@@ -47,6 +42,7 @@ export declare namespace LineType {
 
   type Subscription = {
     id: string;
+    line_id: string;
     user_id: string[];
   };
 }
@@ -56,6 +52,7 @@ export declare namespace NotificationType {
     id: string;
     title: string;
     description?: string;
+    user_id: string;
     origin: [string, string];
     content: [string, string];
     created_at: Date;

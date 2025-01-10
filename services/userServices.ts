@@ -74,18 +74,6 @@ export const createAccount = async (
 
     await _createDocument(
       env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_SUBSCRIPTION,
-      userAccount.$id,
-      {}
-    );
-    await _createDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_NOTIFICATION,
-      userAccount.$id,
-      {}
-    );
-    await _createDocument(
-      env.DATABASE_PRIMARY,
       env.COLLECTION_USER_ACTIVITY,
       userInfo.$id,
       {}

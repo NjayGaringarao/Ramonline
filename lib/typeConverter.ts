@@ -26,14 +26,6 @@ export const toUserInfoList = (documents: Models.Document[]) => {
   return userList;
 };
 
-export const toUserNotification = (document: Models.Document) => {
-  const user: UserType.Notification = {
-    id: document.$id,
-    notification_id: document.notification.map((obj: any) => obj.$id),
-  };
-
-  return user;
-};
 export const toUserActivity = (document: Models.Document) => {
   const user: UserType.Activity = {
     id: document.$id,
@@ -88,6 +80,8 @@ export const toNotificationInfo = (document: Models.Document) => {
   const notification: NotificationType.Info = {
     id: document.$id,
     title: document.title,
+    description: document.description,
+    user_id: document.user_id,
     origin: [document.origin[0], document.origin[1]],
     content: [document.content[0], document.content[1]],
     created_at: new Date(document.created_at),
@@ -131,15 +125,6 @@ export const toLineInfoList = (documents: Models.Document[]) => {
   }
 
   return lineList;
-};
-
-export const toLineSubscription = (document: Models.Document) => {
-  const line: LineType.Subscription = {
-    id: document.$id,
-    user_id: document.user.map((obj: any) => obj.$id),
-  };
-
-  return line;
 };
 //#endregion
 
