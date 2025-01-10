@@ -17,7 +17,7 @@ import {
   _updatePassword,
   _uploadFile,
 } from "./appwrite";
-import { toSessionList, toUserInfo } from "@/lib/typeConverter";
+import { toSessionList, toUserActivity, toUserInfo } from "@/lib/typeConverter";
 import { env } from "@/constants/env";
 import { Query } from "react-native-appwrite";
 import { AffiliationType } from "@/types/utils";
@@ -157,8 +157,7 @@ export const changePassword = async (
 
 export const getCurrentUser = async () => {
   try {
-    const res = await _getCurrentUser();
-    return res;
+    return await _getCurrentUser();
   } catch (error) {
     if (
       error === "AppwriteException: User (role: guests) missing scope (account)"
@@ -202,6 +201,20 @@ export const getUserInfo = async (user_id: string) => {
     return toUserInfo(user);
   } catch (error) {
     console.log(`ERROR : (userServices.ts => getUserInfo) :: ${error}`);
+    throw error;
+  }
+};
+
+export const getUserActivity = async (user_id: string) => {
+  try {
+    const user = await _getDocument(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_USER_ACTIVITY,
+      user_id
+    );
+    return toUserActivity(user);
+  } catch (error) {
+    console.log(`ERROR : (userServices.ts => getUserActivity) :: ${error}`);
     throw error;
   }
 };
