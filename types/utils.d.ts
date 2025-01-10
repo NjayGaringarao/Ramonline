@@ -1,3 +1,5 @@
+import { PostType, LineType } from "./models";
+
 export interface AffiliationType {
   first: string | null;
   second: string | null;
@@ -12,4 +14,14 @@ export interface SessionType {
   osName: string;
   countryName: string;
   ip: string;
+}
+
+export interface UserPostListType {
+  total: number;
+  post_info: PostType.Info[];
+}
+
+export interface UserLineListType {
+  total: number;
+  line_info: LineType.Info[];
 }

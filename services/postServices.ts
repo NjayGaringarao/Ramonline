@@ -13,6 +13,7 @@ import {
 } from "./appwrite";
 import { toPostInfo, toPostInfoList } from "@/lib/typeConverter";
 import { env } from "@/constants/env";
+import { UserPostListType } from "@/types/utils";
 
 export const uploadImages = async (ImagePickerResults: ImagePickerAsset[]) => {
   const uploadedImages: Models.File[] = [];
@@ -165,6 +166,26 @@ export const getFeedPosts = async (lastId?: string) => {
     }
   } catch (error) {
     console.log(`ERROR (postServices.ts => getFeedPosts) :: ${error}`);
+    throw error;
+  }
+};
+
+export const getUserPostList = async (user_id: string) => {
+  try {
+    const postDoc = await _listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_POST_INFO,
+      [Query.equal("user_id", user_id)]
+    );
+
+    const postList: UserPostListType = {
+      total: postDoc.total,
+      post_info: toPostInfoList(postDoc.documents),
+    };
+
+    return postList;
+  } catch (error) {
+    console.log(`ERROR (postServices.ts => getUserPost) :: ${error}`);
     throw error;
   }
 };

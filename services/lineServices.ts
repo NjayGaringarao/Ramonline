@@ -20,6 +20,8 @@ import {
   toPushTargetList,
 } from "@/lib/typeConverter";
 import { compressIds } from "@/lib/commonUtil";
+import { LineType } from "@/types/models";
+import { UserLineListType } from "@/types/utils";
 
 export const uploadBanner = async (ImagePickerResults: ImagePickerAsset) => {
   try {
@@ -229,6 +231,26 @@ export const getLine = async (line_id: string) => {
     return toLineInfo(lineDocs);
   } catch (error) {
     console.log(`lineServices.ts => getLine :: ERROR : ${error}`);
+    throw error;
+  }
+};
+
+export const getUserLine = async (user_id: string) => {
+  try {
+    const lineDoc = await _listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_LINE_INFO,
+      [Query.equal("user_id", user_id)]
+    );
+
+    const lineList: UserLineListType = {
+      total: lineDoc.total,
+      line_info: toLineInfoList(lineDoc.documents),
+    };
+
+    return lineList;
+  } catch (error) {
+    console.log(`ERROR (lineServices.ts => getUserLine) :: ${error}`);
     throw error;
   }
 };
