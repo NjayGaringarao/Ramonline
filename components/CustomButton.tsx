@@ -30,7 +30,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       >
         {children}
         <Text
-          className={`text-darkText font-semibold text-lg self-center ${textStyles} ${
+          className={`text-darkText font-semibold text-xl self-center ${textStyles} ${
             title ? "visible" : "hidden"
           }`}
         >
