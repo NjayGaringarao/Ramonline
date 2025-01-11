@@ -34,7 +34,7 @@ export const requestNotificationPermissions = async () => {
 };
 
 // Retrieve FCM token and request permission
-export const getFCMToken = async () => {
+export const getFCMToken = async (setFcmToken?: (token: string) => void) => {
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -42,6 +42,7 @@ export const getFCMToken = async () => {
 
   if (enabled) {
     const fcmToken = await messaging().getToken();
+    if (setFcmToken) setFcmToken(fcmToken);
     console.log(`FCM Token: ${fcmToken}`);
     return fcmToken;
   } else {
@@ -171,12 +172,10 @@ const resubscribeTopics = async (
 };
 
 export const setupPushTarget = async (
-  user: Models.User<Models.Preferences>
+  user: Models.User<Models.Preferences>,
+  fcmToken: string
 ) => {
   try {
-    const fcmToken = await getFCMToken();
-
-    if (!fcmToken) throw Error("FCM Token Undefined");
     const lineSubscriptionDocuments = await _listDocuments(
       env.DATABASE_PRIMARY,
       env.COLLECTION_LINE_SUBSCRIPTION,

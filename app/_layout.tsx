@@ -5,52 +5,55 @@ import React from "react";
 import "@/global.css";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "@/constants";
+import GlobalProvider from "@/context/GlobalProvider";
 export default function RootLayout() {
   return (
     <>
       <RootSiblingParent>
-        <SafeAreaView className="flex flex-1">
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="settings"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="line"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="createLinePage"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="createPostPage"
-              options={{
-                headerShown: false,
-              }}
-            />
-            <Stack.Screen
-              name="(auth)"
-              options={{
-                headerShown: false,
-              }}
-            />
+        <GlobalProvider>
+          <SafeAreaView className="flex flex-1">
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="settings"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="line"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="createLinePage"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="createPostPage"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
+                name="(auth)"
+                options={{
+                  headerShown: false,
+                }}
+              />
 
-            <Stack.Screen
-              name="(tabs)"
-              options={{
-                headerShown: false,
-              }}
-            />
-          </Stack>
-        </SafeAreaView>
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </Stack>
+          </SafeAreaView>
+        </GlobalProvider>
       </RootSiblingParent>
       <StatusBar backgroundColor={colors.background} style="light" />
     </>

@@ -7,6 +7,7 @@ import React, {
   ReactNode,
 } from "react";
 import {
+  getFCMToken,
   requestNotificationPermissions,
   setupNotificationHandlers,
 } from "@/services/notificationServices";
@@ -22,7 +23,7 @@ import { UserRecordType } from "@/types/utils";
 import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 
-interface RefreshRecordUserType {
+interface IRefreshUserRecordType {
   info: boolean;
   activity: boolean;
   line: boolean;
@@ -38,11 +39,11 @@ export interface GlobalContextInterface {
     React.SetStateAction<Models.User<Models.Preferences> | null>
   >;
   setUserRecord: Dispatch<React.SetStateAction<UserRecordType>>;
-  setIsRefreshUserRecord: Dispatch<React.SetStateAction<RefreshRecordUserType>>;
+  refreshUserRecord: (update: IRefreshUserRecordType) => void;
   setIsRefreshFeeds: Dispatch<React.SetStateAction<boolean>>;
   user: Models.User<Models.Preferences> | null;
   userRecord: UserRecordType;
-  isRefreshUserRecord: RefreshRecordUserType;
+  fcmToken?: string;
   isRefreshFeeds: boolean;
   isLoading: boolean;
   isOnline: boolean;
@@ -75,16 +76,16 @@ const emptyUserRecord: UserRecordType = {
 const defaultValue: GlobalContextInterface = {
   setUser: (param: Models.User<Models.Preferences> | null) => {},
   setUserRecord: (param: UserRecordType) => {},
-  setIsRefreshUserRecord: (param: RefreshRecordUserType) => {},
   setIsRefreshFeeds: (param: boolean) => {},
+  refreshUserRecord: ({
+    info = false,
+    activity = false,
+    line = false,
+    post = false,
+  }) => {},
   user: null,
   userRecord: emptyUserRecord,
-  isRefreshUserRecord: {
-    info: false,
-    activity: false,
-    line: false,
-    post: false,
-  },
+  fcmToken: undefined,
   isRefreshFeeds: false,
   isLoading: false,
   isOnline: true,
@@ -101,16 +102,10 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
     null
   );
   const [userRecord, setUserRecord] = useState(emptyUserRecord);
-  const [isRefreshUserRecord, setIsRefreshUserRecord] =
-    useState<RefreshRecordUserType>({
-      info: false,
-      activity: false,
-      line: false,
-      post: false,
-    });
   const [isRefreshFeeds, setIsRefreshFeeds] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(true);
+  const [fcmToken, setFcmToken] = useState<string>();
   useEffect(() => {
     const initialize = async () => {
       await requestNotificationPermissions();
@@ -120,6 +115,8 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
         .then(async (user) => {
           if (user) {
             setUser(user);
+            const fcm = await getFCMToken(setFcmToken);
+            if (fcm) await setupPushTarget(user, fcm);
 
             setUserRecord({
               info: await getUserInfo(user.$id),
@@ -127,7 +124,6 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
               line: await getUserLineList(user.$id),
               post: await getUserPostList(user.$id),
             });
-            await setupPushTarget(user);
           } else {
             setUser(null);
           }
@@ -139,45 +135,22 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
     initialize();
   }, []);
 
-  useEffect(() => {
-    const refresh = async () => {
-      try {
-        setIsLoading(true);
-        if (user) {
-          setUserRecord({
-            info: isRefreshUserRecord.info
-              ? await getUserInfo(user.$id)
-              : userRecord.info,
-            activity: isRefreshUserRecord.activity
-              ? await getUserActivity(user.$id)
-              : userRecord.activity,
-            line: isRefreshUserRecord.line
-              ? await getUserLineList(user.$id)
-              : userRecord.line,
-            post: isRefreshUserRecord.post
-              ? await getUserPostList(user.$id)
-              : userRecord.post,
-          });
-        }
-      } catch (error) {
-        console.log(
-          "GlobalProvider : There was a problem querying user information"
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (isRefreshUserRecord) {
-      refresh();
-      setIsRefreshUserRecord({
-        info: false,
-        activity: false,
-        line: false,
-        post: false,
+  const refreshUserRecord = async ({
+    info,
+    activity,
+    line,
+    post,
+  }: IRefreshUserRecordType) => {
+    if (user)
+      setUserRecord({
+        info: info ? await getUserInfo(user.$id) : userRecord.info,
+        activity: activity
+          ? await getUserActivity(user.$id)
+          : userRecord.activity,
+        line: line ? await getUserLineList(user.$id) : userRecord.line,
+        post: post ? await getUserPostList(user.$id) : userRecord.post,
       });
-    }
-  }, [isRefreshUserRecord]);
-
+  };
   useEffect(() => {
     setIsOnline(!!isInternetReachable);
   }, [isInternetReachable]);
@@ -187,11 +160,11 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
       value={{
         setUser,
         setUserRecord,
-        setIsRefreshUserRecord,
+        refreshUserRecord,
         setIsRefreshFeeds,
         user,
         userRecord,
-        isRefreshUserRecord,
+        fcmToken,
         isLoading,
         isRefreshFeeds,
         isOnline,

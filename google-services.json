@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "938217600082",
+    "firebase_url": "https://ramonline-bf98f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "ramonline-bf98f",
+    "storage_bucket": "ramonline-bf98f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938217600082:android:ff8ee7bf1e0d9fc1691b8b",
+        "android_client_info": {
+          "package_name": "com.prmsu.ramonline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJuRCzbjHIeRuk4laDPGB4VGsdgvVLaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938217600082:android:ef11c697da649e99691b8b",
+        "android_client_info": {
+          "package_name": "com.se101.ramonline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYJuRCzbjHIeRuk4laDPGB4VGsdgvVLaI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
