@@ -1,6 +1,5 @@
-import React from "react";
-import { TouchableOpacity, Text } from "react-native";
-import { Image } from "expo-image";
+import React, { ReactNode } from "react";
+import { TouchableOpacity, Text, View, Image } from "react-native";
 
 interface CustomButtonProps {
   title?: string;
@@ -8,48 +7,37 @@ interface CustomButtonProps {
   containerStyles?: string;
   textStyles?: string;
   isLoading?: boolean;
-  withBackground?: boolean;
-  imageOnly?: string;
-  imageStyles?: string;
-  iconTint?: string;
+  children?: ReactNode;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   title = "",
   handlePress,
-  containerStyles = "",
+  containerStyles,
   textStyles = "text-white",
   isLoading = false,
-  withBackground = true,
-  imageOnly = null,
-  imageStyles = null,
-  iconTint,
+  children,
 }) => {
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      activeOpacity={0.7}
-      className={`${
-        withBackground ? "bg-primary dark:bg-secondary" : "bg-transparent"
-      } rounded-lg px-4 min-h-24 justify-center items-center ${containerStyles} ${
-        isLoading ? "opacity-50" : ""
-      } `}
-      disabled={isLoading}
+    <View
+      className={`bg-primary rounded-lg overflow-hidden px-4 py-2 ${containerStyles}`}
     >
-      <Image
-        className={`${imageStyles} ${imageOnly ? "" : "hidden"}`}
-        source={imageOnly}
-        contentFit="contain"
-        tintColor={iconTint}
-      />
-      <Text
-        className={`text-darkText font-semibold text-lg self-center ${textStyles} ${
-          imageOnly ? "hidden" : ""
-        }`}
+      <TouchableOpacity
+        onPress={handlePress}
+        activeOpacity={0.7}
+        disabled={isLoading}
+        className="flex-1 flex-row space-x-2 justify-center items-center"
       >
-        {title}
-      </Text>
-    </TouchableOpacity>
+        {children}
+        <Text
+          className={`text-darkText font-semibold text-lg self-center ${textStyles} ${
+            title ? "visible" : "hidden"
+          }`}
+        >
+          {title}
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
