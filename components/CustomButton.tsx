@@ -20,7 +20,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   return (
     <View
-      className={`bg-primary rounded-lg overflow-hidden px-4 py-2 ${containerStyles}`}
+      className={`h-10 bg-primary rounded-lg overflow-hidden px-4 py-2 ${containerStyles}`}
     >
       <TouchableOpacity
         onPress={handlePress}
@@ -30,7 +30,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       >
         {children}
         <Text
-          className={`text-darkText font-semibold text-xl self-center ${textStyles} ${
+          className={`text-center font-semibold text-lg self-center ${textStyles} ${
             title ? "visible" : "hidden"
           }`}
         >
