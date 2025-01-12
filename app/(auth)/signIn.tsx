@@ -120,7 +120,7 @@ const signIn = () => {
             <CustomButton
               title="Login"
               handlePress={loginHandle}
-              containerStyles="mt-2 py-2 w-full "
+              containerStyles="mt-2 w-full "
               isLoading={isSubmitting}
             />
             <Text

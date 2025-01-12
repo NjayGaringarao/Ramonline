@@ -1,6 +1,5 @@
-import { TouchableOpacity, View } from "react-native";
-import { Image, ImageContentFit } from "expo-image";
-import React from "react";
+import { TouchableOpacity, View, Image } from "react-native";
+import React, { useEffect, useState } from "react";
 import { UserType } from "@/types/models";
 import { getImagePreview } from "@/services/commonServices";
 
@@ -10,7 +9,6 @@ interface IProfilePictureType {
   onLongPress?: () => void;
   containerStyle?: string;
   imageStyle?: string;
-  imageContentFit?: ImageContentFit;
 }
 
 const ProfilePicture = ({
@@ -19,8 +17,24 @@ const ProfilePicture = ({
   onLongPress,
   containerStyle,
   imageStyle,
-  imageContentFit,
 }: IProfilePictureType) => {
+  const [imagePreview, setImagePreview] = useState<string>(userInfo.avatar_url);
+
+  useEffect(() => {
+    const initialize = async () => {
+      if (userInfo.picture_id && userInfo.picture_id.length > 19) {
+        setImagePreview(getImagePreview(userInfo.picture_id));
+      } else {
+        setImagePreview(userInfo.avatar_url);
+      }
+    };
+
+    initialize();
+  }, [userInfo]);
+
+  console.log("User Info:", JSON.stringify(userInfo, null, 2));
+  console.log("Image Preview:", imagePreview);
+
   if (onLongPress || onPress) {
     return (
       <TouchableOpacity
@@ -28,31 +42,13 @@ const ProfilePicture = ({
         onLongPress={onLongPress}
         className={containerStyle}
       >
-        <Image
-          className={imageStyle}
-          contentFit={imageContentFit}
-          source={
-            userInfo.picture_id
-              ? getImagePreview(userInfo.picture_id)
-              : userInfo.avatar_url
-          }
-          placeholder={userInfo.avatar_url}
-        />
+        <Image className={imageStyle} source={{ uri: imagePreview }} />
       </TouchableOpacity>
     );
   } else {
     return (
       <View className={containerStyle}>
-        <Image
-          className={imageStyle}
-          contentFit={imageContentFit}
-          source={
-            userInfo.picture_id
-              ? getImagePreview(userInfo.picture_id)
-              : userInfo.avatar_url
-          }
-          placeholder={userInfo.avatar_url}
-        />
+        <Image className={imageStyle} source={{ uri: imagePreview }} />
       </View>
     );
   }

@@ -33,7 +33,7 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
 
   const pickImage = async (): Promise<void> => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: "images",
       quality: 1,
       allowsEditing: isBanner ? true : false,
       allowsMultipleSelection: isBanner ? false : true,
@@ -53,24 +53,6 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
     );
   };
 
-  const handleLongPress = (uri: string) => {
-    Alert.alert(
-      "Remove Image",
-      "Do you want to remove this image?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Yes",
-          onPress: () => removeImage(uri),
-        },
-      ],
-      { cancelable: true }
-    );
-  };
-
   const openImageModal = async (uri: string) => {
     const base64Uri = await convertToBase64(uri);
     if (base64Uri) {
@@ -82,7 +64,7 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
   return (
     <>
       <View
-        className={`flex-row h-auto w-full border-2 border-primary bg-background rounded-lg p-2 space-y-2 ${containerStyles}`}
+        className={`flex-row h-auto w-full border-2 border-primary bg-panel rounded-lg p-2 space-y-2 ${containerStyles}`}
       >
         <ScrollView
           horizontal
@@ -97,12 +79,22 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
               <TouchableOpacity
                 key={index}
                 onPress={() => openImageModal(asset.uri)}
-                onLongPress={() => handleLongPress(asset.uri)}
+                onLongPress={() => removeImage(asset.uri)}
               >
                 <Image
                   source={{ uri: asset.uri }}
                   className="w-32 h-32 rounded-lg mr-2 border border-gray-300"
                 />
+                <TouchableOpacity
+                  className="absolute top-0 right-0 bg-panel opacity-75 rounded-full overflow-hidden border-primary"
+                  onPress={() => removeImage(asset.uri)}
+                >
+                  <Image
+                    source={icons.close}
+                    className="h-8 w-8"
+                    tintColor={colors.uBlack}
+                  />
+                </TouchableOpacity>
               </TouchableOpacity>
             ))
           ) : (
@@ -115,21 +107,22 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
           title={
             selectedImages.length === 0
               ? isBanner
-                ? "Add a Banner"
-                : "Add an Image"
+                ? "Insert a Banner"
+                : "Insert an Image"
               : ""
           }
           handlePress={pickImage}
-          containerStyles={`py-1 border-2 border-primary ${
+          containerStyles={`h-12 border-2 border-primary ${
             isBanner && selectedImages.length != 0 ? "hidden" : "visible"
-          } bg-transparent`}
-          textStyles="text-primary"
+          }`}
+          textStyles="text-panel"
         >
           {selectedImages.length === 0 ? null : (
             <Image
               source={icons.add}
-              className="w-10 h-28"
-              tintColor={colors.primary}
+              className="w-10 h-10 my-2"
+              tintColor={colors.panel}
+              resizeMode="contain"
             />
           )}
         </CustomButton>
