@@ -20,7 +20,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   return (
     <View
-      className={`h-10 bg-primary rounded-lg overflow-hidden px-4 ${containerStyles}`}
+      className={`h-10 bg-primary rounded-lg overflow-hidden px-4 ${containerStyles} ${
+        isLoading ? "opacity-50" : "opacity-100"
+      }`}
     >
       <TouchableOpacity
         onPress={handlePress}
