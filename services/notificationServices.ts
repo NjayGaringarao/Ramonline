@@ -11,6 +11,7 @@ import {
   _subscribeTopic,
   _unsubscribeTopic,
   _updateDocument,
+  _updateTarget,
 } from "./appwrite";
 import messaging from "@react-native-firebase/messaging";
 import * as Notifications from "expo-notifications";
@@ -22,6 +23,7 @@ import {
 } from "@/lib/typeConverter";
 import { env } from "@/constants/env";
 import { LineType, NotificationType, UserType } from "@/types/models";
+import { hashId } from "@/lib/commonUtil";
 
 //#region Notification Handling
 
@@ -96,31 +98,16 @@ export const setupNotificationHandlers = () => {
 //#endregion
 
 //#region Notification Setup
-const getMatchedSessionTarget = async (
+const getMatchedSessionTarget = (
   targets: Models.Target[],
   session: Models.Session
 ) => {
-  let matchedTargets: Models.Target[] = [];
+  const matchedTargets: Models.Target[] = [];
 
-  targets.forEach((target) => {
-    if (target.$id == session.$id) {
-      matchedTargets.push(target);
-    }
-  });
-
-  if (matchedTargets.length == 1) {
-    return matchedTargets[0];
-  } else {
-    return undefined;
+  for (let i = 0; targets.length > i; i++) {
+    if (targets[i].$id === hashId(session.$id)) return targets[i];
   }
-};
-
-const createPushTarget = async (sessionId: string, fcmToken: string) => {
-  try {
-    return await _createTarget(sessionId, fcmToken);
-  } catch (error) {
-    throw Error(`createPushTarget : ${error}`);
-  }
+  return undefined;
 };
 
 const validateTargets = async (targets: Models.Target[]) => {
@@ -134,7 +121,7 @@ const validateTargets = async (targets: Models.Target[]) => {
     let unusedPushTargets: Models.Target[] = [];
     pushTargets.forEach((target) => {
       const isUsed = sessionList.sessions.some((session) => {
-        return session.$id === target.$id;
+        return hashId(session.$id) === target.$id;
       });
 
       if (!isUsed) {
@@ -186,18 +173,17 @@ export const setupPushTarget = async (
     );
 
     const session = await _getSession();
-    const matchedSessionTarget = await getMatchedSessionTarget(
-      user.targets,
-      session
-    );
+    const matchedSessionTarget = getMatchedSessionTarget(user.targets, session);
 
     if (matchedSessionTarget) {
       if (fcmToken != matchedSessionTarget.identifier) {
-        await _deleteTarget(matchedSessionTarget.$id);
-        user.targets.push(await createPushTarget(session.$id, fcmToken));
+        user.targets.filter(
+          (target) => target.$id !== matchedSessionTarget.$id
+        );
+        user.targets.push(await _updateTarget(hashId(session.$id), fcmToken));
       }
     } else {
-      user.targets.push(await createPushTarget(session.$id, fcmToken));
+      user.targets.push(await _createTarget(hashId(session.$id), fcmToken));
     }
 
     await validateTargets(user.targets);
@@ -217,7 +203,7 @@ export const setupPushTarget = async (
 export const deletePushTarget = async () => {
   try {
     const session = await _getSession();
-    await _deleteTarget(session.$id);
+    await _deleteTarget(hashId(session.$id));
   } catch (error) {
     console.log(
       `notificationServices.ts => deletePushTarget :: ERROR : ${error}`
@@ -310,5 +296,4 @@ export const deleteNotification = async (
     );
   }
 };
-
 //#endregion
