@@ -6,8 +6,8 @@ import {
   ScrollView,
   Modal,
   Alert,
+  Image,
 } from "react-native";
-import { Image } from "expo-image";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset } from "expo-image-picker";
 import CustomButton from "./CustomButton";
@@ -122,13 +122,17 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
           handlePress={pickImage}
           containerStyles={`py-1 border-2 border-primary ${
             isBanner && selectedImages.length != 0 ? "hidden" : "visible"
-          }`}
+          } bg-transparent`}
           textStyles="text-primary"
-          withBackground={false}
-          imageOnly={selectedImages.length === 0 ? undefined : icons.add}
-          imageStyles="w-10 h-28"
-          iconTint={colors.primary}
-        />
+        >
+          {selectedImages.length === 0 ? null : (
+            <Image
+              source={icons.add}
+              className="w-10 h-28"
+              tintColor={colors.primary}
+            />
+          )}
+        </CustomButton>
       </View>
 
       {/* Modal to show the image in full screen */}
@@ -152,12 +156,10 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
           <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
           <CustomButton
             handlePress={() => setIsImagePreviewVisible(false)}
-            imageOnly={icons.back}
-            imageStyles="h-6 w-6"
-            iconTint="#fff"
-            withBackground={false}
-            containerStyles="absolute top-5 left-0"
-          />
+            containerStyles="absolute top-5 left-0 bg-transparent"
+          >
+            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+          </CustomButton>
         </View>
       </Modal>
     </>

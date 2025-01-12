@@ -1,15 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, Modal, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  FlatList,
+  Image,
+} from "react-native";
 import CustomButton from "../CustomButton";
-import { Image } from "expo-image";
 import { LineType } from "@/types/models";
 import { images } from "@/constants";
 import { getImagePreview } from "@/services/commonServices";
 import TextBox from "../TextBox";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 type ModalSendNotificationProps = {
   visible: boolean;
-  lines: LineType.Info[];
   selectedLines: LineType.Info[];
   handleSelectLine: (line: LineType.Info) => void;
   onClose: () => void;
@@ -20,7 +26,6 @@ type ModalSendNotificationProps = {
 
 const ModalSendNotification = ({
   visible,
-  lines,
   handleSelectLine,
   onClose,
   onDone,
@@ -28,6 +33,7 @@ const ModalSendNotification = ({
   notificationTitle,
   setNotificationTitle,
 }: ModalSendNotificationProps) => {
+  const { userRecord } = useGlobalContext();
   return (
     <Modal visible={visible} transparent animationType="none">
       <View className="flex-1 justify-center">
@@ -40,7 +46,7 @@ const ModalSendNotification = ({
             Select Line/s to Notify
           </Text>
           <FlatList
-            data={lines}
+            data={userRecord.line.line_info}
             className="h-max-64 w-full mb-2"
             keyExtractor={(line, index) => index.toString()}
             renderItem={({ item }) => {
@@ -59,13 +65,13 @@ const ModalSendNotification = ({
                     <View className="bg-primary rounded-lg overflow-hidden">
                       <Image
                         source={images.gate}
-                        contentFit="cover"
+                        resizeMode="cover"
                         className="absolute left-0 h-16 w-20 opacity-50"
                       />
                       <Image
-                        source={getImagePreview(item.banner_id)}
+                        source={{ uri: getImagePreview(item.banner_id) }}
                         className="h-16 w-20"
-                        contentFit="cover"
+                        resizeMode="cover"
                       />
                     </View>
                     <View>
@@ -105,8 +111,7 @@ const ModalSendNotification = ({
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                withBackground={false}
-                containerStyles="border-2 border-primary h-10 w-24"
+                containerStyles="border-2 border-primary h-10 w-24 bg-transparent"
                 textStyles="text-primary"
               />
               <CustomButton

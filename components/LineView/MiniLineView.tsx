@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { Image } from "expo-image";
+import { View, Text, Image } from "react-native";
 import { LineType, UserType } from "@/types/models";
 import DescriptionView from "./DescriptionView";
 import { getDisplayName, getDisplayRole } from "@/lib/commonUtil";
@@ -36,7 +35,7 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
         <Image
           source={{ uri: getImagePreview(line.banner_id) }}
           className="w-full h-52"
-          contentFit="cover"
+          resizeMode="cover"
         />
       </View>
       <View className="h-auto w-full">

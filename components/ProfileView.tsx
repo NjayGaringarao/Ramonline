@@ -81,20 +81,24 @@ const ProfileView = ({
         handlePress={() => {
           router.push("/settings");
         }}
-        containerStyles="absolute top-44 left-2 h-6 w-6 p-0"
-        imageOnly={icons.settings}
-        imageStyles="h-6 w-6"
-        iconTint={colors.primary}
-        withBackground={false}
-      />
+        containerStyles="absolute top-44 left-2 h-6 w-6 p-0 bg-transparent"
+      >
+        <Image
+          source={icons.settings}
+          className="h-6 w-6"
+          tintColor={colors.primary}
+        />
+      </CustomButton>
       <CustomButton
         handlePress={logoutHandle}
-        containerStyles="absolute top-44 right-2 h-6 w-6"
-        imageOnly={icons.logout}
-        imageStyles="h-6 w-6"
-        iconTint={colors.primary}
-        withBackground={false}
-      />
+        containerStyles="absolute top-44 right-2 h-6 w-6 bg-transparent"
+      >
+        <Image
+          source={icons.logout}
+          className="h-6 w-6"
+          tintColor={colors.primary}
+        />
+      </CustomButton>
 
       <View className="w-auto h-auto mt-24 mb-4 space-y-2">
         <Text className="text-base text-gray-800">
@@ -203,12 +207,10 @@ const ProfileView = ({
           <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
           <CustomButton
             handlePress={() => setIsImagePreviewVisible(false)}
-            imageOnly={icons.back}
-            imageStyles="h-6 w-6"
-            iconTint="#fff"
-            withBackground={false}
-            containerStyles="absolute top-5 left-0"
-          />
+            containerStyles="absolute top-5 left-0 bg-transparent"
+          >
+            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+          </CustomButton>
         </View>
       </Modal>
     </View>

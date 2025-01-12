@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, TouchableOpacity, View, ScrollView } from "react-native";
-import { LineType, PostType } from "@/types/models";
+import { LineType } from "@/types/models";
 
 type IDescriptionProps = {
   line: LineType.Info;

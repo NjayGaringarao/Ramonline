@@ -41,8 +41,7 @@ const ModalEditCaption = ({
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                withBackground={false}
-                containerStyles="border-2 border-primary mx-2 h-10"
+                containerStyles="border-2 border-primary mx-2 h-10 bg-transparent"
                 textStyles="text-primary"
               />
               <CustomButton title="Save" handlePress={onSave} />

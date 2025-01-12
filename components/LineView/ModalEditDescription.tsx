@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { View, Text, Modal, TouchableOpacity, Image } from "react-native";
 import CustomButton from "../CustomButton";
 import FormField from "../FormField";
 
@@ -40,10 +40,9 @@ const ModalEditDescription = ({
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                withBackground={false}
-                containerStyles="border-2 border-primary mx-2 h-10"
+                containerStyles="border-2 border-primary mx-2 h-10 bg-transparent"
                 textStyles="text-primary"
-              />
+              ></CustomButton>
               <CustomButton title="Save" handlePress={onSave} />
             </View>
           </View>

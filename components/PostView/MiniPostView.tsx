@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, FlatList } from "react-native";
-import { Image } from "expo-image";
+import { View, Text, FlatList, Image } from "react-native";
 import { getImagePreview } from "@/services/commonServices";
 import { PostType, UserType } from "@/types/models";
 import CaptionView from "./CaptionView";
@@ -8,15 +7,15 @@ import { getDisplayName, getDisplayRole } from "@/lib/commonUtil";
 import ProfilePicture from "../ProfilePicture";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 type MiniPostViewProps = {
   post: PostType.Info;
-  userInfo: UserType.Info;
 };
 
-const MiniPostView = ({ post, userInfo }: MiniPostViewProps) => {
+const MiniPostView = ({ post }: MiniPostViewProps) => {
   const [owner, setOwner] = useState<UserType.Info>(Object);
-
+  const { userRecord } = useGlobalContext();
   const renderImage = (imageId: string) => {
     try {
       return getImagePreview(imageId);
@@ -27,8 +26,8 @@ const MiniPostView = ({ post, userInfo }: MiniPostViewProps) => {
   };
 
   useEffect(() => {
-    if (post.user_id == userInfo.id) {
-      setOwner(userInfo);
+    if (post.user_id == userRecord.info.id) {
+      setOwner(userRecord.info);
     } else {
       getUserInfo(post.user_id).then((result) => setOwner(result));
     }
@@ -69,7 +68,7 @@ const MiniPostView = ({ post, userInfo }: MiniPostViewProps) => {
             <Image
               source={{ uri: renderImage(item) }}
               className="w-36 h-36"
-              contentFit="cover"
+              resizeMode="cover"
             />
           )}
           ListFooterComponent={

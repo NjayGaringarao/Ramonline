@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, Text, TouchableOpacity } from "react-native";
+import { Modal, View, Text, TouchableOpacity, Image } from "react-native";
 import CustomButton from "../CustomButton";
 import MiniPostView from "./MiniPostView";
 import { PostType } from "@/types/models";
@@ -35,12 +35,14 @@ const ModalOptions = ({
         </Text>
         <CustomButton
           handlePress={onClose}
-          imageOnly={icons.close}
-          iconTint={colors.uGray}
-          imageStyles="h-5 w-5"
-          withBackground={false}
-          containerStyles="-mr-4"
-        />
+          containerStyles="-mr-4 bg-transparent"
+        >
+          <Image
+            source={icons.close}
+            className="h-5 w-5"
+            tintColor={colors.uGray}
+          />
+        </CustomButton>
       </View>
       <MiniPostView post={post} />
       <View className="w-full h-auto">
@@ -52,16 +54,14 @@ const ModalOptions = ({
         <CustomButton
           title="Edit Caption"
           handlePress={onEditPress}
-          containerStyles="h-9 w-full border-2 border-primary mb-1"
+          containerStyles="h-9 w-full border-2 border-primary mb-1 bg-transparent"
           textStyles="text-primary"
-          withBackground={false}
         />
         <CustomButton
           title="Delete Post"
           handlePress={onDelete}
-          containerStyles="h-9 w-full border-2 border-primary"
+          containerStyles="h-9 w-full border-2 border-primary bg-transparent"
           textStyles="text-primary"
-          withBackground={false}
         />
       </View>
     </View>

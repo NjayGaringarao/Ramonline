@@ -116,9 +116,8 @@ const AffliationSection = ({
           <CustomButton
             title="Reset"
             handlePress={resetHandle}
-            containerStyles="ml-2 py-1 border-2 border-primary"
+            containerStyles="ml-2 py-1 border-2 border-primary bg-transparent"
             textStyles="text-primary"
-            withBackground={false}
           />
         </View>
       )}

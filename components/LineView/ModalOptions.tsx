@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Modal, TouchableOpacity } from "react-native";
+import { View, Text, Modal, TouchableOpacity, Image } from "react-native";
 import CustomButton from "../CustomButton";
 import MiniLineView from "./MiniLineView";
 import { LineType, UserType } from "@/types/models";
@@ -35,12 +35,14 @@ const ModalOptions = ({
           </Text>
           <CustomButton
             handlePress={onClose}
-            imageOnly={icons.close}
-            iconTint={colors.uGray}
-            imageStyles="h-5 w-5"
-            withBackground={false}
-            containerStyles="-mr-4"
-          />
+            containerStyles="-mr-4 bg-transparent"
+          >
+            <Image
+              source={icons.close}
+              tintColor={colors.uGray}
+              className="h-5 w-5"
+            />
+          </CustomButton>
         </View>
         <MiniLineView line={line} user={owner} />
         <CustomButton
@@ -51,8 +53,7 @@ const ModalOptions = ({
         <CustomButton
           handlePress={onDelete}
           title="Delete Line"
-          containerStyles="h-10 border-2 border-primary"
-          withBackground={false}
+          containerStyles="h-10 border-2 border-primary bg-transparent"
           textStyles="text-primary"
         />
       </View>

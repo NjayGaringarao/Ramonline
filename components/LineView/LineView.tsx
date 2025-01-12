@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Modal, TouchableOpacity, Alert } from "react-native";
-import { Image } from "expo-image";
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from "react-native";
 import { getImagePreview } from "@/services/commonServices";
 import CustomButton from "../CustomButton";
 import Toast from "react-native-root-toast";
@@ -25,10 +31,10 @@ import WebView from "react-native-webview";
 import ProfilePicture from "../ProfilePicture";
 import ModalOptions from "./ModalOptions";
 import ModalEditDescription from "./ModalEditDescription";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 type ILineViewProps = {
   line: LineType.Info;
-  userInfo: UserType.Info;
   isInModal?: boolean;
   isModifyable?: boolean;
   isInFeed?: boolean;
@@ -36,11 +42,11 @@ type ILineViewProps = {
 
 const LineView = ({
   line,
-  userInfo,
   isInModal,
   isModifyable,
   isInFeed,
 }: ILineViewProps) => {
+  const { userRecord } = useGlobalContext();
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isThisVisible, setIsThisVisible] = useState(true);
@@ -62,7 +68,7 @@ const LineView = ({
   const setupSubscriptionStatus = async () => {
     try {
       setIsLoading(true);
-      setIsSubscribed(await isUserSubscribed(userInfo.id, line.id));
+      setIsSubscribed(await isUserSubscribed(userRecord.info.id, line.id));
     } catch (error) {
       Alert.alert(
         "Error",
@@ -134,7 +140,7 @@ const LineView = ({
     try {
       setIsLoading(true);
       if (isSubscribed) {
-        const result = await unsubscribeLine(userInfo.id, line.id);
+        const result = await unsubscribeLine(userRecord.info.id, line.id);
         if (result) setIsSubscribed(false);
         Toast.show(
           `You are unable to recieve notifications from ${line.name}.`,
@@ -143,7 +149,7 @@ const LineView = ({
           }
         );
       } else {
-        const result = await subscribeLine(userInfo.id, line.id);
+        const result = await subscribeLine(userRecord.info.id, line.id);
         if (result) setIsSubscribed(true);
         Toast.show(`You are able to recieve notifications from ${line.name}.`, {
           duration: Toast.durations.LONG,
@@ -163,8 +169,8 @@ const LineView = ({
   useEffect(() => {
     setDescriptionForm(line.description);
     setupSubscriptionStatus();
-    if (userInfo.id == line.user_id) {
-      setOwner(userInfo);
+    if (userRecord.info.id == line.user_id) {
+      setOwner(userRecord.info);
     } else {
       getUserInfo(line.user_id).then((e) => {
         setOwner(e);
@@ -201,11 +207,12 @@ const LineView = ({
             handlePress={() => {
               setIsModalOptionVisible(true);
             }}
-            imageOnly={icons.options}
-            imageStyles="h-7 w-7"
-            withBackground={false}
-            containerStyles={`-mr-2 ${isModifyable ? "visible" : "hidden"}`}
-          />
+            containerStyles={`-mr-2 bg-transparent ${
+              isModifyable ? "visible" : "hidden"
+            }`}
+          >
+            <Image source={icons.options} className="h-7 w-7" />
+          </CustomButton>
         </View>
       </View>
       <View className="rounded-lg overflow-hidden">
@@ -216,12 +223,12 @@ const LineView = ({
           <Image
             source={images.gate}
             className="absolute w-full h-56 opacity-40"
-            contentFit="cover"
+            resizeMode="cover"
           />
           <Image
             source={{ uri: renderImage(line.banner_id) }}
             className="w-full h-56"
-            contentFit="cover"
+            resizeMode="cover"
           />
         </TouchableOpacity>
         <View className="h-auto w-full">
@@ -240,8 +247,7 @@ const LineView = ({
             isSubscribed
               ? "text-primary font-semibold"
               : "text-white font-semibold"
-          } `}
-          withBackground={isSubscribed ? false : true}
+          } ${!!isSubscribed && "bg-transparent"}`}
           isLoading={isLoading}
         />
       </View>
@@ -297,12 +303,10 @@ const LineView = ({
           <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
           <CustomButton
             handlePress={() => setIsBannerPreviewVisible(false)}
-            imageOnly={icons.back}
-            imageStyles="h-6 w-6"
-            iconTint="#fff"
-            withBackground={false}
-            containerStyles="absolute top-5 left-0"
-          />
+            containerStyles="absolute top-5 left-0 bg-transparent"
+          >
+            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+          </CustomButton>
         </View>
       </Modal>
     </View>

@@ -119,12 +119,14 @@ const ProfilePicturePicker = forwardRef(
               <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
               <CustomButton
                 handlePress={() => setIsImagePreviewVisible(false)}
-                imageOnly={icons.back}
-                imageStyles="h-6 w-6"
-                iconTint="#fff"
-                withBackground={false}
-                containerStyles="absolute top-5 left-0"
-              />
+                containerStyles="absolute top-5 left-0 bg-transparent"
+              >
+                <Image
+                  source={icons.back}
+                  className="h-6 w-6"
+                  tintColor={"#fff"}
+                />
+              </CustomButton>
             </View>
           </Modal>
         )}

@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SessionType } from "@/types/utils";
 import { colors, icons } from "@/constants";
@@ -35,12 +35,14 @@ const SessionSection = () => {
       <View className="absolute -top-6 w-full items-end">
         <CustomButton
           handlePress={getSessionsHandle}
-          imageOnly={icons.refresh}
-          imageStyles="h-5 w-5"
-          iconTint={colors.uGray}
-          withBackground={false}
-          containerStyles="-mr-1"
-        />
+          containerStyles="-mr-1 bg-transparent"
+        >
+          <Image
+            source={icons.refresh}
+            className="h-5 w-5"
+            tintColor={colors.uGray}
+          />
+        </CustomButton>
       </View>
       <View className="rounded-lg overflow-hidden">
         {sessions

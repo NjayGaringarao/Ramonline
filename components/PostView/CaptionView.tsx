@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import Hyperlink from "react-native-hyperlink";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-  Linking,
-} from "react-native";
+import { Text, View, ScrollView, Linking } from "react-native";
 import { PostType } from "@/types/models";
 
 type ICaptionProps = {

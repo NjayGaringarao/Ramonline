@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, Image } from "react-native";
 import { WebView } from "react-native-webview";
 import { LineType, PostType, UserType } from "@/types/models";
 import { deletePost, updateCaption } from "@/services/postServices";
@@ -23,6 +23,7 @@ import ModalOptions from "./ModalOptions";
 import ImageDisplay from "./ImageDisplay";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
+import { useGlobalContext } from "@/context/GlobalProvider";
 type IPostViewProps = {
   post: PostType.Info;
   isModifyable?: boolean;
@@ -39,11 +40,9 @@ const PostView = ({
   isModifyable,
   isMiniture,
   isInModal,
-  userInfo,
-  userLine,
-  setIsRefreshUserInfo,
-  setIsRefreshFeeds,
 }: IPostViewProps) => {
+  const { setIsRefreshFeeds, refreshUserRecord, userRecord } =
+    useGlobalContext();
   const [isModalImageVisible, setIsModalImageVisible] = useState(false);
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
@@ -81,7 +80,12 @@ const PostView = ({
 
     if (isConfirmed) {
       if (await deletePost(post.id)) {
-        setIsRefreshUserInfo(true);
+        refreshUserRecord({
+          info: true,
+          activity: false,
+          line: false,
+          post: false,
+        });
         setIsRefreshFeeds(true);
         setIsThisVisible(false);
         Toast.show(`Post deleted`, {
@@ -137,8 +141,8 @@ const PostView = ({
 
   useEffect(() => {
     setCaptionForm(post.caption!);
-    if (userInfo.id == post.user_id) {
-      setOwner(userInfo);
+    if (userRecord.info.id == post.user_id) {
+      setOwner(userRecord.info);
     } else {
       getUserInfo(post.user_id).then((e) => {
         setOwner(e);
@@ -147,7 +151,7 @@ const PostView = ({
   }, []);
 
   if (isMiniture) {
-    return <MiniPostView post={post} userInfo={userInfo} />;
+    return <MiniPostView post={post} />;
   }
   return (
     <View
@@ -177,11 +181,16 @@ const PostView = ({
             handlePress={() => {
               setIsModalOptionVisible(true);
             }}
-            imageOnly={icons.options}
-            imageStyles="h-7 w-7"
-            withBackground={false}
-            containerStyles={`-mr-2 ${isModifyable ? "visible" : "hidden"}`}
-          />
+            containerStyles={`-mr-2 bg-transparent ${
+              isModifyable ? "visible" : "hidden"
+            }`}
+          >
+            <Image
+              source={icons.options}
+              className="h-7 w-7"
+              tintColor={"#fff"}
+            />
+          </CustomButton>
           {!isModifyable && (
             <View>
               <AdaptiveTime
@@ -229,7 +238,6 @@ const PostView = ({
 
           <ModalSendNotification
             visible={isModalNotifyVisible}
-            lines={userLine}
             selectedLines={selectedLines}
             onDone={() => {
               sendNotificationHandle();
@@ -281,12 +289,10 @@ const PostView = ({
           <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
           <CustomButton
             handlePress={() => setIsModalImageVisible(false)}
-            imageOnly={icons.back}
-            imageStyles="h-6 w-6"
-            iconTint="#fff"
-            withBackground={false}
-            containerStyles="absolute top-5 left-0"
-          />
+            containerStyles="absolute top-5 left-0 bg-transparent"
+          >
+            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+          </CustomButton>
         </View>
       </Modal>
     </View>

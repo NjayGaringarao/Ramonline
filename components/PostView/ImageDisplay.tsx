@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { getImagePreview } from "@/services/commonServices";
 
 type ImageDisplayProps = {
@@ -15,7 +14,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
         <Image
           source={{ uri: getImagePreview(imageIds[0]) }}
           className="w-full h-64 bg-panel"
-          contentFit="cover"
+          resizeMode="cover"
         />
       </TouchableOpacity>
     );
@@ -30,7 +29,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
               key={key}
               source={{ uri: getImagePreview(imageId) }}
               className="w-1/2 h-64 bg-panel"
-              contentFit="cover"
+              resizeMode="cover"
             />
           ))}
         </View>
@@ -47,7 +46,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
               key={key}
               source={{ uri: getImagePreview(imageId) }}
               className="w-1/2 h-64 bg-panel"
-              contentFit="cover"
+              resizeMode="cover"
             />
           ))}
           <View className="absolute right-0 h-64 w-1/2 justify-center items-center">
@@ -68,7 +67,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
               key={key}
               source={{ uri: getImagePreview(imageId) }}
               className="w-1/2 h-32 bg-panel"
-              contentFit="cover"
+              resizeMode="cover"
             />
           ))}
         </View>
@@ -84,7 +83,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
             key={key}
             source={{ uri: getImagePreview(imageId) }}
             className="w-1/2 h-32 bg-panel"
-            contentFit="cover"
+            resizeMode="cover"
           />
         ))}
         {imageIds.length > 4 && (
