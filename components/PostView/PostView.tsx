@@ -162,11 +162,10 @@ const PostView = ({
       {/* Header */}
       <View className="w-full h-auto my-2">
         <View className="flex-row justify-between items-center">
-          <View className="flex-row space-x-2 h-12 items-center">
+          <View className="flex-row gap-2 h-12 items-center">
             <ProfilePicture
               userInfo={owner}
               imageStyle="h-12 w-12 rounded-full"
-              imageContentFit="cover"
             />
             <View className="justify-center">
               <Text className="text-lg font-semibold">

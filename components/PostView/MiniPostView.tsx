@@ -37,11 +37,7 @@ const MiniPostView = ({ post }: MiniPostViewProps) => {
     <View className="w-full h-auto px-2 mb-4 bg-background items-center justify-center rounded-md shadow-md shadow-primary">
       <View className="w-full h-auto justify-center ">
         <View className="flex-row space-x-2 h-auto items-center mx-2 mt-2">
-          <ProfilePicture
-            userInfo={owner}
-            imageStyle="h-8 w-8 rounded-lg"
-            imageContentFit="cover"
-          />
+          <ProfilePicture userInfo={owner} imageStyle="h-8 w-8 rounded-lg" />
 
           <View className="justify-center">
             <Text className="text-base font-semibold">

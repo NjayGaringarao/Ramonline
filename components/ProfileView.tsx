@@ -1,6 +1,12 @@
-import { View, Text, TouchableOpacity, Alert, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  Modal,
+  Image,
+} from "react-native";
 import React, { useState } from "react";
-import { Image } from "expo-image";
 import { colors, icons, images } from "@/constants";
 import { UserType } from "@/types/models";
 import CustomButton from "./CustomButton";
@@ -73,7 +79,7 @@ const ProfileView = ({
       <View className="h-40 w-full bg-primary overflow-hidden">
         <Image
           source={images.building}
-          contentFit="cover"
+          resizeMode="cover"
           className="w-full h-56 opacity-50"
         />
       </View>
@@ -169,7 +175,6 @@ const ProfileView = ({
           userInfo={userInfo}
           containerStyle="h-32 w-32 rounded-3xl  overflow-hidden shadow-lg shadow-primary"
           imageStyle="flex-1 bg-primary"
-          imageContentFit="cover"
           onPress={() => {
             setIsImagePreviewVisible(true);
           }}

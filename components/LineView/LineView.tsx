@@ -191,7 +191,6 @@ const LineView = ({
             <ProfilePicture
               userInfo={owner}
               imageStyle="h-12 w-12 rounded-full"
-              imageContentFit="cover"
             />
 
             <View className="justify-center">

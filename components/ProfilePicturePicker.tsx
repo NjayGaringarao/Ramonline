@@ -1,5 +1,4 @@
-import { Modal, TouchableOpacity, View } from "react-native";
-import { Image, ImageContentFit } from "expo-image";
+import { Modal, TouchableOpacity, View, Image } from "react-native";
 import React, {
   useEffect,
   useState,
@@ -18,7 +17,6 @@ interface ProfilePicturePickerType {
   containerStyle?: string;
   userInfo: UserType.Info;
   imageStyle?: string;
-  imageContentFit?: ImageContentFit;
   setNewProfilePicture: (image: ImagePickerAsset | undefined) => void;
   newProfilePicture: ImagePickerAsset | undefined;
 }
@@ -31,7 +29,6 @@ const ProfilePicturePicker = forwardRef(
       setNewProfilePicture,
       newProfilePicture,
       imageStyle,
-      imageContentFit,
     }: ProfilePicturePickerType,
     ref
   ) => {
@@ -89,12 +86,7 @@ const ProfilePicturePicker = forwardRef(
           onLongPress={pickImagehandle}
           className={`${containerStyle}`}
         >
-          <Image
-            className={imageStyle}
-            contentFit={imageContentFit}
-            source={{ uri: imageSource }}
-            placeholder={userInfo.avatar_url}
-          />
+          <Image className={imageStyle} source={{ uri: imageSource }} />
         </TouchableOpacity>
         {isImagePreviewVisible && (
           <Modal

@@ -16,11 +16,7 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
     <View className="w-full h-auto px-2 bg-background items-center justify-center rounded-md shadow-lg shadow-primary mb-4">
       <View className="w-full h-auto  justify-center ">
         <View className="flex-row space-x-2 h-auto items-center ml-2 my-2">
-          <ProfilePicture
-            userInfo={user}
-            imageStyle="h-7 w-7 rounded-lg"
-            imageContentFit="cover"
-          />
+          <ProfilePicture userInfo={user} imageStyle="h-7 w-7 rounded-lg" />
           <View className="justify-center">
             <Text className="text-base font-semibold">
               {getDisplayName(user)}
