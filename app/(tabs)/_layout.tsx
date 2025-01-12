@@ -1,5 +1,4 @@
-import { View, Text } from "react-native";
-import { Image } from "expo-image";
+import { View, Text, Image } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { colors, icons, images } from "@/constants";
@@ -10,7 +9,7 @@ const layout = () => {
     <>
       <View className=" pt-4 h-16 bg-primary justify-end">
         <Text className="pl-4 text-background text-4xl font-bold">
-          RamONLINE
+          Ramonline
         </Text>
       </View>
       <Tabs
@@ -19,14 +18,15 @@ const layout = () => {
           tabBarStyle: {
             position: "absolute",
             top: 0,
-            elevation: 0,
             paddingRight: "40%",
-            borderTopColor: "transparent",
             backgroundColor: colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+            borderTopWidth: 0,
           },
           tabBarItemStyle: {
             alignItems: "flex-start",
-            paddingLeft: 32,
+            paddingLeft: 8,
           },
           tabBarShowLabel: false,
         }}
