@@ -4,8 +4,8 @@ import {
   TextInput,
   TouchableOpacity,
   TextInputProps,
+  Image,
 } from "react-native";
-import { Image } from "expo-image";
 import React from "react";
 import { colors, icons } from "../constants";
 
@@ -57,7 +57,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
             <Image
               source={icons.close}
               className="w-3 h-3"
-              contentFit="contain"
+              resizeMode="contain"
               tintColor={"#374151"}
             />
           </TouchableOpacity>

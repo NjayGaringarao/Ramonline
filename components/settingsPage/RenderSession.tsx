@@ -1,5 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { colors, icons } from "@/constants";
 import { SessionType } from "@/types/utils";

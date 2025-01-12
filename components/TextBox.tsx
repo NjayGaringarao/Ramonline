@@ -4,8 +4,8 @@ import {
   TextInput,
   TouchableOpacity,
   TextInputProps,
+  Image,
 } from "react-native";
-import { Image } from "expo-image";
 import React, { useState } from "react";
 import { colors, icons } from "../constants";
 
@@ -73,7 +73,7 @@ const FormField: React.FC<TextBoxProps> = ({
             <Image
               source={!showPassword ? icons.show : icons.hide}
               className="w-6 h-6"
-              contentFit="contain"
+              resizeMode="contain"
               tintColor={colors.primary}
             />
           </TouchableOpacity>
