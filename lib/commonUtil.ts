@@ -1,37 +1,15 @@
-import { SHA256 } from "crypto-es/lib/sha256";
+import { MD5 } from "crypto-es/lib/md5";
 import { Alert } from "react-native";
 import { UserType } from "@/types/models";
-const base62Chars =
-  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-const base62Encode = (hexString: string): string => {
-  let num = BigInt("0x" + hexString); // Convert hex string to a BigInt
-  let base62Str = "";
-
-  // Base62 encoding process
-  while (num > 0n) {
-    const remainder = Number(num % 62n);
-    base62Str = base62Chars[remainder] + base62Str;
-    num = num / 62n;
-  }
-
-  return base62Str;
-};
 
 export const compressIds = (param1: string, param2: string): string => {
   const input = `${param1}${param2}`;
 
-  const hash = SHA256(input).toString();
+  return MD5(input).toString();
+};
 
-  let base62Encoded = base62Encode(hash);
-
-  base62Encoded = base62Encoded.substring(2, 38);
-
-  if (!/^[a-zA-Z0-9]/.test(base62Encoded[0])) {
-    base62Encoded = "a" + base62Encoded.substring(1);
-  }
-
-  return base62Encoded;
+export const hashId = (id: string) => {
+  return MD5(id).toString();
 };
 
 export const formatDateToLocal = (isoDate: string) => {
