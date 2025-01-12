@@ -61,22 +61,24 @@ export const createAccount = async (
 
     const avatar_url = _generateAvatar(username);
 
-    const userInfo = await _createDocument(
+    await _createDocument(
       env.DATABASE_PRIMARY,
       env.COLLECTION_USER_INFO,
       userAccount.$id,
       {
         username: username,
         avatar_url: avatar_url.toString(),
-        joined_at: new Date().toISOString(),
+        created_at: new Date(),
       }
     );
 
     await _createDocument(
       env.DATABASE_PRIMARY,
       env.COLLECTION_USER_ACTIVITY,
-      userInfo.$id,
-      {}
+      userAccount.$id,
+      {
+        viewed_notification_id: [],
+      }
     );
 
     return userAccount;
