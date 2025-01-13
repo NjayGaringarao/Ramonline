@@ -32,9 +32,6 @@ const ProfilePicture = ({
     initialize();
   }, [userInfo]);
 
-  console.log("User Info:", JSON.stringify(userInfo, null, 2));
-  console.log("Image Preview:", imagePreview);
-
   if (onLongPress || onPress) {
     return (
       <TouchableOpacity
