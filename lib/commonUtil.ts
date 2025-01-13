@@ -231,7 +231,7 @@ export const getHTMLImageRender = (
 };
 
 type HasCreatedAt = {
-  created_at?: string;
+  created_at: Date;
 };
 
 export const sortByDate = async <T extends HasCreatedAt>(

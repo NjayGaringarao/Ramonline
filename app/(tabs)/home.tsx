@@ -97,19 +97,7 @@ const Home = () => {
         data={postList}
         keyExtractor={(item, index) => index.toString()}
         horizontal={false}
-        renderItem={({ item }) => (
-          <PostView
-            post={item}
-            userInfo={userRecord.info}
-            userLine={userRecord.line.line_info}
-            setIsRefreshUserInfo={function (e: boolean): {} {
-              throw new Error("Function not implemented.");
-            }}
-            setIsRefreshFeeds={function (e: boolean): {} {
-              throw new Error("Function not implemented.");
-            }}
-          />
-        )}
+        renderItem={({ item }) => <PostView post={item} />}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={

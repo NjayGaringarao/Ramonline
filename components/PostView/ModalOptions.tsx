@@ -54,13 +54,13 @@ const ModalOptions = ({
         <CustomButton
           title="Edit Caption"
           handlePress={onEditPress}
-          containerStyles="h-9 w-full border-2 border-primary mb-1 bg-transparent"
+          containerStyles="h-9 w-full border border-primary mb-1 bg-transparent"
           textStyles="text-primary"
         />
         <CustomButton
           title="Delete Post"
           handlePress={onDelete}
-          containerStyles="h-9 w-full border-2 border-primary bg-transparent"
+          containerStyles="h-9 w-full border border-primary bg-transparent"
           textStyles="text-primary"
         />
       </View>

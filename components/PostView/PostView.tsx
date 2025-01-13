@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Modal, Image } from "react-native";
+import { View, Text, Modal, Image, Alert } from "react-native";
 import { WebView } from "react-native-webview";
 import { LineType, PostType, UserType } from "@/types/models";
 import { deletePost, updateCaption } from "@/services/postServices";
@@ -13,7 +13,7 @@ import CustomButton from "../CustomButton";
 import Toast from "react-native-root-toast";
 import MiniPostView from "./MiniPostView";
 import CaptionView from "./CaptionView";
-import { icons } from "@/constants";
+import { colors, icons } from "@/constants";
 import { getImagePreview } from "@/services/commonServices";
 import ProfilePicture from "../ProfilePicture";
 import { notifyLine } from "@/services/lineServices";
@@ -29,10 +29,6 @@ type IPostViewProps = {
   isModifyable?: boolean;
   isMiniture?: boolean;
   isInModal?: boolean;
-  userInfo: UserType.Info;
-  userLine: LineType.Info[];
-  setIsRefreshUserInfo: (e: boolean) => {};
-  setIsRefreshFeeds: (e: boolean) => {};
 };
 
 const PostView = ({
@@ -187,7 +183,7 @@ const PostView = ({
             <Image
               source={icons.options}
               className="h-7 w-7"
-              tintColor={"#fff"}
+              tintColor={colors.uGray}
             />
           </CustomButton>
           {!isModifyable && (
@@ -260,7 +256,14 @@ const PostView = ({
               setIsModalEditVisible(true);
             }}
             onNotifyPress={() => {
-              setIsModalNotifyVisible(true);
+              if (userRecord.line.total == 0) {
+                Alert.alert(
+                  "No Line",
+                  "You do not own any `Line`. Please create one."
+                );
+              } else {
+                setIsModalNotifyVisible(true);
+              }
             }}
             onDelete={deletePostHandle}
           />

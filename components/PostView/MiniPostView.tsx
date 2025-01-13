@@ -36,7 +36,7 @@ const MiniPostView = ({ post }: MiniPostViewProps) => {
   return (
     <View className="w-full h-auto px-2 mb-4 bg-background items-center justify-center rounded-md shadow-md shadow-primary">
       <View className="w-full h-auto justify-center ">
-        <View className="flex-row space-x-2 h-auto items-center mx-2 mt-2">
+        <View className="flex-row gap-2 h-auto items-center mx-2 mt-2">
           <ProfilePicture userInfo={owner} imageStyle="h-8 w-8 rounded-lg" />
 
           <View className="justify-center">
@@ -71,12 +71,12 @@ const MiniPostView = ({ post }: MiniPostViewProps) => {
             <View
               className={`${
                 post.image_id?.length == 0 ? "h-16" : "h-36"
-              } w-36 items-center justify-around`}
+              } w-36 items-center justify-around ${
+                post.image_id.length == 0 && "hidden"
+              }`}
             >
-              <Text className="text-sm text-primary">
-                {post.image_id?.length == 0
-                  ? "No Image to Show"
-                  : "Nothing\nFollows"}
+              <Text className={`text-sm text-primary`}>
+                {"Nothing\nFollows"}
               </Text>
             </View>
           }
