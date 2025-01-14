@@ -18,6 +18,7 @@ import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
 import {
   toLineInfoList,
+  toLineSubscriptionList,
   toNotificationInfoList,
   toPushTargetList,
 } from "@/lib/typeConverter";
@@ -142,13 +143,13 @@ const validateTargets = async (targets: Models.Target[]) => {
 
 const resubscribeTopics = async (
   pushTargets: Models.Target[],
-  userSubscriptions: LineType.Info[]
+  userSubscriptions: LineType.Subscription[]
 ) => {
   // iterates all user subscriptions. each iteration, there is a iteration of pushtargets where the actual resubscription happens
   userSubscriptions.forEach((subscription) => {
     pushTargets.forEach(async (target) => {
       try {
-        await _subscribeTopic(subscription.id, target.$id);
+        await _subscribeTopic(subscription.line_id, target.$id);
       } catch (error) {
         console.log(
           `setupNewPushTarget - topic ID : ${subscription.id} PushTarget ID: ${target.$id} \n Error : ${error}`
@@ -168,7 +169,7 @@ export const setupPushTarget = async (
       env.COLLECTION_LINE_SUBSCRIPTION,
       [Query.equal("user_id", user.$id)]
     );
-    const lineSubscription = toLineInfoList(
+    const lineSubscription = toLineSubscriptionList(
       lineSubscriptionDocuments.documents
     );
 

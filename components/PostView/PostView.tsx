@@ -77,10 +77,10 @@ const PostView = ({
     if (isConfirmed) {
       if (await deletePost(post.id)) {
         refreshUserRecord({
-          info: true,
+          info: false,
           activity: false,
           line: false,
-          post: false,
+          post: true,
         });
         setIsRefreshFeeds(true);
         setIsThisVisible(false);

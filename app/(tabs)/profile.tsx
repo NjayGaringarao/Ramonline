@@ -16,6 +16,7 @@ const profile = () => {
   const [userPosts, setUserPosts] = useState<PostType.Info[]>([]);
   const [userLines, setUserLines] = useState<LineType.Info[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
   useEffect(() => {
     const updateUI = async () => {
       setUserPosts([]);
@@ -55,8 +56,8 @@ const profile = () => {
             <ProfileView
               userInfo={userRecord.info}
               setActiveTab={setActiveTab}
-              userPostTotal={userRecord.post.total}
-              userLineTotal={userRecord.line.total}
+              userPostTotal={userPosts.length}
+              userLineTotal={userLines.length}
             />
           }
           ListFooterComponent={

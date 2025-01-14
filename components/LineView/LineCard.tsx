@@ -80,7 +80,7 @@ const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
                 handlePress={() => {
                   setModalVisible(false);
                 }}
-                containerStyles="absolute right-0 top-8 bg-transparent"
+                containerStyles="absolute right-0 top-4 bg-transparent"
               >
                 <Image
                   source={icons.close}

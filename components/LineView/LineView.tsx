@@ -46,7 +46,7 @@ const LineView = ({
   isModifyable,
   isInFeed,
 }: ILineViewProps) => {
-  const { userRecord } = useGlobalContext();
+  const { userRecord, refreshUserRecord } = useGlobalContext();
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isThisVisible, setIsThisVisible] = useState(true);
@@ -93,6 +93,12 @@ const LineView = ({
       setIsModalOptionVisible(false);
       setIsThisVisible(false);
       await deleteLine(line.id);
+      refreshUserRecord({
+        info: false,
+        activity: false,
+        line: true,
+        post: false,
+      });
     } catch (error) {
       Alert.alert(
         "Failed",
@@ -123,6 +129,12 @@ const LineView = ({
         line.description = descriptionForm;
         Toast.show(`Line updated`, {
           duration: Toast.durations.LONG,
+        });
+        refreshUserRecord({
+          info: false,
+          activity: false,
+          line: true,
+          post: false,
         });
       }
     } catch (error) {
@@ -187,7 +199,7 @@ const LineView = ({
       {/* Header */}
       <View className="w-full h-auto my-2">
         <View className="flex-row justify-between items-center">
-          <View className="flex-row space-x-2 h-12 items-center">
+          <View className="flex-row gap-2 h-12 items-center">
             <ProfilePicture
               userInfo={owner}
               imageStyle="h-12 w-12 rounded-full"
@@ -240,7 +252,7 @@ const LineView = ({
           handlePress={subscriptionHandle}
           title={isSubscribed ? "Unsubscribe" : "Subscribe"}
           containerStyles={`py-1 ${
-            isSubscribed ? "border-2 border-primary" : ""
+            isSubscribed ? "border-2 border-primary bg-transparent" : ""
           } ${isInFeed ? "self-end" : ""}`}
           textStyles={`${
             isSubscribed

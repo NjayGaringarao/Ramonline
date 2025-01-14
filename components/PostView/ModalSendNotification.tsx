@@ -58,7 +58,7 @@ const ModalSendNotification = ({
                 <View className="h-auto w-fit m-1 rounded-md overflow-hidden">
                   <TouchableOpacity
                     onPress={() => handleSelectLine(item)}
-                    className={`px-2 py-1 flex-1 flex-row items-center space-x-2 ${
+                    className={`py-1 flex-1 flex-row items-center gap-2 ${
                       isSelected ? "bg-panel" : "bg-background"
                     }`}
                   >
@@ -74,12 +74,15 @@ const ModalSendNotification = ({
                         resizeMode="cover"
                       />
                     </View>
-                    <View>
+                    <View className="flex-1 mr-2">
                       <Text className="text-lg font-semibold text-gray-800">
                         {item.name}
                       </Text>
-                      <Text className="text-sm font-light text-gray-800">
-                        {item.description.slice(0, 30).concat(" ...")}
+                      <Text
+                        className="text-sm font-light text-gray-800"
+                        numberOfLines={1}
+                      >
+                        {item.description}
                       </Text>
                     </View>
                   </TouchableOpacity>
@@ -94,24 +97,24 @@ const ModalSendNotification = ({
           />
           <TextBox
             title="Title"
-            titleTextStyles="text-primary text-2xl font-semibold"
+            titleTextStyles="text-primary text-xl font-semibold"
             textValue={notificationTitle}
             placeholder="Title will default to Line Name if unset"
             maxLength={50}
             textInputStyles="text-base"
             handleChangeText={setNotificationTitle}
-            boxStyles="w-full py-1 border-2 border-primary rounded-lg px-4"
+            boxStyles="w-full py-1 border border-primary rounded-lg px-4"
             containerStyles="pb-1 shadow-primary shadow-2xl"
           />
-          <View className="pt-2 flex-row w-full justify-around">
+          <View className="pt-2 flex-row w-full justify-end">
             <Text className="text-base self-center">
               Line Selected : {selectedLines.length}
             </Text>
-            <View className="flex-row w-fit place-self-end">
+            <View className="flex-row flex-1 justify-end">
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                containerStyles="border-2 border-primary h-10 w-24 bg-transparent"
+                containerStyles="border border-primary h-10 w-24 bg-transparent"
                 textStyles="text-primary"
               />
               <CustomButton

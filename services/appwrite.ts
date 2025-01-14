@@ -395,11 +395,11 @@ export const _deleteDocument = async (
 
 export const _executeFunction = async (
   FUNCTION_ID: string,
-  operation_Name: string,
+  operation: string,
   parameter: object
 ) => {
   const bodyRequest = {
-    function: operation_Name,
+    operation: operation,
     parameter: parameter,
   };
 

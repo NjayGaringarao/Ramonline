@@ -126,6 +126,26 @@ export const toLineInfoList = (documents: Models.Document[]) => {
 
   return lineList;
 };
+
+export const toLineSubscription = (document: Models.Document) => {
+  const line: LineType.Subscription = {
+    id: document.$id,
+    user_id: document.user_id,
+    line_id: document.line_id,
+  };
+
+  return line;
+};
+
+export const toLineSubscriptionList = (documents: Models.Document[]) => {
+  const lineList: LineType.Subscription[] = [];
+
+  for (let i = 0; documents.length > i; i++) {
+    lineList.push(toLineSubscription(documents[i]));
+  }
+
+  return lineList;
+};
 //#endregion
 
 //#region Other
