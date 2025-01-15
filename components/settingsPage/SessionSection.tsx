@@ -32,7 +32,7 @@ const SessionSection = () => {
 
   return (
     <View className="mb-4 gap-2">
-      <View className="absolute -top-6 w-full items-end">
+      <View className="absolute -top-10 w-full items-end">
         <CustomButton
           handlePress={getSessionsHandle}
           containerStyles="-mr-1 bg-transparent"

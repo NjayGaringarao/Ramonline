@@ -9,18 +9,10 @@ import { confirmAction } from "@/lib/commonUtil";
 import Toast from "react-native-root-toast";
 import Loading from "../Loading";
 import { updateRole } from "@/services/userServices";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
-interface IAffliationSectionType {
-  userInfo: UserType.Info;
-  refreshUserInfo: (refresh: boolean) => void;
-  isRefreshUserInfo: boolean;
-}
-
-const AffliationSection = ({
-  userInfo,
-  refreshUserInfo,
-  isRefreshUserInfo,
-}: IAffliationSectionType) => {
+const AffliationSection = () => {
+  const { userInfo, refreshUserRecord } = useGlobalContext();
   const [dimensions, setDimensions] = useState<AffiliationType>(Object);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,7 +47,12 @@ const AffliationSection = ({
       Toast.show(`Succesfully applied changes.`, {
         duration: Toast.durations.LONG,
       });
-      refreshUserInfo(true);
+      refreshUserRecord({
+        info: true,
+        activity: false,
+        line: false,
+        post: false,
+      });
     } catch (error) {
       Toast.show(`Failed to save changes.`, {
         duration: Toast.durations.LONG,
@@ -65,8 +62,8 @@ const AffliationSection = ({
   };
 
   useEffect(() => {
-    if (!isRefreshUserInfo) setIsLoading(false);
-  }, [isRefreshUserInfo]);
+    setIsLoading(false);
+  }, [userInfo]);
 
   return (
     <View className="mb-4">

@@ -10,13 +10,10 @@ import { changePassword } from "@/services/userServices";
 import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
 import { Models } from "react-native-appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
-interface ICredentialSectionType {
-  user: Models.User<Models.Preferences>;
-  userInfo: UserType.Info;
-}
-
-const CredentialSection = ({ user, userInfo }: ICredentialSectionType) => {
+const CredentialSection = () => {
+  const { user } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     oldPassword: "",
@@ -90,7 +87,7 @@ const CredentialSection = ({ user, userInfo }: ICredentialSectionType) => {
       <TextBox
         title="Email (can't be change)"
         titleTextStyles="text-uGray text-sm font-semibold"
-        textValue={user.email}
+        textValue={user?.email!}
         placeholder="ramonian@gmail.com"
         textInputStyles="text-base"
         handleChangeText={() => {}}
@@ -116,7 +113,7 @@ const CredentialSection = ({ user, userInfo }: ICredentialSectionType) => {
             href={{
               pathname: "/(auth)/recovery/[email]",
               params: {
-                email: user.email,
+                email: user?.email!,
                 isFormDisabled: "true",
               },
             }}

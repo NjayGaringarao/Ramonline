@@ -9,18 +9,10 @@ import Loading from "../Loading";
 import { updateProfile } from "@/services/userServices";
 import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
-interface ProfileSectionProp {
-  userInfo: UserType.Info;
-  refreshUserInfo: (refresh: boolean) => void;
-  isRefreshUserInfo: boolean;
-}
-
-const ProfileSection = ({
-  userInfo,
-  refreshUserInfo,
-  isRefreshUserInfo,
-}: ProfileSectionProp) => {
+const ProfileSection = () => {
+  const { userInfo, refreshUserRecord } = useGlobalContext();
   const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [newProfilePicture, setNewProfilePicture] = useState<
@@ -71,7 +63,12 @@ const ProfileSection = ({
       Toast.show(`Succesfully applied changes.`, {
         duration: Toast.durations.LONG,
       });
-      refreshUserInfo(true);
+      refreshUserRecord({
+        info: true,
+        activity: false,
+        line: false,
+        post: false,
+      });
     } catch (error) {
       Toast.show(`Failed to save changes.`, {
         duration: Toast.durations.LONG,
@@ -100,8 +97,8 @@ const ProfileSection = ({
   }, [form, newProfilePicture]);
 
   useEffect(() => {
-    if (!isRefreshUserInfo) setIsLoading(false);
-  }, [isRefreshUserInfo]);
+    setIsLoading(false);
+  }, [userInfo]);
 
   return (
     <View className="mb-8 gap-2">
@@ -109,7 +106,7 @@ const ProfileSection = ({
         User Information
       </Text>
       <View>
-        <View className="w-full flex-row space-x-4">
+        <View className="w-full flex-row gap-4">
           <View className="justify-center items-center">
             <ProfilePicturePicker
               ref={profilePickerRef}
@@ -170,7 +167,7 @@ const ProfileSection = ({
             <CustomButton
               title="Reset"
               handlePress={clearHandle}
-              containerStyles="ml-2 py-1 border-2 border-primary bg-transparent"
+              containerStyles="ml-2 py-1 border border-primary bg-transparent"
               textStyles="text-primary"
             />
           </View>

@@ -36,7 +36,9 @@ const Collapsible = ({
         </Text>
       </TouchableOpacity>
       {isOpen && (
-        <View className={`ml-5 ${childrenContainerStyle}`}>{children}</View>
+        <View className={`ml-5 mt-2 ${childrenContainerStyle}`}>
+          {children}
+        </View>
       )}
     </View>
   );
