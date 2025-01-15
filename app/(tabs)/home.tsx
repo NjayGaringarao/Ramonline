@@ -92,7 +92,7 @@ const Home = () => {
   }, [isRefreshFeeds]);
 
   return (
-    <View className="h-full bg-background mt-12">
+    <View className="flex-1 bg-background mt-12">
       <FlatList
         data={postList}
         keyExtractor={(item, index) => index.toString()}
@@ -178,11 +178,23 @@ const Home = () => {
               <Loading loadingPrompt="Querying RamonLine" />
             </View>
           ) : (
-            <Text className="text-lg text-primary text-center py-24">
-              {hasMorePosts
-                ? "Nothing Follows"
-                : "You've Reached the Beginning"}
-            </Text>
+            <View className="flex-1 bg-panel mx-2 my-12 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
+              <Text className="text-xl text-primary font-semibold text-center pb-2 ">
+                ℹ️ YOU'VE REACHED THE BEGINNING ℹ️
+              </Text>
+              <CustomButton
+                handlePress={() => {
+                  onRefreshFeedHandle();
+                }}
+                title="Back to top"
+                containerStyles=" w-2/3"
+              />
+            </View>
+            // <Text className="text-lg text-primary text-center py-24">
+            //   {hasMorePosts
+            //     ? "Nothing Follows"
+            //     : "You've Reached the Beginning"}
+            // </Text>
           )
         }
         onRefresh={onRefreshFeedHandle}

@@ -21,18 +21,18 @@ const DescriptionView: React.FC<IDescriptionProps> = ({ line, isInModal }) => {
   // Logic for displaying the description
   if (!isLongCaption) {
     return (
-      <View className=" mb-2 border-t-4 border-primary max-h-32">
-        <Text className="pl-4 text-base">{line.description}</Text>
+      <View className="mx-4 py-2 mb-2">
+        <Text className="text-base text-justify">{line.description}</Text>
       </View>
     );
-  } else if (isLongCaption && !isInModal) {
+  } else if (isLongCaption && isInModal) {
     const displayedCaption = isExpanded
       ? line.description
       : `${line.description.slice(0, 100)}...`;
 
     return (
-      <TouchableOpacity onPress={toggleExpand}>
-        <Text className="p-2 text-base text-left font-normal border-t-4 border-primary">
+      <TouchableOpacity onPress={toggleExpand} className="mx-4 py-2 mb-2">
+        <Text className="text-base text-left font-normal border-t border-primary">
           {displayedCaption}
           <Text className="font-semibold">
             {isExpanded ? " Show Less" : " Show More"}
@@ -46,8 +46,11 @@ const DescriptionView: React.FC<IDescriptionProps> = ({ line, isInModal }) => {
       : `${line.description.slice(0, 150)}...`;
 
     return (
-      <TouchableOpacity onPress={toggleExpand}>
-        <Text className="p-2 text-base text-left font-normal border-t-4 border-primary">
+      <TouchableOpacity
+        onPress={toggleExpand}
+        className="mx-4 rounded-lg py-2 mb-2"
+      >
+        <Text className="text-base text-left font-normal border-t border-primary">
           {displayedCaption}
           <Text className="font-semibold">
             {isExpanded ? " Show Less" : " Show More"}
@@ -55,11 +58,11 @@ const DescriptionView: React.FC<IDescriptionProps> = ({ line, isInModal }) => {
         </Text>
       </TouchableOpacity>
     );
-  } else if (isLongCaption && isInModal) {
+  } else if (!isLongCaption && isInModal) {
     return (
       <ScrollView
         showsVerticalScrollIndicator={true}
-        className="px-2 mb-2 border-t-4 border-primary max-h-32"
+        className="mx-4 py-2 mb-2"
       >
         <Text className="text-base text-left font-normal">
           {line.description}
@@ -68,7 +71,7 @@ const DescriptionView: React.FC<IDescriptionProps> = ({ line, isInModal }) => {
     );
   } else {
     return (
-      <View className=" mb-2 border-t-4 border-primary max-h-32">
+      <View className="mx-4 max-h-32">
         <Text className="pl-4 text-base">{line.description}</Text>
       </View>
     );

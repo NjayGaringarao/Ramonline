@@ -29,10 +29,12 @@ const profile = () => {
 
   useEffect(() => {
     setLineList(sortByDate(userLine));
+    setIsRefreshing(false);
   }, [userLine]);
 
   useEffect(() => {
     setPostList(sortByDate(userPost));
+    setIsRefreshing(false);
   }, [userPost]);
 
   const onRefreshHandle = useCallback(async () => {
@@ -61,9 +63,11 @@ const profile = () => {
           ListHeaderComponent={<ProfileView setActiveTab={setActiveTab} />}
           ListFooterComponent={
             isRefreshing ? null : postList.length == 0 ? null : (
-              <Text className="text-lg text-primary text-center py-16">
-                Nothing Follows.
-              </Text>
+              <View className="flex-1 bg-panel m-2 mb-16 rounded-lg overflow-hidden">
+                <Text className="text-xl text-primary font-semibold text-center py-12">
+                  Nothing Follows.
+                </Text>
+              </View>
             )
           }
           ListEmptyComponent={
@@ -73,16 +77,16 @@ const profile = () => {
                 containerStyles="pt-16"
               />
             ) : (
-              <View className="py-16 w-2/3 self-center">
-                <Text className="text-lg text-primary text-center pb-2 ">
-                  You haven't posted anything yet.
+              <View className="flex-1 bg-panel m-2 mt-16 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
+                <Text className="text-xl text-primary font-semibold text-center pb-2 ">
+                  ⚠️ YOU HAVE NO PUBLISHED POST ⚠️.
                 </Text>
                 <CustomButton
                   handlePress={() => {
                     router.push("/createPostPage");
                   }}
-                  title="Create a Post"
-                  containerStyles="h-12 w-30"
+                  title="Post Something!"
+                  containerStyles=" w-2/3"
                 />
               </View>
             )
@@ -104,9 +108,11 @@ const profile = () => {
           ListHeaderComponent={<ProfileView setActiveTab={setActiveTab} />}
           ListFooterComponent={
             isRefreshing ? null : lineList.length == 0 ? null : (
-              <Text className="text-lg text-primary text-center py-16">
-                Nothing Follows.
-              </Text>
+              <View className="flex-1 bg-panel m-2 mb-16 rounded-lg overflow-hidden">
+                <Text className="text-xl text-primary font-semibold text-center py-12">
+                  Nothing Follows.
+                </Text>
+              </View>
             )
           }
           ListEmptyComponent={
@@ -116,16 +122,16 @@ const profile = () => {
                 containerStyles="pt-16"
               />
             ) : (
-              <View className="py-16 w-2/3 self-center">
-                <Text className="text-lg text-primary text-center pb-2 ">
-                  You haven't created any Line yet.
+              <View className="flex-1 bg-panel m-2 mt-16 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
+                <Text className="text-xl text-primary font-semibold text-center pb-2 ">
+                  ⚠️ YOU DO NOT OWN A SINGLE LINE ⚠️.
                 </Text>
                 <CustomButton
                   handlePress={() => {
                     router.push("/createLinePage");
                   }}
-                  title="Create a Line"
-                  containerStyles="h-12 w-30"
+                  title="Create One!"
+                  containerStyles=" w-2/3"
                 />
               </View>
             )

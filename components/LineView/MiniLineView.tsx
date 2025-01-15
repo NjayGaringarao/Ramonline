@@ -15,7 +15,7 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
   return (
     <View className="w-full h-auto px-2 bg-background items-center justify-center rounded-md shadow-lg shadow-primary mb-4">
       <View className="w-full h-auto  justify-center ">
-        <View className="flex-row space-x-2 h-auto items-center ml-2 my-2">
+        <View className="flex-row gap-2 h-auto items-center ml-2 my-2">
           <ProfilePicture userInfo={user} imageStyle="h-7 w-7 rounded-lg" />
           <View className="justify-center">
             <Text className="text-base font-semibold">
@@ -35,7 +35,7 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
         />
       </View>
       <View className="h-auto w-full">
-        <Text className="text-xl text-primary font-semibold py-2">
+        <Text className="text-xl text-primary font-semibold py-2 border-b border-primary">
           {line.name}
         </Text>
         <DescriptionView line={line} isInModal={true} />

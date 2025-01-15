@@ -192,7 +192,7 @@ const LineView = ({
 
   return (
     <View
-      className={`w-full h-auto pb-10 bg-background p-2 ${
+      className={`w-full h-auto mb-4 bg-background p-2 ${
         isThisVisible ? "visible" : "hidden"
       }`}
     >
@@ -243,16 +243,18 @@ const LineView = ({
           />
         </TouchableOpacity>
         <View className="h-auto w-full">
-          <Text className="text-xl text-primary font-semibold py-2">
-            {line.name}
-          </Text>
+          <View className="w-full bg-panel rounded-b-lg">
+            <Text className="text-xl text-primary font-semibold py-2 pl-4">
+              {line.name}
+            </Text>
+          </View>
           <DescriptionView line={line} isInModal={isInModal} />
         </View>
         <CustomButton
           handlePress={subscriptionHandle}
           title={isSubscribed ? "Unsubscribe" : "Subscribe"}
           containerStyles={`py-1 ${
-            isSubscribed ? "border-2 border-primary bg-transparent" : ""
+            isSubscribed ? "border border-primary bg-transparent" : ""
           } ${isInFeed ? "self-end" : ""}`}
           textStyles={`${
             isSubscribed

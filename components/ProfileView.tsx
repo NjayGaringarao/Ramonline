@@ -68,7 +68,7 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
   };
 
   return (
-    <View className="h-auto w-full items-center bg-background">
+    <View className="h-auto w-full items-center bg-background mb-4">
       <View className="h-40 w-full bg-primary overflow-hidden">
         <Image
           source={images.building}
@@ -99,35 +99,33 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
         />
       </CustomButton>
 
-      <View className="w-auto h-auto mt-24 mb-4 space-y-2">
-        <Text className="text-base text-gray-800">
+      <View className="w-auto h-auto mt-24 mb-4 gap-2">
+        <Text className="text-base text-uGray font-semibold">
           {"Name\t\t\t\t\t\t: "}
-          <Text className="text-lg text-gray-800 font-medium">
+          <Text className="text-lg text-uBlack font-semibold">
             {getDisplayName(userInfo) === userInfo.username ? (
-              <Text className="text-lg text-gray-800 font-medium italic">
-                Unset
-              </Text>
+              <Text>unset</Text>
             ) : (
               getDisplayName(userInfo)
             )}
           </Text>
         </Text>
 
-        <Text className="text-base text-gray-800">
+        <Text className="text-base text-uGray font-semibold">
           Username
-          <Text className="text-lg text-gray-800 font-medium">
+          <Text className="text-lg text-uBlack font-semibold">
             {`\t\t: ${userInfo.username}`}
           </Text>
         </Text>
-        <Text className="text-base text-gray-800">
+        <Text className="text-base text-uGray font-semibold">
           Email
-          <Text className="text-lg text-gray-800 font-medium">
+          <Text className="text-lg text-uBlack font-semibold">
             {`\t\t\t\t\t\t: ${user?.email}`}
           </Text>
         </Text>
-        <Text className="text-base text-gray-800">
+        <Text className="text-base text-uGray font-semibold">
           {`Role\t\t\t\t\t\t\t: `}
-          <Text className="text-lg text-gray-800 font-medium">
+          <Text className="text-lg text-uBlack font-semibold">
             {getDisplayRole(userInfo)}
           </Text>
         </Text>
