@@ -12,7 +12,7 @@ import LineCard from "@/components/LineView/LineCard";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
 const Home = () => {
-  const { isRefreshFeeds, setIsRefreshFeeds, userRecord } = useGlobalContext();
+  const { isRefreshFeeds, setIsRefreshFeeds } = useGlobalContext();
   const [postList, setPostList] = useState<PostType.Info[]>([]);
   const [lineList, setLineList] = useState<LineType.Info[]>([]);
   const [isLinesLoading, setIsLinesLoading] = useState(false);

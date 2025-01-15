@@ -15,20 +15,3 @@ export interface SessionType {
   countryName: string;
   ip: string;
 }
-
-export interface UserPostListType {
-  total: number;
-  post_info: PostType.Info[];
-}
-
-export interface UserLineListType {
-  total: number;
-  line_info: LineType.Info[];
-}
-
-export interface UserRecordType {
-  info: UserType.Info;
-  activity: UserType.Activity;
-  line: UserLineListType;
-  post: UserPostListType;
-}

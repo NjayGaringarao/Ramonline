@@ -14,14 +14,8 @@ import {
 } from "./appwrite";
 import { Models, Query } from "react-native-appwrite";
 import { env } from "@/constants/env";
-import {
-  toLineInfo,
-  toLineInfoList,
-  toPushTargetList,
-} from "@/lib/typeConverter";
+import { toLineInfo, toLineInfoList } from "@/lib/typeConverter";
 import { compressIds } from "@/lib/commonUtil";
-import { LineType } from "@/types/models";
-import { UserLineListType } from "@/types/utils";
 
 export const uploadBanner = async (ImagePickerResults: ImagePickerAsset) => {
   try {
@@ -243,12 +237,7 @@ export const getUserLineList = async (user_id: string) => {
       [Query.equal("user_id", user_id)]
     );
 
-    const lineList: UserLineListType = {
-      total: lineDoc.total,
-      line_info: toLineInfoList(lineDoc.documents),
-    };
-
-    return lineList;
+    return toLineInfoList(lineDoc.documents);
   } catch (error) {
     console.log(`ERROR (lineServices.ts => getUserLine) :: ${error}`);
     throw error;

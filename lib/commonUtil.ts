@@ -234,10 +234,10 @@ type HasCreatedAt = {
   created_at: Date;
 };
 
-export const sortByDate = async <T extends HasCreatedAt>(
+export const sortByDate = <T extends HasCreatedAt>(
   items: T[],
   sortDateAsc: boolean = false
-): Promise<T[]> => {
+): T[] => {
   try {
     items.sort((a, b) => {
       const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;

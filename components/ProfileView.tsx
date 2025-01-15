@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { colors, icons, images } from "@/constants";
-import { UserType } from "@/types/models";
+import { UserType, LineType, PostType } from "@/types/models";
 import CustomButton from "./CustomButton";
 import {
   confirmAction,
@@ -23,23 +23,16 @@ import ProfilePicture from "./ProfilePicture";
 import { deletePushTarget } from "@/services/notificationServices";
 import { logoutUser } from "@/services/userServices";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import "@/global.css";
 
 interface ProfileViewProps {
-  userInfo: UserType.Info;
   setActiveTab: (activeTab: string) => void;
-  userPostTotal: number;
-  userLineTotal: number;
 }
 
-const ProfileView = ({
-  userInfo,
-  setActiveTab,
-  userPostTotal,
-  userLineTotal,
-}: ProfileViewProps) => {
+const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
   const [_activeTab, set_ActiveTab] = useState("post");
   const [isImagePreviewVisible, setIsImagePreviewVisible] = useState(false);
-  const { setUser } = useGlobalContext();
+  const { user, setUser, userInfo, userLine, userPost } = useGlobalContext();
 
   const setTabHandler = (tab: string) => {
     setActiveTab(tab);
@@ -91,8 +84,8 @@ const ProfileView = ({
       >
         <Image
           source={icons.settings}
-          className="h-6 w-6"
           tintColor={colors.primary}
+          className="h-6 w-6"
         />
       </CustomButton>
       <CustomButton
@@ -127,6 +120,12 @@ const ProfileView = ({
           </Text>
         </Text>
         <Text className="text-base text-gray-800">
+          Email
+          <Text className="text-lg text-gray-800 font-medium">
+            {`\t\t\t\t\t\t: ${user?.email}`}
+          </Text>
+        </Text>
+        <Text className="text-base text-gray-800">
           {`Role\t\t\t\t\t\t\t: `}
           <Text className="text-lg text-gray-800 font-medium">
             {getDisplayRole(userInfo)}
@@ -147,10 +146,10 @@ const ProfileView = ({
           }}
         >
           <Text className="text-3xl font-semibold text-gray-800">
-            {userPostTotal}
+            {userPost ? userPost.length! : "N/A"}
           </Text>
           <Text className="text-lg font-medium -mt-2">
-            {userPostTotal > 1 ? "Posts" : "Post"}
+            {userPost.length > 1 ? "Posts" : "Post"}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -162,10 +161,10 @@ const ProfileView = ({
           }}
         >
           <Text className="text-3xl font-semibold text-gray-800">
-            {userLineTotal}
+            {userLine.length}
           </Text>
           <Text className="text-lg font-medium -mt-2">
-            {userLineTotal > 1 ? "Lines" : "Line"}
+            {userLine.length > 1 ? "Lines" : "Line"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -214,7 +213,7 @@ const ProfileView = ({
             handlePress={() => setIsImagePreviewVisible(false)}
             containerStyles="absolute top-5 left-0 bg-transparent"
           >
-            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+            <Image source={icons.back} tintColor={"#fff"} className="h-6 w-6" />
           </CustomButton>
         </View>
       </Modal>

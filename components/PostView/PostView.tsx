@@ -37,7 +37,7 @@ const PostView = ({
   isMiniture,
   isInModal,
 }: IPostViewProps) => {
-  const { setIsRefreshFeeds, refreshUserRecord, userRecord } =
+  const { setIsRefreshFeeds, refreshUserRecord, userInfo, userLine } =
     useGlobalContext();
   const [isModalImageVisible, setIsModalImageVisible] = useState(false);
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
@@ -137,8 +137,8 @@ const PostView = ({
 
   useEffect(() => {
     setCaptionForm(post.caption!);
-    if (userRecord.info.id == post.user_id) {
-      setOwner(userRecord.info);
+    if (userInfo.id == post.user_id) {
+      setOwner(userInfo);
     } else {
       getUserInfo(post.user_id).then((e) => {
         setOwner(e);
@@ -256,7 +256,7 @@ const PostView = ({
               setIsModalEditVisible(true);
             }}
             onNotifyPress={() => {
-              if (userRecord.line.total == 0) {
+              if (userLine.length == 0) {
                 Alert.alert(
                   "No Line",
                   "You do not own any `Line`. Please create one."

@@ -46,7 +46,7 @@ const LineView = ({
   isModifyable,
   isInFeed,
 }: ILineViewProps) => {
-  const { userRecord, refreshUserRecord } = useGlobalContext();
+  const { userInfo, userLine, refreshUserRecord } = useGlobalContext();
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isThisVisible, setIsThisVisible] = useState(true);
@@ -68,7 +68,7 @@ const LineView = ({
   const setupSubscriptionStatus = async () => {
     try {
       setIsLoading(true);
-      setIsSubscribed(await isUserSubscribed(userRecord.info.id, line.id));
+      setIsSubscribed(await isUserSubscribed(userInfo.id, line.id));
     } catch (error) {
       Alert.alert(
         "Error",
@@ -152,7 +152,7 @@ const LineView = ({
     try {
       setIsLoading(true);
       if (isSubscribed) {
-        const result = await unsubscribeLine(userRecord.info.id, line.id);
+        const result = await unsubscribeLine(userInfo.id, line.id);
         if (result) setIsSubscribed(false);
         Toast.show(
           `You are unable to recieve notifications from ${line.name}.`,
@@ -161,7 +161,7 @@ const LineView = ({
           }
         );
       } else {
-        const result = await subscribeLine(userRecord.info.id, line.id);
+        const result = await subscribeLine(userInfo.id, line.id);
         if (result) setIsSubscribed(true);
         Toast.show(`You are able to recieve notifications from ${line.name}.`, {
           duration: Toast.durations.LONG,
@@ -181,8 +181,8 @@ const LineView = ({
   useEffect(() => {
     setDescriptionForm(line.description);
     setupSubscriptionStatus();
-    if (userRecord.info.id == line.user_id) {
-      setOwner(userRecord.info);
+    if (userInfo.id == line.user_id) {
+      setOwner(userInfo);
     } else {
       getUserInfo(line.user_id).then((e) => {
         setOwner(e);

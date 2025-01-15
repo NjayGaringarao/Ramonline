@@ -13,7 +13,7 @@ import Toast from "react-native-root-toast";
 import { icons } from "@/constants";
 
 const createPostPage = () => {
-  const { userRecord, refreshUserRecord, isOnline } = useGlobalContext();
+  const { userInfo, refreshUserRecord, isOnline } = useGlobalContext();
   const [caption, setCaption] = useState<string>("");
   const [images, setImages] = useState<ImagePickerAsset[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ const createPostPage = () => {
     setIsLoading(true);
     try {
       if (!isOnline) throw Error("No Internet Connection.");
-      const post = await createPost(userRecord.info.id, caption, images);
+      const post = await createPost(userInfo.id, caption, images);
       if (post) {
         Toast.show(`Uploaded Succesfully`, {
           duration: Toast.durations.LONG,

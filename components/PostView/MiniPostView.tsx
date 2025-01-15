@@ -15,7 +15,7 @@ type MiniPostViewProps = {
 
 const MiniPostView = ({ post }: MiniPostViewProps) => {
   const [owner, setOwner] = useState<UserType.Info>(Object);
-  const { userRecord } = useGlobalContext();
+  const { userInfo } = useGlobalContext();
   const renderImage = (imageId: string) => {
     try {
       return getImagePreview(imageId);
@@ -26,8 +26,8 @@ const MiniPostView = ({ post }: MiniPostViewProps) => {
   };
 
   useEffect(() => {
-    if (post.user_id == userRecord.info.id) {
-      setOwner(userRecord.info);
+    if (post.user_id == userInfo.id) {
+      setOwner(userInfo);
     } else {
       getUserInfo(post.user_id).then((result) => setOwner(result));
     }

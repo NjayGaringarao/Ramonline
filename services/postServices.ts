@@ -13,7 +13,6 @@ import {
 } from "./appwrite";
 import { toPostInfo, toPostInfoList } from "@/lib/typeConverter";
 import { env } from "@/constants/env";
-import { UserPostListType } from "@/types/utils";
 
 export const uploadImages = async (ImagePickerResults: ImagePickerAsset[]) => {
   const uploadedImages: Models.File[] = [];
@@ -178,12 +177,7 @@ export const getUserPostList = async (user_id: string) => {
       [Query.equal("user_id", user_id)]
     );
 
-    const postList: UserPostListType = {
-      total: postDoc.total,
-      post_info: toPostInfoList(postDoc.documents),
-    };
-
-    return postList;
+    return toPostInfoList(postDoc.documents);
   } catch (error) {
     console.log(`ERROR (postServices.ts => getUserPost) :: ${error}`);
     throw error;

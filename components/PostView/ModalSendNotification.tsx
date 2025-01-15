@@ -33,7 +33,7 @@ const ModalSendNotification = ({
   notificationTitle,
   setNotificationTitle,
 }: ModalSendNotificationProps) => {
-  const { userRecord } = useGlobalContext();
+  const { userLine } = useGlobalContext();
   return (
     <Modal visible={visible} transparent animationType="none">
       <View className="flex-1 justify-center">
@@ -46,7 +46,7 @@ const ModalSendNotification = ({
             Select Line/s to Notify
           </Text>
           <FlatList
-            data={userRecord.line.line_info}
+            data={userLine}
             className="h-max-64 w-full mb-2"
             keyExtractor={(line, index) => index.toString()}
             renderItem={({ item }) => {

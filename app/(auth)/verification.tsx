@@ -17,7 +17,7 @@ import { Models } from "react-native-appwrite";
 import { router } from "expo-router";
 
 const Verification = () => {
-  const { userRecord, setUser, user } = useGlobalContext();
+  const { userInfo, setUser, user } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [cooldown, setCooldown] = useState(0);
@@ -113,7 +113,7 @@ const Verification = () => {
       const { queryParams } = Linking.parse(url);
       if (
         queryParams?.userId &&
-        queryParams.userId === userRecord.info.id?.toString()
+        queryParams.userId === userInfo.id?.toString()
       ) {
         console.log("Deep link matched. Checking verification status...");
         await checkUserVerificationHandle();

@@ -11,22 +11,29 @@ import { router } from "expo-router";
 import { sortByDate } from "@/lib/commonUtil";
 
 const profile = () => {
-  const { userRecord, refreshUserRecord } = useGlobalContext();
+  const { userInfo, userPost, userLine, refreshUserRecord } =
+    useGlobalContext();
   const [activeTab, setActiveTab] = useState("post");
-  const [userPosts, setUserPosts] = useState<PostType.Info[]>([]);
-  const [userLines, setUserLines] = useState<LineType.Info[]>([]);
+  const [postList, setPostList] = useState<PostType.Info[]>([]);
+  const [lineList, setLineList] = useState<LineType.Info[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     const updateUI = async () => {
-      setUserPosts([]);
-      setUserLines([]);
-      setUserPosts(await sortByDate(userRecord.post.post_info));
-      setUserLines(await sortByDate(userRecord.line.line_info));
+      setPostList(sortByDate(userPost));
+      setLineList(sortByDate(userLine));
       setIsRefreshing(false);
     };
     updateUI();
-  }, [userRecord.post, userRecord.post]);
+  }, [userInfo]);
+
+  useEffect(() => {
+    setLineList(sortByDate(userLine));
+  }, [userLine]);
+
+  useEffect(() => {
+    setPostList(sortByDate(userPost));
+  }, [userPost]);
 
   const onRefreshHandle = useCallback(async () => {
     setIsRefreshing(true);
@@ -39,11 +46,10 @@ const profile = () => {
   }, []);
 
   return (
-    <View className="h-full bg-background justify-center space-y-2">
-      <Text className="text-3xl font-black">Profile</Text>
+    <View className="h-full bg-background justify-center space-y-2 mt-12">
       {activeTab == "post" ? (
         <FlatList
-          data={userPosts}
+          data={postList}
           keyExtractor={(item, index) => index.toString()}
           horizontal={false}
           className="flex-1"
@@ -52,16 +58,9 @@ const profile = () => {
           }}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <ProfileView
-              userInfo={userRecord.info}
-              setActiveTab={setActiveTab}
-              userPostTotal={userPosts.length}
-              userLineTotal={userLines.length}
-            />
-          }
+          ListHeaderComponent={<ProfileView setActiveTab={setActiveTab} />}
           ListFooterComponent={
-            isRefreshing ? null : userPosts.length == 0 ? null : (
+            isRefreshing ? null : postList.length == 0 ? null : (
               <Text className="text-lg text-primary text-center py-16">
                 Nothing Follows.
               </Text>
@@ -93,7 +92,7 @@ const profile = () => {
         />
       ) : (
         <FlatList
-          data={userLines}
+          data={lineList}
           keyExtractor={(item, index) => index.toString()}
           horizontal={false}
           className="flex-1"
@@ -102,16 +101,9 @@ const profile = () => {
           }}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <ProfileView
-              userInfo={userRecord.info}
-              setActiveTab={setActiveTab}
-              userPostTotal={userRecord.post.total}
-              userLineTotal={userRecord.line.total}
-            />
-          }
+          ListHeaderComponent={<ProfileView setActiveTab={setActiveTab} />}
           ListFooterComponent={
-            isRefreshing ? null : userLines.length == 0 ? null : (
+            isRefreshing ? null : lineList.length == 0 ? null : (
               <Text className="text-lg text-primary text-center py-16">
                 Nothing Follows.
               </Text>

@@ -13,7 +13,7 @@ import { View, Text, ScrollView, Alert, Image } from "react-native";
 import Toast from "react-native-root-toast";
 
 const createLinePage = () => {
-  const { userRecord, refreshUserRecord } = useGlobalContext();
+  const { userInfo, refreshUserRecord } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [lineName, setLineName] = useState("");
   const [lineDescription, setLineDescription] = useState("");
@@ -50,7 +50,7 @@ const createLinePage = () => {
       const banner = await uploadBanner(image[0]);
 
       const result = await createLine(
-        userRecord.info.id,
+        userInfo.id,
         lineName,
         lineDescription,
         banner.$id
