@@ -11,8 +11,6 @@ import CredentialSection from "@/components/settingsPage/CredentialSection";
 import Collapsible from "@/components/Collapsible";
 
 const settings = () => {
-  const { userInfo, refreshUserRecord } = useGlobalContext();
-
   return (
     <>
       <View className="h-14 w-full flex-row items-center bg-primary">

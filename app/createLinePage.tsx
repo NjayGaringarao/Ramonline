@@ -59,10 +59,7 @@ const createLinePage = () => {
       if (result?.responseStatusCode == 200) {
         Alert.alert("Success", "Your Line is created successfully.");
         refreshUserRecord({
-          info: false,
-          activity: false,
           line: true,
-          post: false,
         });
       } else {
         Toast.show(`There might be a problem creating you line.`, {

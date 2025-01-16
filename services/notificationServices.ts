@@ -216,7 +216,7 @@ export const deletePushTarget = async () => {
 
 //#region Notification Database
 
-export const getNotifications = async (user_id: string) => {
+export const getUserNotificationList = async (user_id: string) => {
   try {
     const notification = await _listDocuments(
       env.DATABASE_PRIMARY,

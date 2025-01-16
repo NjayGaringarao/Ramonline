@@ -94,10 +94,7 @@ const LineView = ({
       setIsThisVisible(false);
       await deleteLine(line.id);
       refreshUserRecord({
-        info: false,
-        activity: false,
         line: true,
-        post: false,
       });
     } catch (error) {
       Alert.alert(
@@ -131,10 +128,7 @@ const LineView = ({
           duration: Toast.durations.LONG,
         });
         refreshUserRecord({
-          info: false,
-          activity: false,
           line: true,
-          post: false,
         });
       }
     } catch (error) {

@@ -5,17 +5,15 @@ import { confirmAction, sortByDate } from "@/lib/commonUtil";
 import NotificationItem from "@/components/NotificationView/NotificationItem";
 import CustomButton from "@/components/CustomButton";
 import { NotificationType } from "@/types/models";
-import {
-  deleteNotification,
-  getNotifications,
-} from "@/services/notificationServices";
+import { deleteNotification } from "@/services/notificationServices";
 import { colors, icons } from "@/constants";
 
 const Notification = () => {
-  const { refreshUserRecord, userInfo, userActivity } = useGlobalContext();
-  const [notifications, setNotifications] = useState<NotificationType.Info[]>(
-    []
-  );
+  const { refreshUserRecord, userNotification, userActivity } =
+    useGlobalContext();
+  const [notificationList, setNotificationList] = useState<
+    NotificationType.Info[]
+  >([]);
   const [isSelectionOn, setIsSelectionOn] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState<
     NotificationType.Info[]
@@ -33,25 +31,6 @@ const Notification = () => {
           )
         : [...prev, notification]
     );
-  };
-
-  const loadHandle = async () => {
-    const userNotifications = await getNotifications(userInfo.id);
-
-    setNotifications(sortByDate(userNotifications));
-    setIsRefreshing(false);
-  };
-  useEffect(() => {
-    loadHandle();
-  }, [userInfo]);
-
-  useEffect(() => {
-    if (selectedNotification.length === 0) setIsSelectionOn(false);
-  }, [selectedNotification]);
-
-  const onRefreshHandle = () => {
-    setIsRefreshing(true);
-    loadHandle();
   };
 
   const deleteNotificationHandle = async () => {
@@ -77,6 +56,24 @@ const Notification = () => {
     onRefreshHandle();
   };
 
+  const setupHandle = () => {
+    setNotificationList(sortByDate(userNotification));
+    setIsRefreshing(false);
+  };
+
+  const onRefreshHandle = () => {
+    setIsRefreshing(true);
+    refreshUserRecord({ notification: true });
+  };
+
+  useEffect(() => {
+    setupHandle();
+  }, [userNotification]);
+
+  useEffect(() => {
+    if (selectedNotification.length === 0) setIsSelectionOn(false);
+  }, [selectedNotification]);
+
   return (
     <View className="flex-1 bg-background mt-12">
       <View className="w-full flex-row justify-between items-center">
@@ -95,7 +92,7 @@ const Notification = () => {
         </CustomButton>
       </View>
       <FlatList
-        data={notifications}
+        data={notificationList}
         className="flex-1 mb-2"
         keyExtractor={(notification, index) => index.toString()}
         renderItem={({ item }) => {

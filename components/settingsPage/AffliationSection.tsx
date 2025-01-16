@@ -49,9 +49,6 @@ const AffliationSection = () => {
       });
       refreshUserRecord({
         info: true,
-        activity: false,
-        line: false,
-        post: false,
       });
     } catch (error) {
       Toast.show(`Failed to save changes.`, {

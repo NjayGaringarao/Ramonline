@@ -40,8 +40,7 @@ const profile = () => {
   const onRefreshHandle = useCallback(async () => {
     setIsRefreshing(true);
     refreshUserRecord({
-      info: false,
-      activity: false,
+      info: true,
       line: true,
       post: true,
     });

@@ -15,3 +15,11 @@ export interface SessionType {
   countryName: string;
   ip: string;
 }
+
+export interface RefreshUserRecordType {
+  info?: boolean;
+  activity?: boolean;
+  line?: boolean;
+  post?: boolean;
+  notification?: boolean;
+}

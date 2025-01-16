@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import {
   getFCMToken,
+  getUserNotificationList,
   requestNotificationPermissions,
   setupNotificationHandlers,
   setupPushTarget,
@@ -21,13 +22,14 @@ import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 import { Models } from "react-native-appwrite";
 import { useNetworkState } from "expo-network";
-import { UserType, PostType, LineType } from "@/types/models";
+import { UserType, PostType, LineType, NotificationType } from "@/types/models";
 
-interface IRefreshUserRecordType {
-  info: boolean;
-  activity: boolean;
-  line: boolean;
-  post: boolean;
+interface RefreshUserRecordType {
+  info?: boolean;
+  activity?: boolean;
+  line?: boolean;
+  post?: boolean;
+  notification?: boolean;
 }
 
 type GlobalContextProps = {
@@ -42,13 +44,15 @@ export interface GlobalContextInterface {
   setUserActivity: Dispatch<React.SetStateAction<UserType.Activity>>;
   setUserPost: Dispatch<React.SetStateAction<PostType.Info[]>>;
   setUserLine: Dispatch<React.SetStateAction<LineType.Info[]>>;
-  refreshUserRecord: (update: IRefreshUserRecordType) => void;
+  setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
+  refreshUserRecord: (update: RefreshUserRecordType) => void;
   setIsRefreshFeeds: Dispatch<React.SetStateAction<boolean>>;
   user: Models.User<Models.Preferences> | null;
   userInfo: UserType.Info;
   userActivity: UserType.Activity;
   userPost: PostType.Info[];
   userLine: LineType.Info[];
+  userNotification: NotificationType.Info[];
   fcmToken?: string;
   isRefreshFeeds: boolean;
   isLoading: boolean;
@@ -75,6 +79,7 @@ const defaultValue: GlobalContextInterface = {
   setUserActivity: () => {},
   setUserPost: () => {},
   setUserLine: () => {},
+  setUserNotification: () => {},
   refreshUserRecord: () => {},
   setIsRefreshFeeds: () => {},
   user: null,
@@ -82,6 +87,7 @@ const defaultValue: GlobalContextInterface = {
   userActivity: emptyUserActivity,
   userPost: [],
   userLine: [],
+  userNotification: [],
   fcmToken: undefined,
   isRefreshFeeds: false,
   isLoading: false,
@@ -102,6 +108,9 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
     useState<UserType.Activity>(emptyUserActivity);
   const [userPost, setUserPost] = useState<PostType.Info[]>([]);
   const [userLine, setUserLine] = useState<LineType.Info[]>([]);
+  const [userNotification, setUserNotification] = useState<
+    NotificationType.Info[]
+  >([]);
   const [isRefreshFeeds, setIsRefreshFeeds] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(true);
@@ -119,17 +128,20 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
           const fcm = await getFCMToken(setFcmToken);
           if (fcm) await setupPushTarget(currentUser, fcm);
 
-          const [info, activity, lines, posts] = await Promise.all([
-            getUserInfo(currentUser.$id),
-            getUserActivity(currentUser.$id),
-            getUserLineList(currentUser.$id),
-            getUserPostList(currentUser.$id),
-          ]);
+          const [info, activity, lines, posts, notification] =
+            await Promise.all([
+              getUserInfo(currentUser.$id),
+              getUserActivity(currentUser.$id),
+              getUserLineList(currentUser.$id),
+              getUserPostList(currentUser.$id),
+              getUserNotificationList(currentUser.$id),
+            ]);
 
           setUserInfo(info);
           setUserActivity(activity);
           setUserLine(lines);
           setUserPost(posts);
+          setUserNotification(notification);
         } else {
           setUser(null);
         }
@@ -148,7 +160,8 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
     activity,
     line,
     post,
-  }: IRefreshUserRecordType) => {
+    notification,
+  }: RefreshUserRecordType) => {
     if (!user?.$id) return;
 
     const updates = [];
@@ -157,7 +170,8 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
     if (activity) updates.push(getUserActivity(user.$id).then(setUserActivity));
     if (line) updates.push(getUserLineList(user.$id).then(setUserLine));
     if (post) updates.push(getUserPostList(user.$id).then(setUserPost));
-
+    if (notification)
+      updates.push(getUserNotificationList(user.$id).then(setUserNotification));
     await Promise.all(updates);
   };
 
@@ -173,6 +187,7 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
         setUserActivity,
         setUserPost,
         setUserLine,
+        setUserNotification,
         refreshUserRecord,
         setIsRefreshFeeds,
         user,
@@ -180,6 +195,7 @@ export const GlobalProvider = ({ children }: GlobalContextProps) => {
         userActivity,
         userPost,
         userLine,
+        userNotification,
         fcmToken,
         isLoading,
         isRefreshFeeds,

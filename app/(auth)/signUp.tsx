@@ -55,6 +55,7 @@ const signUp = () => {
           activity: true,
           line: true,
           post: true,
+          notification: true,
         });
         const fcmToken = await getFCMToken();
         await setupPushTarget(user, fcmToken!);

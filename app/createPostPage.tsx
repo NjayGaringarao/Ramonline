@@ -43,10 +43,7 @@ const createPostPage = () => {
           duration: Toast.durations.LONG,
         });
         refreshUserRecord({
-          info: true,
-          activity: false,
-          line: false,
-          post: false,
+          post: true,
         });
       }
       router.back();

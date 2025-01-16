@@ -4,23 +4,14 @@ import { UserType, NotificationType } from "@/types/models";
 import AdaptiveTime from "../AdaptiveTime";
 import ModalLinePost from "./ModalLinePost";
 import { setNotificationViewed } from "@/services/notificationServices";
+import { RefreshUserRecordType } from "@/types/utils";
 
 interface NotificationItemProps {
   notification: NotificationType.Info;
   isSelected: boolean;
   isViewed: boolean;
   userActivity: UserType.Activity;
-  refreshUserRecord: ({
-    info,
-    activity,
-    line,
-    post,
-  }: {
-    info: boolean;
-    activity: boolean;
-    line: boolean;
-    post: boolean;
-  }) => void;
+  refreshUserRecord: (update: RefreshUserRecordType) => void;
   onLongPress: () => void;
   handleSelectNotification: (notification: NotificationType.Info) => void;
   isSelectionOn: boolean;
@@ -44,10 +35,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     if (!isViewed) {
       await setNotificationViewed(userActivity, notification.id);
       refreshUserRecord({
-        info: false,
         activity: true,
-        line: false,
-        post: false,
       });
     }
   };
