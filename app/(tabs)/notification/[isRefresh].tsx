@@ -81,7 +81,7 @@ const Notification = () => {
 
   const onRefreshHandle = () => {
     setIsRefreshing(true);
-    refreshUserRecord({ notification: true });
+    refreshUserRecord({ notification: true, activity: true });
   };
 
   useEffect(() => {
