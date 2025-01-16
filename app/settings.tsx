@@ -3,7 +3,6 @@ import React from "react";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import { router } from "expo-router";
-import { useGlobalContext } from "@/context/GlobalProvider";
 import ProfileSection from "@/components/settingsPage/ProfileSection";
 import AffliationSection from "@/components/settingsPage/AffliationSection";
 import SessionSection from "@/components/settingsPage/SessionSection";

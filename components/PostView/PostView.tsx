@@ -23,7 +23,7 @@ import ModalOptions from "./ModalOptions";
 import ImageDisplay from "./ImageDisplay";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 type IPostViewProps = {
   post: PostType.Info;
   isModifyable?: boolean;

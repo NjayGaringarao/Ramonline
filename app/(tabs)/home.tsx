@@ -9,7 +9,7 @@ import { colors, icons, images } from "@/constants";
 import { router } from "expo-router";
 import { getFeedLines } from "@/services/lineServices";
 import LineCard from "@/components/LineView/LineCard";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const Home = () => {
   const { isRefreshFeeds, setIsRefreshFeeds } = useGlobalContext();

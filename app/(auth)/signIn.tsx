@@ -7,7 +7,7 @@ import {
   getUserInfo,
   loginAccount,
 } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 import Loading from "@/components/Loading";
 import { getFCMToken, setupPushTarget } from "@/services/notificationServices";
 import { StatusBar } from "expo-status-bar";

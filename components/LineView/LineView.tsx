@@ -31,7 +31,7 @@ import WebView from "react-native-webview";
 import ProfilePicture from "../ProfilePicture";
 import ModalOptions from "./ModalOptions";
 import ModalEditDescription from "./ModalEditDescription";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 type ILineViewProps = {
   line: LineType.Info;

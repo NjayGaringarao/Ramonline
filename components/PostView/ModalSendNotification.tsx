@@ -12,7 +12,7 @@ import { LineType } from "@/types/models";
 import { images } from "@/constants";
 import { getImagePreview } from "@/services/commonServices";
 import TextBox from "../TextBox";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 type ModalSendNotificationProps = {
   visible: boolean;

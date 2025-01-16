@@ -5,7 +5,7 @@ import FormField from "@/components/FormField";
 import { ImagePickerAsset } from "expo-image-picker";
 import PhotoPicker from "@/components/PhotoPicker";
 import { createPost } from "@/services/postServices";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 import Loading from "@/components/Loading";
 import { confirmAction } from "@/lib/commonUtil";
 import { router } from "expo-router";
@@ -13,7 +13,8 @@ import Toast from "react-native-root-toast";
 import { icons } from "@/constants";
 
 const createPostPage = () => {
-  const { userInfo, refreshUserRecord, isOnline } = useGlobalContext();
+  const { userInfo, refreshUserRecord, isInternetReachable } =
+    useGlobalContext();
   const [caption, setCaption] = useState<string>("");
   const [images, setImages] = useState<ImagePickerAsset[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +37,7 @@ const createPostPage = () => {
 
     setIsLoading(true);
     try {
-      if (!isOnline) throw Error("No Internet Connection.");
+      if (!isInternetReachable) throw Error("No Internet Connection.");
       const post = await createPost(userInfo.id, caption, images);
       if (post) {
         Toast.show(`Uploaded Succesfully`, {

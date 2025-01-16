@@ -22,7 +22,7 @@ import WebView from "react-native-webview";
 import ProfilePicture from "./ProfilePicture";
 import { deletePushTarget } from "@/services/notificationServices";
 import { logoutUser } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 import "@/global.css";
 
 interface ProfileViewProps {

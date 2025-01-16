@@ -10,7 +10,7 @@ import { changePassword } from "@/services/userServices";
 import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
 import { Models } from "react-native-appwrite";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const CredentialSection = () => {
   const { user } = useGlobalContext();

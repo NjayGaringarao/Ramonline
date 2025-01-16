@@ -9,7 +9,7 @@ import { confirmAction } from "@/lib/commonUtil";
 import Toast from "react-native-root-toast";
 import Loading from "../Loading";
 import { updateRole } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 const AffliationSection = () => {
   const { userInfo, refreshUserRecord } = useGlobalContext();
