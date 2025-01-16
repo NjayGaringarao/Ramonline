@@ -6,7 +6,6 @@ import {
   getFCMToken,
   getUserNotificationList,
   requestNotificationPermissions,
-  setupNotificationHandlers,
   setupPushTarget,
 } from "@/services/notificationServices";
 import {
@@ -17,6 +16,7 @@ import {
 import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 import { UserType, PostType, LineType, NotificationType } from "@/types/models";
+import handleNotification from "./NotificationHandler";
 
 export const useGlobalState = () => {
   const { isInternetReachable } = useNetworkState();
@@ -47,7 +47,6 @@ export const useGlobalState = () => {
   useEffect(() => {
     const initialize = async () => {
       await requestNotificationPermissions();
-      setupNotificationHandlers();
 
       try {
         const currentUser = await getCurrentUser();
@@ -55,6 +54,11 @@ export const useGlobalState = () => {
           setUser(currentUser);
           const fcm = await getFCMToken(setFcmToken);
           if (fcm) await setupPushTarget(currentUser, fcm);
+
+          handleNotification(async () => {
+            setUserNotification(await getUserNotificationList(currentUser.$id));
+            setUserActivity(await getUserActivity(currentUser.$id));
+          });
 
           const [info, activity, lines, posts, notification] =
             await Promise.all([

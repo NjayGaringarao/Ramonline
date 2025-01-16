@@ -7,9 +7,12 @@ import CustomButton from "@/components/CustomButton";
 import { NotificationType } from "@/types/models";
 import { deleteNotification } from "@/services/notificationServices";
 import { colors, icons } from "@/constants";
+import { useGlobalSearchParams } from "expo-router";
+import { useSearchParams } from "expo-router/build/hooks";
 
 const Notification = () => {
-  const { refreshUserRecord, userNotification, userActivity } =
+  const searchParams = useGlobalSearchParams();
+  const { refreshUserRecord, userNotification, userActivity, setUserActivity } =
     useGlobalContext();
   const [notificationList, setNotificationList] = useState<
     NotificationType.Info[]
@@ -51,6 +54,21 @@ const Notification = () => {
         `notification.tsx => deleteNotificationHandle :: ERROR Deleting`
       );
     }
+
+    const notificationIdsToRemove = selectedNotification.map(
+      (notif) => notif.id
+    );
+
+    const updatedViewedNotification =
+      userActivity.viewed_notification_id.filter(
+        (id) => !notificationIdsToRemove.includes(id)
+      );
+
+    setUserActivity({
+      ...userActivity,
+      viewed_notification_id: updatedViewedNotification,
+    });
+
     setSelectedNotification([]);
     setIsSelectionOn(false);
     onRefreshHandle();
@@ -73,6 +91,20 @@ const Notification = () => {
   useEffect(() => {
     if (selectedNotification.length === 0) setIsSelectionOn(false);
   }, [selectedNotification]);
+
+  useEffect(() => {
+    if (!searchParams) return;
+    if (searchParams.isRefresh == "true") {
+      setIsRefreshing(true);
+      refreshUserRecord({
+        info: true,
+        activity: true,
+        line: true,
+        post: true,
+        notification: true,
+      });
+    }
+  }, [searchParams]);
 
   return (
     <View className="flex-1 bg-background mt-12">

@@ -28,8 +28,9 @@ export const useRefreshUser = (
     if (activity) updates.push(getUserActivity(user.$id).then(setUserActivity));
     if (line) updates.push(getUserLineList(user.$id).then(setUserLine));
     if (post) updates.push(getUserPostList(user.$id).then(setUserPost));
-    if (notification)
+    if (notification) {
       updates.push(getUserNotificationList(user.$id).then(setUserNotification));
+    }
 
     await Promise.all(updates);
   };

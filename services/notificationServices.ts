@@ -54,50 +54,6 @@ export const getFCMToken = async (setFcmToken?: (token: string) => void) => {
   }
 };
 
-// Setup notification handlers
-export const setupNotificationHandlers = () => {
-  // Background message handler
-  // messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-  //   console.log("Message handled in the background:", remoteMessage);
-  //   AppRegistry.registerComponent("index", () => {});
-  // });
-
-  // Handle notifications that open the app from a quit state
-  messaging()
-    .getInitialNotification()
-    .then((remoteMessage) => {
-      if (remoteMessage) {
-        console.log(
-          "Notification caused the app to open from quit state:",
-          remoteMessage.notification
-        );
-      }
-    });
-
-  // Handle notifications that open the app from the background
-  messaging().onNotificationOpenedApp((remoteMessage) => {
-    console.log(
-      "Notification caused app to open from background state:",
-      remoteMessage.notification
-    );
-  });
-
-  // Handle notifications when the app is in the foreground
-  messaging().onMessage(async (remoteMessage) => {
-    Alert.alert("A new FCM message arrived", JSON.stringify(remoteMessage));
-  });
-
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: true,
-      shouldSetBadge: true,
-    }),
-  });
-};
-
-//#endregion
-
 //#region Notification Setup
 const getMatchedSessionTarget = (
   targets: Models.Target[],
@@ -267,22 +223,26 @@ export const deleteNotification = async (
         env.COLLECTION_NOTIFICATION_INFO,
         notification[i].id
       );
-
-      await _updateDocument(
-        env.DATABASE_PRIMARY,
-        env.COLLECTION_USER_ACTIVITY,
-        userActivity.id,
-        {
-          viewed_notification_id: userActivity.viewed_notification_id.filter(
-            (id) => !notification[i].id.includes(id)
-          ),
-        }
-      );
     } catch (error) {
       console.error(
         `notificationServices.ts => deleteNotification :: ERROR : ${error}`
       );
     }
   }
+
+  const notificationIdsToRemove = notification.map((notif) => notif.id);
+
+  const updatedUserActivity = userActivity.viewed_notification_id.filter(
+    (id) => !notificationIdsToRemove.includes(id)
+  );
+
+  await _updateDocument(
+    env.DATABASE_PRIMARY,
+    env.COLLECTION_USER_ACTIVITY,
+    userActivity.id,
+    {
+      viewed_notification_id: updatedUserActivity,
+    }
+  );
 };
 //#endregion
