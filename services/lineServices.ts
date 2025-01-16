@@ -10,6 +10,7 @@ import {
   _subscribeTopic,
   _unsubscribeTopic,
   _updateDocument,
+  _updateFile,
   _uploadFile,
 } from "./appwrite";
 import { Models, Query } from "react-native-appwrite";
@@ -38,12 +39,20 @@ export const createLine = async (
   banner_id: string
 ) => {
   try {
-    return await _executeFunction(env.FUNCTION_NOTIFICATION, "createLine", {
-      lineName: lineName,
-      description: description,
-      user_id: user_id,
-      banner_id: banner_id,
-    });
+    const result = await _executeFunction(
+      env.FUNCTION_NOTIFICATION,
+      "createLine",
+      {
+        lineName: lineName,
+        description: description,
+        user_id: user_id,
+        banner_id: banner_id,
+      }
+    );
+
+    if (result)
+      await _updateFile(env.BUCKET_IMAGE, banner_id, { name: `LINE BANNER` });
+    return result;
   } catch (error) {
     console.log(`lineServices.ts => createLine :: ERROR : ${error}`);
   }

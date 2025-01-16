@@ -152,7 +152,7 @@ const resubscribeTopics = async (
         await _subscribeTopic(subscription.line_id, target.$id);
       } catch (error) {
         console.log(
-          `setupNewPushTarget - topic ID : ${subscription.id} PushTarget ID: ${target.$id} \n Error : ${error}`
+          `setupNewPushTarget - topic ID : ${subscription.line_id} PushTarget ID: ${target.$id} \n Error : ${error}`
         );
       }
     });
@@ -216,29 +216,15 @@ export const deletePushTarget = async () => {
 
 //#region Notification Database
 
-export const getNotifications = async (user_id: string, last_id?: string) => {
+export const getNotifications = async (user_id: string) => {
   try {
-    if (last_id) {
-      const notification = await _listDocuments(
-        env.DATABASE_PRIMARY,
-        env.COLLECTION_NOTIFICATION_INFO,
-        [
-          Query.orderDesc("created_at"),
-          Query.limit(5),
-          Query.cursorAfter(last_id),
-        ]
-      );
+    const notification = await _listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_NOTIFICATION_INFO,
+      [Query.equal("user_id", user_id), Query.orderDesc("created_at")]
+    );
 
-      return toNotificationInfoList(notification.documents);
-    } else {
-      const notification = await _listDocuments(
-        env.DATABASE_PRIMARY,
-        env.COLLECTION_NOTIFICATION_INFO,
-        [Query.equal("user_id", user_id), Query.orderDesc("created_at")]
-      );
-
-      return toNotificationInfoList(notification.documents);
-    }
+    return toNotificationInfoList(notification.documents);
   } catch (error) {
     console.error(
       `notificationServices.ts => getNotification :: ERROR : ${error}`
@@ -257,7 +243,7 @@ export const setNotificationViewed = async (
       env.COLLECTION_USER_ACTIVITY,
       userActivity.id,
       {
-        viewed_notification_ids: [
+        viewed_notification_id: [
           ...userActivity.viewed_notification_id,
           notification_id,
         ],
@@ -272,29 +258,31 @@ export const setNotificationViewed = async (
 
 export const deleteNotification = async (
   userActivity: UserType.Activity,
-  notification_id: string
+  notification: NotificationType.Info[]
 ) => {
-  try {
-    await _deleteDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_NOTIFICATION_INFO,
-      notification_id
-    );
+  for (let i = 0; notification.length > i; i++) {
+    try {
+      await _deleteDocument(
+        env.DATABASE_PRIMARY,
+        env.COLLECTION_NOTIFICATION_INFO,
+        notification[i].id
+      );
 
-    await _updateDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_ACTIVITY,
-      userActivity.id,
-      {
-        viewed_notification_id: userActivity.viewed_notification_id.filter(
-          (id) => !notification_id.includes(id)
-        ),
-      }
-    );
-  } catch (error) {
-    console.error(
-      `notificationServices.ts => deleteNotification :: ERROR : ${error}`
-    );
+      await _updateDocument(
+        env.DATABASE_PRIMARY,
+        env.COLLECTION_USER_ACTIVITY,
+        userActivity.id,
+        {
+          viewed_notification_id: userActivity.viewed_notification_id.filter(
+            (id) => !notification[i].id.includes(id)
+          ),
+        }
+      );
+    } catch (error) {
+      console.error(
+        `notificationServices.ts => deleteNotification :: ERROR : ${error}`
+      );
+    }
   }
 };
 //#endregion
