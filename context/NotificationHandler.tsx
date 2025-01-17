@@ -15,8 +15,9 @@ const handleNotification = (refreshNotificationHandler: () => void) => {
       "Notification caused app to open from background:",
       remoteMessage.notification
     );
+    const user = await getCurrentUser();
 
-    if (await getCurrentUser()) {
+    if (user && user.emailVerification) {
       router.navigate("/(tabs)/notification/true");
     } else {
       router.navigate("/");
@@ -32,8 +33,9 @@ const handleNotification = (refreshNotificationHandler: () => void) => {
           "Notification caused the app to open from quit state:",
           remoteMessage.notification
         );
-        if (await getCurrentUser()) {
-          router.navigate("/(tabs)/notification/true");
+        const user = await getCurrentUser();
+
+        if (user && user.emailVerification) {
         } else {
           router.navigate("/");
         }
