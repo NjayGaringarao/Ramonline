@@ -51,7 +51,7 @@ export const createLine = async (
     );
 
     if (result)
-      await _updateFile(env.BUCKET_IMAGE, banner_id, { name: `LINE BANNER` });
+      await _updateFile(env.BUCKET_IMAGE, banner_id, { name: `Line Banner` });
     return result;
   } catch (error) {
     console.log(`lineServices.ts => createLine :: ERROR : ${error}`);
