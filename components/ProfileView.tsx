@@ -32,17 +32,8 @@ interface ProfileViewProps {
 const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
   const [_activeTab, set_ActiveTab] = useState("post");
   const [isImagePreviewVisible, setIsImagePreviewVisible] = useState(false);
-  const {
-    user,
-    setUser,
-    setUserInfo,
-    setUserLine,
-    setUserPost,
-    setUserNotification,
-    userInfo,
-    userLine,
-    userPost,
-  } = useGlobalContext();
+  const { user, resetGlobalState, userInfo, userLine, userPost } =
+    useGlobalContext();
 
   const setTabHandler = (tab: string) => {
     setActiveTab(tab);
@@ -62,20 +53,7 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
       await deletePushTarget();
       const isLoggedOut = await logoutUser();
       if (isLoggedOut) {
-        setUser(null);
-        setUserInfo({
-          id: "",
-          username: "",
-          name: ["", "", ""],
-          avatar_url: "",
-          picture_id: "",
-          role: ["", "", "", ""],
-          created_at: new Date(0),
-        });
-        setUserPost([]);
-        setUserLine([]);
-        setUserNotification([]);
-
+        resetGlobalState();
         router.replace("/signIn");
       } else {
         Alert.alert(

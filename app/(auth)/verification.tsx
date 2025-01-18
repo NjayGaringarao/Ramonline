@@ -17,7 +17,7 @@ import { Models } from "react-native-appwrite";
 import { router } from "expo-router";
 
 const Verification = () => {
-  const { setUser, user, refreshUserRecord } = useGlobalContext();
+  const { user, initializeGlobalState, resetGlobalState } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [cooldown, setCooldown] = useState(0);
@@ -43,13 +43,7 @@ const Verification = () => {
     }
 
     if (user && user.emailVerification) {
-      setUser(user);
-      refreshUserRecord({
-        info: true,
-        line: true,
-        post: true,
-        notification: true,
-      });
+      await initializeGlobalState();
       router.replace("/(tabs)/home");
     } else {
       Alert.alert(
@@ -92,7 +86,7 @@ const Verification = () => {
       await deletePushTarget();
       const isLoggedOut = await logoutUser();
       if (isLoggedOut) {
-        setUser(null);
+        resetGlobalState();
         router.replace("/signIn");
       } else {
         Alert.alert(

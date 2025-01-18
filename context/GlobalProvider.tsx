@@ -37,6 +37,8 @@ interface GlobalContextInterface {
   setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
   refreshUserRecord: (update: RefreshUserRecordType) => void;
   setIsRefreshFeeds: Dispatch<React.SetStateAction<boolean>>;
+  resetGlobalState: () => void;
+  initializeGlobalState: () => Promise<void>;
   user: Models.User<Models.Preferences> | null;
   userInfo: UserType.Info;
   userPost: PostType.Info[];
@@ -65,6 +67,8 @@ const defaultValue: GlobalContextInterface = {
   setUserNotification: () => {},
   refreshUserRecord: () => {},
   setIsRefreshFeeds: () => {},
+  resetGlobalState: () => {},
+  initializeGlobalState: async () => {},
   user: null,
   userInfo: emptyUserInfo,
   userPost: [],
@@ -96,41 +100,41 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [fcmToken, setFcmToken] = useState<string>();
 
-  useEffect(() => {
-    const initialize = async () => {
-      await requestNotificationPermissions();
+  const initializeGlobalState = async () => {
+    await requestNotificationPermissions();
 
-      try {
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          setUser(currentUser);
-          const fcm = await getFCMToken(setFcmToken);
-          if (fcm) await setupPushTarget(currentUser, fcm);
-          handleNotification(async () => {
-            setUserNotification(await getUserNotificationList(currentUser.$id));
-          });
-          const [info, lines, posts, notifications] = await Promise.all([
-            getUserInfo(currentUser.$id),
-            getUserLineList(currentUser.$id),
-            getUserPostList(currentUser.$id),
-            getUserNotificationList(currentUser.$id),
-          ]);
+    try {
+      const currentUser = await getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+        const fcm = await getFCMToken(setFcmToken);
+        if (fcm) await setupPushTarget(currentUser, fcm);
+        handleNotification(async () => {
+          setUserNotification(await getUserNotificationList(currentUser.$id));
+        });
+        const [info, lines, posts, notifications] = await Promise.all([
+          getUserInfo(currentUser.$id),
+          getUserLineList(currentUser.$id),
+          getUserPostList(currentUser.$id),
+          getUserNotificationList(currentUser.$id),
+        ]);
 
-          setUserInfo(info);
-          setUserLine(lines);
-          setUserPost(posts);
-          setUserNotification(notifications);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Initialization error:", error);
-      } finally {
-        setIsLoading(false);
+        setUserInfo(info);
+        setUserLine(lines);
+        setUserPost(posts);
+        setUserNotification(notifications);
+      } else {
+        setUser(null);
       }
-    };
+    } catch (error) {
+      console.error("Initialization error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    initialize();
+  useEffect(() => {
+    initializeGlobalState();
   }, []);
 
   const refreshUserRecord = async ({
@@ -153,6 +157,17 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     await Promise.all(updates);
   };
 
+  const resetGlobalState = () => {
+    setUser(null);
+    setUserInfo(emptyUserInfo);
+    setUserPost([]);
+    setUserLine([]);
+    setUserNotification([]);
+    setIsRefreshFeeds(false);
+    setIsLoading(false);
+    setFcmToken(undefined);
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -163,6 +178,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserNotification,
         refreshUserRecord,
         setIsRefreshFeeds,
+        resetGlobalState,
+        initializeGlobalState,
         user,
         userInfo,
         userPost,

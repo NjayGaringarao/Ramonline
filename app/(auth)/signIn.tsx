@@ -2,14 +2,9 @@ import CustomButton from "@/components/CustomButton";
 import { Link, router } from "expo-router";
 import { Text, View, Image } from "react-native";
 import React, { useState } from "react";
-import {
-  getCurrentUser,
-  getUserInfo,
-  loginAccount,
-} from "@/services/userServices";
+import { getCurrentUser, loginAccount } from "@/services/userServices";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import Loading from "@/components/Loading";
-import { getFCMToken, setupPushTarget } from "@/services/notificationServices";
 import { StatusBar } from "expo-status-bar";
 import { colors, images } from "@/constants";
 import TextBox from "@/components/TextBox";
@@ -17,7 +12,7 @@ import Toast from "react-native-root-toast";
 
 const signIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setUser, refreshUserRecord } = useGlobalContext();
+  const { initializeGlobalState } = useGlobalContext();
   const [form, setform] = useState({
     email: "",
     password: "",
@@ -29,24 +24,14 @@ const signIn = () => {
     try {
       const isLoginSuccess = await loginAccount(form.email, form.password);
 
-      if (isLoginSuccess) {
-        const user = await getCurrentUser();
-        if (!user) throw Error;
-        setUser(user);
-        const fcmToken = await getFCMToken();
-        await setupPushTarget(user, fcmToken!);
-        if (!user.emailVerification) {
-          refreshUserRecord({
-            info: true,
-            line: true,
-            post: true,
-            notification: true,
-          });
-          router.replace("/(auth)/verification");
-        } else {
-          router.replace("/home");
-        }
-      }
+      if (!isLoginSuccess) throw Error;
+
+      const user = await getCurrentUser();
+      if (!user) throw Error;
+
+      if (!user.emailVerification) router.replace("/(auth)/verification");
+      await initializeGlobalState();
+      router.replace("/home");
     } catch (error) {
       Toast.show(`Failed: Wrong password or email.`, {
         duration: Toast.durations.LONG,
