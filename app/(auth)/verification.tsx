@@ -3,7 +3,7 @@ import { View, Text, Alert, ScrollView, Image } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "@/components/CustomButton";
 import { colors, icons, images } from "@/constants";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { confirmAction } from "@/lib/commonUtil";
 import { deletePushTarget } from "@/services/notificationServices";
 import {

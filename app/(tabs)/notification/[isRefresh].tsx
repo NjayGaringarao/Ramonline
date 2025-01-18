@@ -1,6 +1,6 @@
 import { View, Text, FlatList, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { confirmAction, sortByDate } from "@/lib/commonUtil";
 import NotificationItem from "@/components/NotificationView/NotificationItem";
 import CustomButton from "@/components/CustomButton";

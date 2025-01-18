@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { View, Text, Image } from "react-native";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import CustomButton from "@/components/CustomButton";
 import { colors, images } from "@/constants";
 import React, { useEffect } from "react";

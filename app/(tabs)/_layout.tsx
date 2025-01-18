@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { colors, icons, images } from "@/constants";
 import { StatusBar } from "expo-status-bar";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const layout = () => {
   const { userNotification } = useGlobalContext();

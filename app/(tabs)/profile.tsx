@@ -1,6 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import PostView from "@/components/PostView/PostView";
 import { LineType, PostType } from "@/types/models";
 import Loading from "@/components/Loading";

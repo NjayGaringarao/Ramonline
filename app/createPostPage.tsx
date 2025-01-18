@@ -5,7 +5,7 @@ import FormField from "@/components/FormField";
 import { ImagePickerAsset } from "expo-image-picker";
 import PhotoPicker from "@/components/PhotoPicker";
 import { createPost } from "@/services/postServices";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import Loading from "@/components/Loading";
 import { confirmAction } from "@/lib/commonUtil";
 import { router } from "expo-router";

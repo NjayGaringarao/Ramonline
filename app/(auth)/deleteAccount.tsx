@@ -7,7 +7,7 @@ import Collapsible from "@/components/Collapsible";
 import Toast from "react-native-root-toast";
 import { confirmAction, getDisplayName } from "@/lib/commonUtil";
 import { deleteUserAccount } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { icons, images } from "@/constants";
 import ProfilePicture from "@/components/ProfilePicture";
 

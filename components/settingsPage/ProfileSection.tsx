@@ -9,7 +9,7 @@ import Loading from "../Loading";
 import { updateProfile } from "@/services/userServices";
 import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const ProfileSection = () => {
   const { userInfo, refreshUserRecord } = useGlobalContext();

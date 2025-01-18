@@ -7,7 +7,7 @@ import { getDisplayName, getDisplayRole } from "@/lib/commonUtil";
 import ProfilePicture from "../ProfilePicture";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 type MiniPostViewProps = {
   post: PostType.Info;

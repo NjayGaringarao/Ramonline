@@ -3,7 +3,7 @@ import FormField from "@/components/FormField";
 import Loading from "@/components/Loading";
 import PhotoPicker from "@/components/PhotoPicker";
 import icons from "@/constants/icons";
-import { useGlobalContext } from "@/context/GlobalContext";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { confirmAction } from "@/lib/commonUtil";
 import { createLine, uploadBanner } from "@/services/lineServices";
 import { ImagePickerAsset } from "expo-image-picker";
