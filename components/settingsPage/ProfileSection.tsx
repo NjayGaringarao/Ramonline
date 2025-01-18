@@ -110,8 +110,8 @@ const ProfileSection = () => {
               userInfo={userInfo}
               setNewProfilePicture={(e) => setNewProfilePicture(e)}
               newProfilePicture={newProfilePicture}
-              containerStyle="h-32 w-32 rounded-3xl overflow-hidden bg-panel shadow-lg shadow-primary"
-              imageStyle="flex-1 bg-panel"
+              containerStyle=" shadow-lg shadow-primary"
+              imageStyle="bg-panel h-32 w-32 rounded-3xl"
             />
             <Text className="text-sm text-uGray font-semibold pt-1">
               {userInfo.username}

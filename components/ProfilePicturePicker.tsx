@@ -84,10 +84,21 @@ const ProfilePicturePicker = forwardRef(
         <TouchableOpacity
           onPress={() => setIsImagePreviewVisible(true)}
           onLongPress={pickImagehandle}
-          className={`${containerStyle}`}
+          className={`bg-panel ${containerStyle}`}
         >
           <Image className={imageStyle} source={{ uri: imageSource }} />
+          <TouchableOpacity
+            className="absolute -top-2 -right-2 bg-panel rounded-lg overflow-hidden shadow shadow-black"
+            onPress={pickImagehandle}
+          >
+            <Image
+              source={icons.replace}
+              className="h-5 w-5 m-1"
+              tintColor={colors.uGray}
+            />
+          </TouchableOpacity>
         </TouchableOpacity>
+
         {isImagePreviewVisible && (
           <Modal
             visible={isImagePreviewVisible}

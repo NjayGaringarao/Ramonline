@@ -76,41 +76,8 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
           className="w-full h-56 opacity-50"
         />
       </View>
-      <CustomButton
-        handlePress={() => {
-          router.push("/settings");
-        }}
-        containerStyles="absolute top-44 left-2 h-6 w-6 p-0 bg-transparent"
-      >
-        <Image
-          source={icons.settings}
-          tintColor={colors.primary}
-          className="h-6 w-6"
-        />
-      </CustomButton>
-      <CustomButton
-        handlePress={logoutHandle}
-        containerStyles="absolute top-44 right-2 h-6 w-6 bg-transparent"
-      >
-        <Image
-          source={icons.logout}
-          className="h-6 w-6"
-          tintColor={colors.primary}
-        />
-      </CustomButton>
 
       <View className="w-auto h-auto mt-24 mb-4 gap-2">
-        <Text className="text-base text-uGray font-semibold">
-          {"Name\t\t\t\t\t\t: "}
-          <Text className="text-lg text-uBlack font-semibold">
-            {getDisplayName(userInfo) === userInfo.username ? (
-              <Text>unset</Text>
-            ) : (
-              getDisplayName(userInfo)
-            )}
-          </Text>
-        </Text>
-
         <Text className="text-base text-uGray font-semibold">
           Username
           <Text className="text-lg text-uBlack font-semibold">
@@ -129,6 +96,38 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
             {getDisplayRole(userInfo)}
           </Text>
         </Text>
+      </View>
+      <View className="w-full flex-row justify-end pb-2 gap-2 px-2">
+        <View className="bg-panel rounded-xl overflow-hidden">
+          <CustomButton
+            title={`Settings`}
+            textStyles="text-lg text-uGray"
+            handlePress={() => {
+              router.push("/settings");
+            }}
+            containerStyles="p-0 bg-transparent"
+          >
+            <Image
+              source={icons.settings}
+              tintColor={colors.primary}
+              className="h-5 w-5 mr-1"
+            />
+          </CustomButton>
+        </View>
+        <View className="bg-panel rounded-xl overflow-hidden">
+          <CustomButton
+            title="Logout"
+            textStyles="text-lg text-uGray"
+            handlePress={logoutHandle}
+            containerStyles="p-0 bg-transparent"
+          >
+            <Image
+              source={icons.logout}
+              className="h-5 w-5 mr-1"
+              tintColor={colors.primary}
+            />
+          </CustomButton>
+        </View>
       </View>
 
       <Text className="text-3xl pt-3 pb-2 w-full font-semibold text-primary px-4 bg-panel border-primary border-t-4">

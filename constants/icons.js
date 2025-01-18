@@ -15,6 +15,7 @@ import logout from "@/assets/icons/logout.png"
 import settings from "@/assets/icons/settings.png"
 import apple from "@/assets/icons/apple-logo.png"
 import android from "@/assets/icons/android-logo.png"
+import replace from "@/assets/icons/replace.png"
 
 export default {
   home,
@@ -33,5 +34,6 @@ export default {
   logout,
   settings,
   android,
-  apple
+  apple,
+  replace
 };

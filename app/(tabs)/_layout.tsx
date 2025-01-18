@@ -1,9 +1,10 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Tabs } from "expo-router";
 import { colors, icons, images } from "@/constants";
 import { StatusBar } from "expo-status-bar";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { Linking } from "react-native";
 
 const layout = () => {
   const { userNotification } = useGlobalContext();
@@ -91,10 +92,16 @@ const layout = () => {
           }}
         />
       </Tabs>
-      <Image
-        source={images.logo}
-        className="h-24 w-24 absolute right-0 m-2 bg-background border-2 border-background rounded-full overflow-hidden"
-      />
+      <TouchableOpacity
+        className="absolute right-0 m-2 bg-background border-2 border-background rounded-full overflow-hidden"
+        onLongPress={() => {
+          Linking.openURL("https://ramonline.vercel.app").catch((err) =>
+            console.log("Error opening URL:", err)
+          );
+        }}
+      >
+        <Image source={images.logo} className="h-24 w-24 " />
+      </TouchableOpacity>
       <StatusBar backgroundColor={colors.primary} style="auto" />
     </>
   );
