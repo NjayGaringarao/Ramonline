@@ -53,13 +53,20 @@ const settings = () => {
           titleStyle="text-xl font-semibold text-red-600"
         >
           <View className="mb-8">
-            <Text className="text-base font-medium text-gray-800">
-              {"\n\t\t\tAnyone can come and go."}
-            </Text>
             <CustomButton
-              title="Delete Account"
-              handlePress={() => {}}
-              containerStyles="py-1 mt-2"
+              title="Leave Ramonline"
+              handlePress={() => {
+                router.push("/(auth)/deleteAccount");
+              }}
+              containerStyles="py-1 mt-2 mr-4"
+            />
+            <CustomButton
+              title="Clear User Data"
+              handlePress={() => {
+                router.push("/(auth)/deleteAccount");
+              }}
+              containerStyles="bg-transparent py-1 mt-1 mr-4"
+              textStyles="text-primary"
               isLoading={true}
             />
           </View>

@@ -5,6 +5,7 @@ import {
   _createRecovery,
   _createTarget,
   _deleteFile,
+  _executeFunction,
   _generateAvatar,
   _getCurrentUser,
   _getDocument,
@@ -182,6 +183,18 @@ export const getUserSessions = async () => {
     return toSessionList(sessions);
   } catch (error) {
     console.log(`ERROR : (userServices.ts => getUserSessions) :: ${error}`);
+    throw error;
+  }
+};
+
+export const deleteUserAccount = async (user_id: string, password: string) => {
+  try {
+    return await _executeFunction(env.FUNCTION_ACCOUNT, "deleteUserAccount", {
+      user_id: user_id,
+      password: password,
+    });
+  } catch (error) {
+    console.log(`ERROR : (userServices.ts => deleteUserAccount) :: ${error}`);
     throw error;
   }
 };

@@ -10,6 +10,6 @@ export interface IENV {
   COLLECTION_NOTIFICATION_INFO: string;
   BUCKET_IMAGE: string;
   FUNCTION_NOTIFICATION: string;
-  FUNCTION_USER: string;
+  FUNCTION_ACCOUNT: string;
   WEBAPP_ENDPOINT: string;
 }

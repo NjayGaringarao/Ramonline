@@ -31,6 +31,13 @@ const layout = () => {
           headerShown: false,
         }}
       />
+
+      <Stack.Screen
+        name="deleteAccount"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };
