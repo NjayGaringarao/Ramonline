@@ -8,11 +8,7 @@ import {
   requestNotificationPermissions,
   setupPushTarget,
 } from "@/services/notificationServices";
-import {
-  getCurrentUser,
-  getUserActivity,
-  getUserInfo,
-} from "@/services/userServices";
+import { getCurrentUser, getUserInfo } from "@/services/userServices";
 import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 import { UserType, PostType, LineType, NotificationType } from "@/types/models";
@@ -30,10 +26,6 @@ export const useGlobalState = () => {
     avatar_url: "",
     role: ["", "", "", ""],
     created_at: new Date(0),
-  });
-  const [userActivity, setUserActivity] = useState<UserType.Activity>({
-    id: "",
-    viewed_notification_id: [],
   });
   const [userPost, setUserPost] = useState<PostType.Info[]>([]);
   const [userLine, setUserLine] = useState<LineType.Info[]>([]);
@@ -57,20 +49,16 @@ export const useGlobalState = () => {
 
           handleNotification(async () => {
             setUserNotification(await getUserNotificationList(currentUser.$id));
-            setUserActivity(await getUserActivity(currentUser.$id));
           });
 
-          const [info, activity, lines, posts, notification] =
-            await Promise.all([
-              getUserInfo(currentUser.$id),
-              getUserActivity(currentUser.$id),
-              getUserLineList(currentUser.$id),
-              getUserPostList(currentUser.$id),
-              getUserNotificationList(currentUser.$id),
-            ]);
+          const [info, lines, posts, notification] = await Promise.all([
+            getUserInfo(currentUser.$id),
+            getUserLineList(currentUser.$id),
+            getUserPostList(currentUser.$id),
+            getUserNotificationList(currentUser.$id),
+          ]);
 
           setUserInfo(info);
-          setUserActivity(activity);
           setUserLine(lines);
           setUserPost(posts);
           setUserNotification(notification);
@@ -92,8 +80,6 @@ export const useGlobalState = () => {
     setUser,
     userInfo,
     setUserInfo,
-    userActivity,
-    setUserActivity,
     userPost,
     setUserPost,
     userLine,

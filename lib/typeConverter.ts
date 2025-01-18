@@ -26,15 +26,6 @@ export const toUserInfoList = (documents: Models.Document[]) => {
   return userList;
 };
 
-export const toUserActivity = (document: Models.Document) => {
-  const user: UserType.Activity = {
-    id: document.$id,
-    viewed_notification_id: document.viewed_notification_id,
-  };
-
-  return user;
-};
-
 //#endregion
 
 //#region  Post
@@ -84,6 +75,7 @@ export const toNotificationInfo = (document: Models.Document) => {
     user_id: document.user_id,
     origin: [document.origin[0], document.origin[1]],
     content: [document.content[0], document.content[1]],
+    isViewed: !!document.isViewed,
     created_at: new Date(document.created_at),
   };
 

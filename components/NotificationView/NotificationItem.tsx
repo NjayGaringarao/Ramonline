@@ -9,8 +9,6 @@ import { RefreshUserRecordType } from "@/types/utils";
 interface NotificationItemProps {
   notification: NotificationType.Info;
   isSelected: boolean;
-  isViewed: boolean;
-  userActivity: UserType.Activity;
   refreshUserRecord: (update: RefreshUserRecordType) => void;
   onLongPress: () => void;
   handleSelectNotification: (notification: NotificationType.Info) => void;
@@ -20,8 +18,6 @@ interface NotificationItemProps {
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
   isSelected,
-  isViewed,
-  userActivity,
   refreshUserRecord,
   onLongPress,
   handleSelectNotification,
@@ -32,11 +28,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   const onOpen = async () => {
     setIsModalNotificationVisible(true);
-    if (!isViewed) {
-      await setNotificationViewed(userActivity, notification.id);
-      refreshUserRecord({
-        activity: true,
-      });
+    if (!notification.isViewed) {
+      await setNotificationViewed(notification.id);
+      refreshUserRecord({ notification: true });
     }
   };
 
@@ -49,7 +43,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         }
         className={`px-2 py-2 flex flex-row items-center space-x-2 justify-between ${
           isSelected ? "bg-primaryLight" : "bg-background"
-        } ${!isSelected && !isViewed && "bg-panel"}`}
+        } ${!isSelected && !notification.isViewed && "bg-panel"}`}
       >
         <View className="flex-1">
           <Text className="text-lg font-semibold text-gray-800">

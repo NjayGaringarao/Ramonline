@@ -11,7 +11,6 @@ export const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({
   const refreshUserRecord = useRefreshUser(
     state.user,
     state.setUserInfo,
-    state.setUserActivity,
     state.setUserLine,
     state.setUserPost,
     state.setUserNotification

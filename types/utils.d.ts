@@ -18,7 +18,6 @@ export interface SessionType {
 
 export interface RefreshUserRecordType {
   info?: boolean;
-  activity?: boolean;
   line?: boolean;
   post?: boolean;
   notification?: boolean;

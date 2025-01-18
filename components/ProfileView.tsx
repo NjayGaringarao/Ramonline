@@ -37,7 +37,6 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
     setUser,
     setUserInfo,
     setUserLine,
-    setUserActivity,
     setUserPost,
     setUserNotification,
     userInfo,
@@ -65,7 +64,6 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
       if (isLoggedOut) {
         setUser(null);
         setUserInfo(Object);
-        setUserActivity(Object);
         setUserPost([]);
         setUserLine([]);
         setUserNotification([]);

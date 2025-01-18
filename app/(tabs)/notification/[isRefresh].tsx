@@ -12,8 +12,7 @@ import { useSearchParams } from "expo-router/build/hooks";
 
 const Notification = () => {
   const searchParams = useGlobalSearchParams();
-  const { refreshUserRecord, userNotification, userActivity, setUserActivity } =
-    useGlobalContext();
+  const { refreshUserRecord, userNotification } = useGlobalContext();
   const [notificationList, setNotificationList] = useState<
     NotificationType.Info[]
   >([]);
@@ -48,30 +47,16 @@ const Notification = () => {
     setIsRefreshing(true);
 
     try {
-      await deleteNotification(userActivity, selectedNotification);
+      await deleteNotification(selectedNotification);
+      setSelectedNotification([]);
     } catch {
       console.log(
         `notification.tsx => deleteNotificationHandle :: ERROR Deleting`
       );
+    } finally {
+      setIsSelectionOn(false);
+      onRefreshHandle();
     }
-
-    const notificationIdsToRemove = selectedNotification.map(
-      (notif) => notif.id
-    );
-
-    const updatedViewedNotification =
-      userActivity.viewed_notification_id.filter(
-        (id) => !notificationIdsToRemove.includes(id)
-      );
-
-    setUserActivity({
-      ...userActivity,
-      viewed_notification_id: updatedViewedNotification,
-    });
-
-    setSelectedNotification([]);
-    setIsSelectionOn(false);
-    onRefreshHandle();
   };
 
   const setupHandle = () => {
@@ -81,7 +66,7 @@ const Notification = () => {
 
   const onRefreshHandle = () => {
     setIsRefreshing(true);
-    refreshUserRecord({ notification: true, activity: true });
+    refreshUserRecord({ notification: true });
   };
 
   useEffect(() => {
@@ -98,7 +83,6 @@ const Notification = () => {
       setIsRefreshing(true);
       refreshUserRecord({
         info: true,
-        activity: true,
         line: true,
         post: true,
         notification: true,
@@ -132,15 +116,10 @@ const Notification = () => {
             (selectedNotification) => selectedNotification.id === item.id
           );
 
-          const isViewed = userActivity.viewed_notification_id.some(
-            (viewedNotification) => viewedNotification === item.id
-          );
           return (
             <NotificationItem
               notification={item}
               isSelected={isSelected}
-              isViewed={isViewed}
-              userActivity={userActivity}
               refreshUserRecord={refreshUserRecord}
               onLongPress={() => {
                 setIsSelectionOn(true);

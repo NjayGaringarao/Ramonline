@@ -46,7 +46,6 @@ const Verification = () => {
       setUser(user);
       refreshUserRecord({
         info: true,
-        activity: true,
         line: true,
         post: true,
         notification: true,

@@ -5,7 +5,6 @@ import { UserType, PostType, LineType, NotificationType } from "@/types/models";
 
 export interface RefreshUserRecordType {
   info?: boolean;
-  activity?: boolean;
   line?: boolean;
   post?: boolean;
   notification?: boolean;
@@ -16,7 +15,6 @@ export interface GlobalContextInterface {
     React.SetStateAction<Models.User<Models.Preferences> | null>
   >;
   setUserInfo: Dispatch<React.SetStateAction<UserType.Info>>;
-  setUserActivity: Dispatch<React.SetStateAction<UserType.Activity>>;
   setUserPost: Dispatch<React.SetStateAction<PostType.Info[]>>;
   setUserLine: Dispatch<React.SetStateAction<LineType.Info[]>>;
   setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
@@ -24,7 +22,6 @@ export interface GlobalContextInterface {
   setIsRefreshFeeds: Dispatch<React.SetStateAction<boolean>>;
   user: Models.User<Models.Preferences> | null;
   userInfo: UserType.Info;
-  userActivity: UserType.Activity;
   userPost: PostType.Info[];
   userLine: LineType.Info[];
   userNotification: NotificationType.Info[];
@@ -37,7 +34,6 @@ export interface GlobalContextInterface {
 const defaultValue: GlobalContextInterface = {
   setUser: () => {},
   setUserInfo: () => {},
-  setUserActivity: () => {},
   setUserPost: () => {},
   setUserLine: () => {},
   setUserNotification: () => {},
@@ -52,7 +48,6 @@ const defaultValue: GlobalContextInterface = {
     role: ["", "", "", ""],
     created_at: new Date(0),
   },
-  userActivity: { id: "", viewed_notification_id: [] },
   userPost: [],
   userLine: [],
   userNotification: [],

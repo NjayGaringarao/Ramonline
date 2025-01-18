@@ -19,7 +19,7 @@ import {
   _updatePassword,
   _uploadFile,
 } from "./appwrite";
-import { toSessionList, toUserActivity, toUserInfo } from "@/lib/typeConverter";
+import { toSessionList, toUserInfo } from "@/lib/typeConverter";
 import { env } from "@/constants/env";
 import { Models, Query } from "react-native-appwrite";
 import { AffiliationType } from "@/types/utils";
@@ -71,15 +71,6 @@ export const createAccount = async (
         username: username,
         avatar_url: avatar_url.toString(),
         created_at: new Date(),
-      }
-    );
-
-    await _createDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_ACTIVITY,
-      userAccount.$id,
-      {
-        viewed_notification_id: [],
       }
     );
 
@@ -205,20 +196,6 @@ export const getUserInfo = async (user_id: string) => {
     return toUserInfo(user);
   } catch (error) {
     console.log(`ERROR : (userServices.ts => getUserInfo) :: ${error}`);
-    throw error;
-  }
-};
-
-export const getUserActivity = async (user_id: string) => {
-  try {
-    const user = await _getDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_ACTIVITY,
-      user_id
-    );
-    return toUserActivity(user);
-  } catch (error) {
-    console.log(`ERROR : (userServices.ts => getUserActivity) :: ${error}`);
     throw error;
   }
 };

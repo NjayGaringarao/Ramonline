@@ -3,7 +3,6 @@ export interface IENV {
   APPWRITE_PLATFORM: string;
   APPWRITE_PROJECT: string;
   DATABASE_PRIMARY: string;
-  COLLECTION_USER_ACTIVITY: string;
   COLLECTION_USER_INFO: string;
   COLLECTION_POST_INFO: string;
   COLLECTION_LINE_INFO: string;

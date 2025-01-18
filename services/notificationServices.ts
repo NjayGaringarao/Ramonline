@@ -189,20 +189,14 @@ export const getUserNotificationList = async (user_id: string) => {
   }
 };
 
-export const setNotificationViewed = async (
-  userActivity: UserType.Activity,
-  notification_id: string
-) => {
+export const setNotificationViewed = async (notification_id: string) => {
   try {
-    await _updateDocument(
+    return await _updateDocument(
       env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_ACTIVITY,
-      userActivity.id,
+      env.COLLECTION_NOTIFICATION_INFO,
+      notification_id,
       {
-        viewed_notification_id: [
-          ...userActivity.viewed_notification_id,
-          notification_id,
-        ],
+        isViewed: true,
       }
     );
   } catch (error) {
@@ -213,7 +207,6 @@ export const setNotificationViewed = async (
 };
 
 export const deleteNotification = async (
-  userActivity: UserType.Activity,
   notification: NotificationType.Info[]
 ) => {
   for (let i = 0; notification.length > i; i++) {
@@ -229,20 +222,5 @@ export const deleteNotification = async (
       );
     }
   }
-
-  const notificationIdsToRemove = notification.map((notif) => notif.id);
-
-  const updatedUserActivity = userActivity.viewed_notification_id.filter(
-    (id) => !notificationIdsToRemove.includes(id)
-  );
-
-  await _updateDocument(
-    env.DATABASE_PRIMARY,
-    env.COLLECTION_USER_ACTIVITY,
-    userActivity.id,
-    {
-      viewed_notification_id: updatedUserActivity,
-    }
-  );
 };
 //#endregion

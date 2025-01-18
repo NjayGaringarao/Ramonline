@@ -8,11 +8,6 @@ export declare namespace UserType {
     role: [string?, string?, string?, string?];
     created_at: Date;
   };
-
-  type Activity = {
-    id: string;
-    viewed_notification_id: string[];
-  };
 }
 
 export declare namespace PostType {
@@ -55,6 +50,7 @@ export declare namespace NotificationType {
     user_id: string;
     origin: [string, string];
     content: [string, string];
+    isViewed: boolean;
     created_at: Date;
   };
 }

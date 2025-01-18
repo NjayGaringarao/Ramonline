@@ -6,14 +6,14 @@ import { StatusBar } from "expo-status-bar";
 import { useGlobalContext } from "@/context/GlobalContext";
 
 const layout = () => {
-  const { userActivity, userNotification } = useGlobalContext();
+  const { userNotification } = useGlobalContext();
   const [totalUnread, setTotalUnread] = useState(0);
 
   useEffect(() => {
     setTotalUnread(
-      userNotification.length - userActivity.viewed_notification_id.length
+      userNotification.filter((notif) => notif.isViewed === false).length
     );
-  }, [userActivity, userNotification]);
+  }, [userNotification]);
 
   return (
     <>
