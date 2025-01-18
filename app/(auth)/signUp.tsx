@@ -56,8 +56,8 @@ const signUp = () => {
           post: true,
           notification: true,
         });
-        const fcmToken = await getFCMToken();
-        await setupPushTarget(user, fcmToken!);
+        // const fcmToken = await getFCMToken();
+        // await setupPushTarget(user, fcmToken!);
         router.replace("/(auth)/verification");
       }
     } catch (error) {

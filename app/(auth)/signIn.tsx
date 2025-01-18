@@ -13,6 +13,7 @@ import { getFCMToken, setupPushTarget } from "@/services/notificationServices";
 import { StatusBar } from "expo-status-bar";
 import { colors, images } from "@/constants";
 import TextBox from "@/components/TextBox";
+import Toast from "react-native-root-toast";
 
 const signIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,22 +33,24 @@ const signIn = () => {
         const user = await getCurrentUser();
         if (!user) throw Error;
         setUser(user);
-        refreshUserRecord({
-          info: true,
-          line: true,
-          post: true,
-          notification: true,
-        });
         const fcmToken = await getFCMToken();
         await setupPushTarget(user, fcmToken!);
         if (!user.emailVerification) {
+          refreshUserRecord({
+            info: true,
+            line: true,
+            post: true,
+            notification: true,
+          });
           router.replace("/(auth)/verification");
         } else {
           router.replace("/home");
         }
       }
     } catch (error) {
-      console.log(`ERROR : (login.tsx => loginHandle) :: ${error}`);
+      Toast.show(`Failed: Wrong password or email.`, {
+        duration: Toast.durations.LONG,
+      });
     } finally {
       setIsSubmitting(false);
     }

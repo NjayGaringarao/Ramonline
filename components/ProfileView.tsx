@@ -63,7 +63,15 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
       const isLoggedOut = await logoutUser();
       if (isLoggedOut) {
         setUser(null);
-        setUserInfo(Object);
+        setUserInfo({
+          id: "",
+          username: "",
+          name: ["", "", ""],
+          avatar_url: "",
+          picture_id: "",
+          role: ["", "", "", ""],
+          created_at: new Date(0),
+        });
         setUserPost([]);
         setUserLine([]);
         setUserNotification([]);

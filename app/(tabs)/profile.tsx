@@ -76,7 +76,7 @@ const profile = () => {
                 containerStyles="pt-16"
               />
             ) : (
-              <View className="flex-1 bg-panel m-2 mt-16 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
+              <View className="flex-1 bg-panel m-2 mt-2 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
                 <Text className="text-xl text-primary font-semibold text-center pb-2 ">
                   ⚠️ YOU HAVE NO PUBLISHED POST ⚠️.
                 </Text>
@@ -121,7 +121,7 @@ const profile = () => {
                 containerStyles="pt-16"
               />
             ) : (
-              <View className="flex-1 bg-panel m-2 mt-16 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
+              <View className="flex-1 bg-panel m-2 mt-2 py-12 items-center rounded-lg overflow-hidden shadow-primary shadow-lg">
                 <Text className="text-xl text-primary font-semibold text-center pb-2 ">
                   ⚠️ YOU DO NOT OWN A SINGLE LINE ⚠️.
                 </Text>
