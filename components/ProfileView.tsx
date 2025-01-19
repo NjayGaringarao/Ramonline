@@ -97,7 +97,8 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
           </Text>
         </Text>
       </View>
-      <View className="w-full flex-row justify-end pb-2 gap-2 px-2">
+
+      <View className="flex-row w-full pb-2 justify-end gap-2 px-2">
         <View className="bg-panel rounded-xl overflow-hidden">
           <CustomButton
             title={`Settings`}
@@ -130,9 +131,44 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
         </View>
       </View>
 
-      <Text className="text-3xl pt-3 pb-2 w-full font-semibold text-primary px-4 bg-panel border-primary border-t-4">
-        Content
-      </Text>
+      <View className="flex-row justify-between px-2 pt-3 pb-2 w-full bg-panel border-primary border-t-4">
+        <Text className="text-3xl font-semibold text-primary ">Content </Text>
+        <View className="flex-row pb-2 gap-2">
+          <View className="bg-background rounded-xl overflow-hidden">
+            <CustomButton
+              title={`Post`}
+              textStyles="text-lg text-uGray"
+              handlePress={() => {
+                router.push("/createPostPage");
+              }}
+              containerStyles="p-0 bg-transparent"
+            >
+              <Image
+                source={icons.add}
+                tintColor={colors.primary}
+                className="h-5 w-5 mr-1"
+              />
+            </CustomButton>
+          </View>
+
+          <View className="bg-background rounded-xl overflow-hidden">
+            <CustomButton
+              title={`Line`}
+              textStyles="text-lg text-uGray"
+              handlePress={() => {
+                router.push("/createLinePage");
+              }}
+              containerStyles="p-0 bg-transparent"
+            >
+              <Image
+                source={icons.add}
+                tintColor={colors.primary}
+                className="h-5 w-5 mr-1"
+              />
+            </CustomButton>
+          </View>
+        </View>
+      </View>
       <View className="h-20 w-full flex-row">
         <TouchableOpacity
           className={`flex-1 items-center justify-center rounded-br-lg  ${
