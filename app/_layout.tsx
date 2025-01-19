@@ -21,12 +21,6 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
-                name="line"
-                options={{
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
                 name="createLinePage"
                 options={{
                   headerShown: false,

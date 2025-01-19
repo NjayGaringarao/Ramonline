@@ -29,15 +29,15 @@ const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
 
   return (
     <>
-      <TouchableOpacity
-        onPress={line ? openModal : userInterface?.onPress}
-        className="ml-2 h-64 w-48 rounded-lg overflow-hidden"
-      >
-        <View className="w-full">
-          <View className="w-full h-48 justify-center items-center">
+      <View className="p-1 w-full">
+        <TouchableOpacity
+          onPress={line ? openModal : userInterface?.onPress}
+          className="rounded-lg overflow-hidden bg-panel"
+        >
+          <View className="flex-row gap-1">
             <Image
               source={images.gate}
-              className="absolute h-48 w-full opacity-40"
+              className="absolute w-14 h-14 opacity-40"
             />
             {children ? (
               children
@@ -46,18 +46,22 @@ const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
                 source={{ uri: getImagePreview(line?.banner_id!) }}
                 tintColor={line ? undefined : colors.background}
                 className={` ${
-                  line ? "h-full w-full opacity-100" : "h-36 w-full opacity-100"
+                  line ? "h-14 w-14 opacity-100" : "h-14 w-14 opacity-100"
                 }`}
               />
             )}
+            <View className="justify-center flex-1 mr-2">
+              <Text
+                className="text-primary text-base font-semibold mt-1"
+                numberOfLines={2}
+                style={{ lineHeight: 16 }}
+              >
+                {line ? line.name : userInterface?.text}
+              </Text>
+            </View>
           </View>
-          <View className="h-16 bg-background items-center justify-center px-2">
-            <Text className="text-primary text-xl font-semibold">
-              {line ? line.name : userInterface?.text}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
 
       {/* Modal for lineView */}
       <Modal

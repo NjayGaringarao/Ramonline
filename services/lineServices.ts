@@ -68,33 +68,15 @@ export const deleteLine = async (line_id: string) => {
   }
 };
 
-export const getFeedLines = async (lastId?: string, searchArgs?: string) => {
+export const getFeedLines = async (lastId?: string) => {
   try {
-    if (searchArgs) {
-      const lines = await _listDocuments(
-        env.DATABASE_PRIMARY,
-        env.COLLECTION_LINE_INFO,
-        [Query.contains("name", searchArgs), Query.limit(5)]
-      );
-      return toLineInfoList(lines.documents);
-    } else if (searchArgs && lastId) {
-      const lines = await _listDocuments(
-        env.DATABASE_PRIMARY,
-        env.COLLECTION_LINE_INFO,
-        [
-          Query.contains("name", searchArgs),
-          Query.limit(5),
-          Query.cursorAfter(lastId),
-        ]
-      );
-      return toLineInfoList(lines.documents);
-    } else if (lastId && !searchArgs) {
+    if (lastId) {
       const lines = await _listDocuments(
         env.DATABASE_PRIMARY,
         env.COLLECTION_LINE_INFO,
         [
           Query.orderDesc("created_at"),
-          Query.limit(5),
+          Query.limit(8),
           Query.cursorAfter(lastId),
         ]
       );
@@ -103,7 +85,7 @@ export const getFeedLines = async (lastId?: string, searchArgs?: string) => {
       const line = await _listDocuments(
         env.DATABASE_PRIMARY,
         env.COLLECTION_LINE_INFO,
-        [Query.orderDesc("created_at"), Query.limit(5)]
+        [Query.orderDesc("created_at"), Query.limit(8)]
       );
       return toLineInfoList(line.documents);
     }
