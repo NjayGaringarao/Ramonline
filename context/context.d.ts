@@ -27,5 +27,5 @@ export interface GlobalContextInterface {
   isRefreshLineFeed: boolean;
   isRefreshPostFeed: boolean;
   isLoading: boolean;
-  isInternetReachable: boolean | undefined;
+  isInternetConnection: boolean | null;
 }

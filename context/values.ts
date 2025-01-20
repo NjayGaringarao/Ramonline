@@ -30,5 +30,5 @@ export const defaultValue: GlobalContextInterface = {
   isRefreshLineFeed: false,
   isRefreshPostFeed: false,
   isLoading: false,
-  isInternetReachable: undefined,
+  isInternetConnection: null,
 };

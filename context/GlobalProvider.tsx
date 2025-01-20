@@ -12,7 +12,7 @@ import {
   setupPushTarget,
 } from "@/services/notificationServices";
 import { Models } from "react-native-appwrite";
-import { useNetworkState } from "expo-network";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { getCurrentUser, getUserInfo } from "@/services/userServices";
 import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
@@ -20,6 +20,7 @@ import { UserType, PostType, LineType, NotificationType } from "@/types/models";
 import handleNotification from "./NotificationHandler";
 import { GlobalContextInterface, RefreshUserRecordType } from "./context";
 import { defaultValue, emptyUserInfo } from "./values";
+import Toast from "react-native-root-toast";
 
 export const GlobalContext =
   createContext<GlobalContextInterface>(defaultValue);
@@ -27,7 +28,9 @@ export const GlobalContext =
 export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }: { children: ReactNode }) => {
-  const { isInternetReachable } = useNetworkState();
+  const { isInternetReachable } = useNetInfo();
+  const [isInternetConnection, setIsInternetConnection] =
+    useState<boolean>(false);
   const [user, setUser] = useState<Models.User<Models.Preferences> | null>(
     null
   );
@@ -78,6 +81,22 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     initializeGlobalState();
   }, []);
+
+  useEffect(() => {
+    const promptInternetStatus = async () => {
+      if (isInternetReachable === null) return;
+      if (isInternetReachable) {
+        setIsInternetConnection(true);
+      } else {
+        Toast.show("No internet connection", {
+          duration: Toast.durations.LONG,
+        });
+        setIsInternetConnection(false);
+      }
+    };
+
+    promptInternetStatus();
+  }, [isInternetReachable]);
 
   const refreshUserRecord = async ({
     info,
@@ -133,7 +152,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         isRefreshLineFeed,
         isRefreshPostFeed,
         isLoading,
-        isInternetReachable,
+        isInternetConnection,
       }}
     >
       {children}
