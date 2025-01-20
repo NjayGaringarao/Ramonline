@@ -13,7 +13,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
       <TouchableOpacity onPress={onImagePress}>
         <Image
           source={{ uri: getImagePreview(imageIds[0]) }}
-          className="w-full h-64 bg-panel border-2"
+          className="w-full h-64 bg-panel"
           resizeMode="cover"
         />
       </TouchableOpacity>

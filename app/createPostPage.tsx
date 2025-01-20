@@ -13,8 +13,12 @@ import Toast from "react-native-root-toast";
 import { icons } from "@/constants";
 
 const createPostPage = () => {
-  const { userInfo, refreshUserRecord, isInternetReachable } =
-    useGlobalContext();
+  const {
+    userInfo,
+    refreshUserRecord,
+    isInternetReachable,
+    setIsRefreshPostFeed,
+  } = useGlobalContext();
   const [caption, setCaption] = useState<string>("");
   const [images, setImages] = useState<ImagePickerAsset[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +50,7 @@ const createPostPage = () => {
         refreshUserRecord({
           post: true,
         });
+        setIsRefreshPostFeed(true);
       }
       router.back();
     } catch (error) {

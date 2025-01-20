@@ -36,7 +36,8 @@ interface GlobalContextInterface {
   setUserLine: Dispatch<React.SetStateAction<LineType.Info[]>>;
   setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
   refreshUserRecord: (update: RefreshUserRecordType) => void;
-  setIsRefreshFeeds: Dispatch<React.SetStateAction<boolean>>;
+  setIsRefreshLineFeed: Dispatch<React.SetStateAction<boolean>>;
+  setIsRefreshPostFeed: Dispatch<React.SetStateAction<boolean>>;
   resetGlobalState: () => void;
   initializeGlobalState: () => Promise<void>;
   user: Models.User<Models.Preferences> | null;
@@ -45,7 +46,8 @@ interface GlobalContextInterface {
   userLine: LineType.Info[];
   userNotification: NotificationType.Info[];
   fcmToken?: string;
-  isRefreshFeeds: boolean;
+  isRefreshLineFeed: boolean;
+  isRefreshPostFeed: boolean;
   isLoading: boolean;
   isInternetReachable: boolean | undefined;
 }
@@ -66,7 +68,8 @@ const defaultValue: GlobalContextInterface = {
   setUserLine: () => {},
   setUserNotification: () => {},
   refreshUserRecord: () => {},
-  setIsRefreshFeeds: () => {},
+  setIsRefreshLineFeed: () => {},
+  setIsRefreshPostFeed: () => {},
   resetGlobalState: () => {},
   initializeGlobalState: async () => {},
   user: null,
@@ -75,7 +78,8 @@ const defaultValue: GlobalContextInterface = {
   userLine: [],
   userNotification: [],
   fcmToken: undefined,
-  isRefreshFeeds: false,
+  isRefreshLineFeed: false,
+  isRefreshPostFeed: false,
   isLoading: false,
   isInternetReachable: undefined,
 };
@@ -96,7 +100,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [userNotification, setUserNotification] = useState<
     NotificationType.Info[]
   >([]);
-  const [isRefreshFeeds, setIsRefreshFeeds] = useState(false);
+  const [isRefreshLineFeed, setIsRefreshLineFeed] = useState(false);
+  const [isRefreshPostFeed, setIsRefreshPostFeed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [fcmToken, setFcmToken] = useState<string>();
 
@@ -163,7 +168,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     setUserPost([]);
     setUserLine([]);
     setUserNotification([]);
-    setIsRefreshFeeds(false);
+    setIsRefreshLineFeed(false);
+    setIsRefreshPostFeed(false);
     setIsLoading(false);
     setFcmToken(undefined);
   };
@@ -177,7 +183,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserLine,
         setUserNotification,
         refreshUserRecord,
-        setIsRefreshFeeds,
+        setIsRefreshLineFeed,
+        setIsRefreshPostFeed,
         resetGlobalState,
         initializeGlobalState,
         user,
@@ -186,7 +193,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         userLine,
         userNotification,
         fcmToken,
-        isRefreshFeeds,
+        isRefreshLineFeed,
+        isRefreshPostFeed,
         isLoading,
         isInternetReachable,
       }}

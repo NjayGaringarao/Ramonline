@@ -13,7 +13,8 @@ import { View, Text, ScrollView, Alert, Image } from "react-native";
 import Toast from "react-native-root-toast";
 
 const createLinePage = () => {
-  const { userInfo, refreshUserRecord } = useGlobalContext();
+  const { userInfo, refreshUserRecord, setIsRefreshLineFeed } =
+    useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [lineName, setLineName] = useState("");
   const [lineDescription, setLineDescription] = useState("");
@@ -61,6 +62,7 @@ const createLinePage = () => {
         refreshUserRecord({
           line: true,
         });
+        setIsRefreshLineFeed(true);
       } else {
         Toast.show(`There might be a problem creating you line.`, {
           duration: Toast.durations.LONG,

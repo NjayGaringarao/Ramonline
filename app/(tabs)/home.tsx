@@ -18,7 +18,7 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import LineGrid from "@/components/homeComponents/LineGrid";
 
 const Home = () => {
-  const { isRefreshFeeds, setIsRefreshFeeds } = useGlobalContext();
+  const { isRefreshPostFeed, setIsRefreshPostFeed } = useGlobalContext();
   const [postList, setPostList] = useState<PostType.Info[]>([]);
   const [isPostsLoading, setIsPostsLoading] = useState(false);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -78,11 +78,11 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (isRefreshFeeds) {
+    if (setIsRefreshPostFeed) {
       onRefreshFeedHandle();
-      setIsRefreshFeeds(false);
+      setIsRefreshPostFeed(false);
     }
-  }, [isRefreshFeeds]);
+  }, [isRefreshPostFeed]);
 
   return (
     <View className="relative flex-1 bg-background mt-14 overflow-visible">

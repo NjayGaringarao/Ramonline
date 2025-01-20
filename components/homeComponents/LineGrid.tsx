@@ -9,7 +9,7 @@ import CustomButton from "../CustomButton";
 import { icons } from "@/constants";
 
 const LineGrid = () => {
-  const { isRefreshFeeds, setIsRefreshFeeds } = useGlobalContext();
+  const { isRefreshLineFeed, setIsRefreshLineFeed } = useGlobalContext();
   const [displayList, setDisplayList] = useState<LineType.Info[][]>([]);
   const [lineList, setLineList] = useState<LineType.Info[]>([]);
   const [isLinesLoading, setIsLinesLoading] = useState(false);
@@ -75,22 +75,15 @@ const LineGrid = () => {
   };
 
   useEffect(() => {
-    if (isRefreshFeeds) {
-      onRefreshFeedHandle();
-      setIsRefreshFeeds(false);
-    }
-  }, [isRefreshFeeds]);
-
-  useEffect(() => {
     queryLineFeed();
   }, []);
 
   useEffect(() => {
-    if (isRefreshFeeds) {
+    if (isRefreshLineFeed) {
       onRefreshFeedHandle();
-      setIsRefreshFeeds(false);
+      setIsRefreshLineFeed(false);
     }
-  }, [isRefreshFeeds]);
+  }, [isRefreshLineFeed]);
 
   return (
     <View className="bg-primary w-full h-72">
