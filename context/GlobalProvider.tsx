@@ -3,86 +3,23 @@ import React, {
   useContext,
   useState,
   useEffect,
-  Dispatch,
   ReactNode,
 } from "react";
-import { Models } from "react-native-appwrite";
-import { useNetworkState } from "expo-network";
 import {
   getFCMToken,
   getUserNotificationList,
   requestNotificationPermissions,
   setupPushTarget,
 } from "@/services/notificationServices";
+import { Models } from "react-native-appwrite";
+import { useNetworkState } from "expo-network";
 import { getCurrentUser, getUserInfo } from "@/services/userServices";
 import { getUserLineList } from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 import { UserType, PostType, LineType, NotificationType } from "@/types/models";
 import handleNotification from "./NotificationHandler";
-
-interface RefreshUserRecordType {
-  info?: boolean;
-  line?: boolean;
-  post?: boolean;
-  notification?: boolean;
-}
-
-interface GlobalContextInterface {
-  setUser: Dispatch<
-    React.SetStateAction<Models.User<Models.Preferences> | null>
-  >;
-  setUserInfo: Dispatch<React.SetStateAction<UserType.Info>>;
-  setUserPost: Dispatch<React.SetStateAction<PostType.Info[]>>;
-  setUserLine: Dispatch<React.SetStateAction<LineType.Info[]>>;
-  setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
-  refreshUserRecord: (update: RefreshUserRecordType) => void;
-  setIsRefreshLineFeed: Dispatch<React.SetStateAction<boolean>>;
-  setIsRefreshPostFeed: Dispatch<React.SetStateAction<boolean>>;
-  resetGlobalState: () => void;
-  initializeGlobalState: () => Promise<void>;
-  user: Models.User<Models.Preferences> | null;
-  userInfo: UserType.Info;
-  userPost: PostType.Info[];
-  userLine: LineType.Info[];
-  userNotification: NotificationType.Info[];
-  fcmToken?: string;
-  isRefreshLineFeed: boolean;
-  isRefreshPostFeed: boolean;
-  isLoading: boolean;
-  isInternetReachable: boolean | undefined;
-}
-
-const emptyUserInfo: UserType.Info = {
-  id: "",
-  username: "",
-  name: ["", "", ""],
-  avatar_url: "",
-  role: ["", "", "", ""],
-  created_at: new Date(0),
-};
-
-const defaultValue: GlobalContextInterface = {
-  setUser: () => {},
-  setUserInfo: () => {},
-  setUserPost: () => {},
-  setUserLine: () => {},
-  setUserNotification: () => {},
-  refreshUserRecord: () => {},
-  setIsRefreshLineFeed: () => {},
-  setIsRefreshPostFeed: () => {},
-  resetGlobalState: () => {},
-  initializeGlobalState: async () => {},
-  user: null,
-  userInfo: emptyUserInfo,
-  userPost: [],
-  userLine: [],
-  userNotification: [],
-  fcmToken: undefined,
-  isRefreshLineFeed: false,
-  isRefreshPostFeed: false,
-  isLoading: false,
-  isInternetReachable: undefined,
-};
+import { GlobalContextInterface, RefreshUserRecordType } from "./context";
+import { defaultValue, emptyUserInfo } from "./values";
 
 export const GlobalContext =
   createContext<GlobalContextInterface>(defaultValue);
