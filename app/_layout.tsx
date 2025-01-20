@@ -21,13 +21,13 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
-                name="createLinePage"
+                name="create/post"
                 options={{
                   headerShown: false,
                 }}
               />
               <Stack.Screen
-                name="createPostPage"
+                name="create/line"
                 options={{
                   headerShown: false,
                 }}

@@ -13,8 +13,12 @@ import { View, Text, ScrollView, Alert, Image } from "react-native";
 import Toast from "react-native-root-toast";
 
 const createLinePage = () => {
-  const { userInfo, refreshUserRecord, setIsRefreshLineFeed } =
-    useGlobalContext();
+  const {
+    userInfo,
+    refreshUserRecord,
+    setIsRefreshLineFeed,
+    isInternetConnection,
+  } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [lineName, setLineName] = useState("");
   const [lineDescription, setLineDescription] = useState("");
@@ -128,6 +132,7 @@ const createLinePage = () => {
           handlePress={createLineHandle}
           title="Done"
           containerStyles="h-12 w-1/2 my-2"
+          isLoading={!!!isInternetConnection}
         />
       </View>
       <View

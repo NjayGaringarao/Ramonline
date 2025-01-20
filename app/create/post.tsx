@@ -16,7 +16,7 @@ const createPostPage = () => {
   const {
     userInfo,
     refreshUserRecord,
-    isInternetReachable,
+    isInternetConnection,
     setIsRefreshPostFeed,
   } = useGlobalContext();
   const [caption, setCaption] = useState<string>("");
@@ -41,7 +41,6 @@ const createPostPage = () => {
 
     setIsLoading(true);
     try {
-      if (!isInternetReachable) throw Error("No Internet Connection.");
       const post = await createPost(userInfo.id, caption, images);
       if (post) {
         Toast.show(`Uploaded Succesfully`, {
@@ -106,6 +105,7 @@ const createPostPage = () => {
           handlePress={createPostHandle}
           title="Done"
           containerStyles="flex-1 h-12 w-full my-2"
+          isLoading={!!!isInternetConnection}
         />
       </View>
       <View

@@ -82,7 +82,7 @@ const profile = () => {
                 </Text>
                 <CustomButton
                   handlePress={() => {
-                    router.push("/createPostPage");
+                    router.push("/create/post");
                   }}
                   title="Post Something!"
                   containerStyles=" w-2/3"
@@ -127,7 +127,7 @@ const profile = () => {
                 </Text>
                 <CustomButton
                   handlePress={() => {
-                    router.push("/createLinePage");
+                    router.push("/create/line");
                   }}
                   title="Create One!"
                   containerStyles=" w-2/3"

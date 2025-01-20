@@ -139,7 +139,7 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
               title={`Post`}
               textStyles="text-lg text-uGray"
               handlePress={() => {
-                router.push("/createPostPage");
+                router.push("/create/post");
               }}
               containerStyles="p-0 bg-transparent"
             >
@@ -156,7 +156,7 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
               title={`Line`}
               textStyles="text-lg text-uGray"
               handlePress={() => {
-                router.push("/createLinePage");
+                router.push("/create/line");
               }}
               containerStyles="p-0 bg-transparent"
             >
