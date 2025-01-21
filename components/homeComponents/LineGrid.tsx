@@ -8,7 +8,11 @@ import Loading from "../Loading";
 import CustomButton from "../CustomButton";
 import { icons } from "@/constants";
 
-const LineGrid = () => {
+interface ILineGridType {
+  isInternetConnection: boolean;
+}
+
+const LineGrid = ({ isInternetConnection }: ILineGridType) => {
   const { isRefreshLineFeed, setIsRefreshLineFeed } = useGlobalContext();
   const [displayList, setDisplayList] = useState<LineType.Info[][]>([]);
   const [lineList, setLineList] = useState<LineType.Info[]>([]);

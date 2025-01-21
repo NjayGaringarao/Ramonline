@@ -17,7 +17,12 @@ import { Models } from "react-native-appwrite";
 import { router } from "expo-router";
 
 const Verification = () => {
-  const { user, initializeGlobalState, resetGlobalState } = useGlobalContext();
+  const {
+    user,
+    initializeGlobalState,
+    resetGlobalState,
+    isInternetConnection,
+  } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(true);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [cooldown, setCooldown] = useState(0);
@@ -171,7 +176,7 @@ const Verification = () => {
                 }
                 handlePress={requestVerificationHandle}
                 containerStyles="h-10"
-                isLoading={isLoading || cooldown > 0}
+                isLoading={isLoading || cooldown > 0 || !isInternetConnection}
               />
             </View>
           </View>

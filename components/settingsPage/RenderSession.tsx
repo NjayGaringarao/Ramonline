@@ -5,13 +5,19 @@ import { SessionType } from "@/types/utils";
 import { confirmAction } from "@/lib/commonUtil";
 import Toast from "react-native-root-toast";
 import { logoutUser } from "@/services/userServices";
+import CustomButton from "../CustomButton";
 
 interface IRenderSession {
   session: SessionType;
   setIsLoading: (isLoading: boolean) => void;
+  isInternetConnection: boolean;
 }
 
-const RenderSession = ({ session, setIsLoading }: IRenderSession) => {
+const RenderSession = ({
+  session,
+  setIsLoading,
+  isInternetConnection,
+}: IRenderSession) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const deleteSessionHandle = async () => {
@@ -51,16 +57,17 @@ const RenderSession = ({ session, setIsLoading }: IRenderSession) => {
           </View>
         </View>
         {!session.current && (
-          <TouchableOpacity
-            onPress={deleteSessionHandle}
-            className="absolute right-3"
+          <CustomButton
+            handlePress={deleteSessionHandle}
+            containerStyles="absolute right-3 bg-transparent"
+            isLoading={!isInternetConnection}
           >
             <Image
               source={icons.close}
               className="h-5 w-5"
               tintColor={colors.uGray}
             />
-          </TouchableOpacity>
+          </CustomButton>
         )}
       </View>
     </View>

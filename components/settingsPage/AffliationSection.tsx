@@ -11,7 +11,13 @@ import Loading from "../Loading";
 import { updateRole } from "@/services/userServices";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
-const AffliationSection = () => {
+interface IAffiliationSectionType {
+  isInternetConnection: boolean;
+}
+
+const AffliationSection = ({
+  isInternetConnection,
+}: IAffiliationSectionType) => {
   const { userInfo, refreshUserRecord } = useGlobalContext();
   const [dimensions, setDimensions] = useState<AffiliationType>(Object);
   const [isLoading, setIsLoading] = useState(false);
@@ -106,6 +112,7 @@ const AffliationSection = () => {
             title="Update"
             handlePress={handleUpdate}
             containerStyles="py-1"
+            isLoading={isInternetConnection}
           />
           <CustomButton
             title="Reset"

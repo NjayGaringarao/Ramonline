@@ -8,11 +8,11 @@ import { NotificationType } from "@/types/models";
 import { deleteNotification } from "@/services/notificationServices";
 import { colors, icons } from "@/constants";
 import { useGlobalSearchParams } from "expo-router";
-import { useSearchParams } from "expo-router/build/hooks";
 
 const Notification = () => {
   const searchParams = useGlobalSearchParams();
-  const { refreshUserRecord, userNotification } = useGlobalContext();
+  const { refreshUserRecord, userNotification, isInternetConnection } =
+    useGlobalContext();
   const [notificationList, setNotificationList] = useState<
     NotificationType.Info[]
   >([]);
@@ -65,6 +65,7 @@ const Notification = () => {
   };
 
   const onRefreshHandle = () => {
+    if (!isInternetConnection) return;
     setIsRefreshing(true);
     refreshUserRecord({ notification: true });
   };

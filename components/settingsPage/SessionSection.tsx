@@ -8,11 +8,16 @@ import Toast from "react-native-root-toast";
 import { getUserSessions } from "@/services/userServices";
 import Loading from "../Loading";
 
-const SessionSection = () => {
+interface ISessionSectionType {
+  isInternetConnection: boolean;
+}
+
+const SessionSection = ({ isInternetConnection }: ISessionSectionType) => {
   const [sessions, setSessions] = useState<SessionType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const getSessionsHandle = async () => {
+    if (!isInternetConnection) return;
     try {
       setIsLoading(true);
 
@@ -52,6 +57,7 @@ const SessionSection = () => {
               key={session.id}
               session={session}
               setIsLoading={(e) => setIsLoading(e)}
+              isInternetConnection={isInternetConnection}
             />
           ))}
       </View>

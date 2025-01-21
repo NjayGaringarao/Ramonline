@@ -8,8 +8,10 @@ import AffliationSection from "@/components/settingsPage/AffliationSection";
 import SessionSection from "@/components/settingsPage/SessionSection";
 import CredentialSection from "@/components/settingsPage/CredentialSection";
 import Collapsible from "@/components/Collapsible";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const settings = () => {
+  const { isInternetConnection } = useGlobalContext();
   return (
     <>
       <View className="h-14 w-full flex-row items-center bg-primary">
@@ -26,26 +28,26 @@ const settings = () => {
         </Text>
       </View>
       <ScrollView className="bg-background flex-1 px-2 py-4">
-        <ProfileSection />
+        <ProfileSection isInternetConnection={!!isInternetConnection} />
         <Collapsible
           title="PRMSU - Castillejos Affiliation"
           titleStyle="text-xl font-semibold text-uBlack"
         >
-          <AffliationSection />
+          <AffliationSection isInternetConnection={!!isInternetConnection} />
         </Collapsible>
 
         <Collapsible
           title="User Sessions"
           titleStyle="text-xl font-semibold text-uBlack"
         >
-          <SessionSection />
+          <SessionSection isInternetConnection={!!isInternetConnection} />
         </Collapsible>
 
         <Collapsible
           title="Login Credentials"
           titleStyle="text-xl font-semibold text-uBlack"
         >
-          <CredentialSection />
+          <CredentialSection isInternetConnection={!!isInternetConnection} />
         </Collapsible>
 
         <Collapsible

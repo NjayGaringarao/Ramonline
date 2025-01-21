@@ -11,8 +11,13 @@ import { router } from "expo-router";
 import { sortByDate } from "@/lib/commonUtil";
 
 const profile = () => {
-  const { userInfo, userPost, userLine, refreshUserRecord } =
-    useGlobalContext();
+  const {
+    userInfo,
+    userPost,
+    userLine,
+    refreshUserRecord,
+    isInternetConnection,
+  } = useGlobalContext();
   const [activeTab, setActiveTab] = useState("post");
   const [postList, setPostList] = useState<PostType.Info[]>([]);
   const [lineList, setLineList] = useState<LineType.Info[]>([]);
@@ -38,6 +43,7 @@ const profile = () => {
   }, [userPost]);
 
   const onRefreshHandle = useCallback(async () => {
+    if (!isInternetConnection) return;
     setIsRefreshing(true);
     refreshUserRecord({
       info: true,

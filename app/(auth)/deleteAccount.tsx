@@ -12,15 +12,8 @@ import { icons, images } from "@/constants";
 import ProfilePicture from "@/components/ProfilePicture";
 
 const DeleteAccount = () => {
-  const {
-    user,
-    userInfo,
-    setUser,
-    setUserInfo,
-    setUserLine,
-    setUserNotification,
-    setUserPost,
-  } = useGlobalContext();
+  const { user, userInfo, resetGlobalState, isInternetConnection } =
+    useGlobalContext();
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,19 +36,7 @@ const DeleteAccount = () => {
         duration: Toast.durations.LONG,
       });
 
-      setUser(null);
-      setUserInfo({
-        id: "",
-        username: "",
-        name: ["", "", ""],
-        avatar_url: "",
-        picture_id: "",
-        role: ["", "", "", ""],
-        created_at: new Date(0),
-      });
-      setUserLine([]);
-      setUserPost([]);
-      setUserNotification([]);
+      resetGlobalState();
       router.replace("/(auth)/signIn");
     } catch (error) {
       Toast.show(
@@ -131,7 +112,9 @@ const DeleteAccount = () => {
             handlePress={handleDeleteAccount}
             containerStyles="w-full bg-red-600 rounded-lg"
             textStyles="text-white"
-            isLoading={isLoading || password.length == 0}
+            isLoading={
+              isLoading || password.length == 0 || !isInternetConnection
+            }
           />
         </View>
 

@@ -11,7 +11,11 @@ import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
-const ProfileSection = () => {
+interface IProfileSectionType {
+  isInternetConnection: boolean;
+}
+
+const ProfileSection = ({ isInternetConnection }: IProfileSectionType) => {
   const { userInfo, refreshUserRecord } = useGlobalContext();
   const [isModified, setIsModified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -160,6 +164,7 @@ const ProfileSection = () => {
               title="Update"
               handlePress={updateHandle}
               containerStyles="py-1"
+              isLoading={!isInternetConnection}
             />
             <CustomButton
               title="Reset"

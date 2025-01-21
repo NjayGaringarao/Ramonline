@@ -12,7 +12,13 @@ import { confirmAction } from "@/lib/commonUtil";
 import { Models } from "react-native-appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
-const CredentialSection = () => {
+interface ICredentialsSectionType {
+  isInternetConnection: boolean;
+}
+
+const CredentialSection = ({
+  isInternetConnection,
+}: ICredentialsSectionType) => {
   const { user } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
@@ -175,7 +181,11 @@ const CredentialSection = () => {
           title="Update"
           handlePress={handleUpdate}
           containerStyles={`py-1 self-end mt-3 `}
-          isLoading={isLoading || !Object.values(inputValidity).every(Boolean)}
+          isLoading={
+            isLoading ||
+            !Object.values(inputValidity).every(Boolean) ||
+            !isInternetConnection
+          }
         />
       )}
 

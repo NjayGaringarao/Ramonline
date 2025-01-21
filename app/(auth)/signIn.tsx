@@ -12,7 +12,7 @@ import Toast from "react-native-root-toast";
 
 const signIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { initializeGlobalState } = useGlobalContext();
+  const { initializeGlobalState, isInternetConnection } = useGlobalContext();
   const [form, setform] = useState({
     email: "",
     password: "",
@@ -109,7 +109,7 @@ const signIn = () => {
               title="Login"
               handlePress={loginHandle}
               containerStyles="mt-2 w-full "
-              isLoading={isSubmitting}
+              isLoading={isSubmitting || !isInternetConnection}
             />
             <Text
               className="py-2 text-primary text-lg font-bold"

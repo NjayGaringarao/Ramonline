@@ -18,13 +18,15 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import LineGrid from "@/components/homeComponents/LineGrid";
 
 const Home = () => {
-  const { isRefreshPostFeed, setIsRefreshPostFeed } = useGlobalContext();
+  const { isRefreshPostFeed, setIsRefreshPostFeed, isInternetConnection } =
+    useGlobalContext();
   const [postList, setPostList] = useState<PostType.Info[]>([]);
   const [isPostsLoading, setIsPostsLoading] = useState(false);
   const [hasMorePosts, setHasMorePosts] = useState(true);
   const flatListRef = useRef<FlatList>(null);
 
   const queryPostFeed = async () => {
+    if (!isInternetConnection) return;
     let posts: PostType.Info[] = [];
     try {
       setIsPostsLoading(true);
@@ -59,6 +61,7 @@ const Home = () => {
   };
 
   const onRefreshFeedHandle = useCallback(async () => {
+    if (!isInternetConnection) return;
     scrollToLeft();
     setIsPostsLoading(true);
     setPostList([]);
@@ -68,7 +71,12 @@ const Home = () => {
   }, []);
 
   const onEndReachedPostFeedHandle = useCallback(async () => {
-    if (!isPostsLoading && hasMorePosts && postList.length != 0) {
+    if (
+      !isPostsLoading &&
+      hasMorePosts &&
+      postList.length != 0 &&
+      isInternetConnection
+    ) {
       await queryPostFeed();
     }
   }, [isPostsLoading, hasMorePosts]);
@@ -95,7 +103,7 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <View className="w-full h-auto">
-            <LineGrid />
+            <LineGrid isInternetConnection={!!isInternetConnection} />
             <View className="mx-2 mt-4 flex-row w-full justify-between items-center">
               <Text className="text-start font-extrabold text-3xl text-primary ">
                 Latest in PRMSU

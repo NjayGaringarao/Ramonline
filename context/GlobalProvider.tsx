@@ -46,9 +46,11 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [fcmToken, setFcmToken] = useState<string>();
 
   const initializeGlobalState = async () => {
-    await requestNotificationPermissions();
-
     try {
+      setIsLoading(true);
+      if (!isInternetConnection) throw Error("No internet connection.");
+      await requestNotificationPermissions();
+
       const currentUser = await getCurrentUser();
       if (currentUser) {
         setUser(currentUser);
@@ -72,7 +74,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUser(null);
       }
     } catch (error) {
-      console.error("Initialization error:", error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

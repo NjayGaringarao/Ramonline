@@ -5,9 +5,11 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import CustomButton from "@/components/CustomButton";
 import { colors, images } from "@/constants";
 import React, { useEffect } from "react";
+import Loading from "@/components/Loading";
 
 export default function Index() {
-  const { isLoading, user } = useGlobalContext();
+  const { isLoading, user, isInternetConnection, initializeGlobalState } =
+    useGlobalContext();
 
   useEffect(() => {
     if (!isLoading && user) {
@@ -18,6 +20,10 @@ export default function Index() {
       }
     }
   }, [isLoading, user]);
+
+  useEffect(() => {
+    if (isInternetConnection && !isLoading) initializeGlobalState();
+  }, [isInternetConnection]);
 
   return (
     <>
@@ -40,7 +46,7 @@ export default function Index() {
             title="Continue"
             handlePress={() => router.replace("/signIn")}
             containerStyles="w-full h-12"
-            isLoading={isLoading}
+            isLoading={isLoading || !isInternetConnection}
           />
         </View>
       </View>

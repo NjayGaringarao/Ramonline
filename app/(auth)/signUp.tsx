@@ -13,7 +13,8 @@ import { regex } from "@/constants/regex";
 
 const signUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setUser, refreshUserRecord } = useGlobalContext();
+  const { setUser, refreshUserRecord, isInternetConnection } =
+    useGlobalContext();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -56,8 +57,7 @@ const signUp = () => {
           post: true,
           notification: true,
         });
-        // const fcmToken = await getFCMToken();
-        // await setupPushTarget(user, fcmToken!);
+
         router.replace("/(auth)/verification");
       }
     } catch (error) {
@@ -227,9 +227,11 @@ const signUp = () => {
           <CustomButton
             title="Continue"
             handlePress={signUpHandle}
-            containerStyles="mt-2 py-2 w-full "
+            containerStyles="mt-2 w-full "
             isLoading={
-              isSubmitting || !Object.values(inputValidity).every(Boolean)
+              isSubmitting ||
+              !Object.values(inputValidity).every(Boolean) ||
+              !isInternetConnection
             }
           />
           <Text

@@ -9,8 +9,10 @@ import { router, useGlobalSearchParams } from "expo-router";
 import { regex } from "@/constants/regex";
 import { requestRecovery } from "@/services/userServices";
 import Collapsible from "@/components/Collapsible";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const Recovery = () => {
+  const { isInternetConnection } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [cooldown, setCooldown] = useState(0);
@@ -146,7 +148,12 @@ const Recovery = () => {
                 }
                 handlePress={requestVerificationHandle}
                 containerStyles="h-10"
-                isLoading={isLoading || cooldown > 0 || !inputValidity.email}
+                isLoading={
+                  isLoading ||
+                  cooldown > 0 ||
+                  !inputValidity.email ||
+                  !isInternetConnection
+                }
               />
             </View>
           </View>
@@ -235,7 +242,9 @@ const Recovery = () => {
               router.back();
             }}
             containerStyles="w-24 h-10"
-            isLoading={isLoading || !isVerificationSent}
+            isLoading={
+              isLoading || !isVerificationSent || !isInternetConnection
+            }
           />
         </View>
       </View>
