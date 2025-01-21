@@ -13,11 +13,13 @@ import {
 } from "@/services/userServices";
 import * as Linking from "expo-linking";
 import Collapsible from "@/components/Collapsible";
-import { Models } from "react-native-appwrite";
 import { router } from "expo-router";
+import Toast from "react-native-root-toast";
+import { Models } from "react-native-appwrite";
 
 const Verification = () => {
   const {
+    setUser,
     user,
     initializeGlobalState,
     resetGlobalState,
@@ -26,18 +28,16 @@ const Verification = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [cooldown, setCooldown] = useState(0);
-  const [prompt, setPrompt] = useState(
-    `Request verification to your email: ${user?.email}`
-  );
+  const [userEmail, setUserEmail] = useState("");
 
   const url = Linking.useURL();
 
   const checkUserVerificationHandle = async () => {
-    let user: Models.User<Models.Preferences> | undefined;
-
+    let _user: Models.User<Models.Preferences> | undefined;
     try {
       setIsLoading(true);
-      user = await getCurrentUser();
+      _user = await getCurrentUser();
+      setUser(_user);
     } catch (error) {
       Alert.alert(
         "Error",
@@ -47,9 +47,12 @@ const Verification = () => {
       return;
     }
 
-    if (user && user.emailVerification) {
-      await initializeGlobalState();
-      router.replace("/(tabs)/home");
+    if (_user && _user.emailVerification) {
+      initializeGlobalState()
+        .then(() => {
+          router.replace("/(tabs)/home");
+        })
+        .catch();
     } else {
       Alert.alert(
         "Not Verified",
@@ -65,14 +68,14 @@ const Verification = () => {
     try {
       setIsLoading(true);
       await requestVerification();
-      setPrompt(`We've sent a verification link to your email: ${user?.email}`);
       setIsVerificationSent(true);
       console.log("Verification email sent!");
 
       setCooldown(300); // 5 minutes in seconds
     } catch (error) {
-      setPrompt(
-        `There was an error sending verification link to your email: ${user?.email}. Please try again later or contact support.`
+      Toast.show(
+        `There was an error sending verification link to your email: ${userEmail}. Please try again later or contact support.`,
+        { duration: Toast.durations.LONG }
       );
     } finally {
       setIsLoading(false);
@@ -120,7 +123,9 @@ const Verification = () => {
         console.log("Deep link matched. Checking verification status...");
         await checkUserVerificationHandle();
       } else {
-        setPrompt("Invalid or mismatched verification link.");
+        Toast.show("Invalid or mismatched verification link.", {
+          duration: Toast.durations.LONG,
+        });
       }
 
       setIsLoading(false);
@@ -128,6 +133,10 @@ const Verification = () => {
 
     handleDeepLink();
   }, [url]);
+
+  useEffect(() => {
+    setUserEmail(user?.email!);
+  }, [user]);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -162,7 +171,7 @@ const Verification = () => {
                 lineHeight: 25,
               }}
             >
-              {prompt}
+              {`Recieve verification link to your email: ${userEmail}.`}
             </Text>
 
             <View className="w-full items-end">

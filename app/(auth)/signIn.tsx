@@ -24,14 +24,7 @@ const signIn = () => {
     try {
       const isLoginSuccess = await loginAccount(form.email, form.password);
 
-      if (!isLoginSuccess) throw Error;
-
-      const user = await getCurrentUser();
-      if (!user) throw Error;
-
-      if (!user.emailVerification) router.replace("/(auth)/verification");
       await initializeGlobalState();
-      router.replace("/home");
     } catch (error) {
       Toast.show(`Failed: Wrong password or email.`, {
         duration: Toast.durations.LONG,

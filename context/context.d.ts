@@ -1,3 +1,5 @@
+import { Models } from "react-native-appwrite";
+
 export interface RefreshUserRecordType {
   info?: boolean;
   line?: boolean;

@@ -21,6 +21,7 @@ import handleNotification from "./NotificationHandler";
 import { GlobalContextInterface, RefreshUserRecordType } from "./context";
 import { defaultValue, emptyUserInfo } from "./values";
 import Toast from "react-native-root-toast";
+import { router } from "expo-router";
 
 export const GlobalContext =
   createContext<GlobalContextInterface>(defaultValue);
@@ -48,10 +49,11 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const initializeGlobalState = async () => {
     try {
       setIsLoading(true);
-      if (!isInternetConnection) throw Error("No internet connection.");
+
       await requestNotificationPermissions();
 
       const currentUser = await getCurrentUser();
+
       if (currentUser) {
         setUser(currentUser);
         const fcm = await getFCMToken(setFcmToken);
@@ -70,6 +72,12 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserLine(lines);
         setUserPost(posts);
         setUserNotification(notifications);
+
+        if (currentUser.emailVerification) {
+          router.navigate("/home");
+        } else {
+          router.navigate("/(auth)/verification");
+        }
       } else {
         setUser(null);
       }

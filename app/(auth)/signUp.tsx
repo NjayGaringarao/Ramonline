@@ -10,11 +10,11 @@ import { StatusBar } from "expo-status-bar";
 import { colors, images } from "@/constants";
 import TextBox from "@/components/TextBox";
 import { regex } from "@/constants/regex";
+import { _getCurrentUser } from "@/services/appwrite";
 
 const signUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setUser, refreshUserRecord, isInternetConnection } =
-    useGlobalContext();
+  const { isInternetConnection, initializeGlobalState } = useGlobalContext();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -39,25 +39,14 @@ const signUp = () => {
     setIsSubmitting(true);
 
     try {
-      const isSuccess = await createAccount(
+      const result = await createAccount(
         form.username,
         form.email,
         form.password
       );
 
-      if (isSuccess) {
-        const user = await getCurrentUser();
-
-        if (user == undefined) throw Error;
-
-        setUser(user);
-        refreshUserRecord({
-          info: true,
-          line: true,
-          post: true,
-          notification: true,
-        });
-
+      if (result.responseStatusCode == 200) {
+        await initializeGlobalState();
         router.replace("/(auth)/verification");
       }
     } catch (error) {
