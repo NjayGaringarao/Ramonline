@@ -23,7 +23,7 @@ const ProfilePicture = ({
   useEffect(() => {
     const initialize = async () => {
       if (userInfo.picture_id && userInfo.picture_id.length > 19) {
-        setImagePreview(getImagePreview(userInfo.picture_id));
+        setImagePreview(getImagePreview(userInfo.picture_id, 10));
       } else {
         setImagePreview(userInfo.avatar_url);
       }

@@ -10,6 +10,7 @@ import {
   Functions,
   Messaging,
   ExecutionMethod,
+  ImageGravity,
 } from "react-native-appwrite";
 
 const client = new Client();
@@ -271,11 +272,19 @@ export const _updateFile = async (
   }
 };
 
-export const _getFilePreview = (BUCKET_ID: string, file_ID: string) => {
+export const _getFilePreview = (
+  BUCKET_ID: string,
+  file_ID: string,
+  quality?: number
+) => {
   try {
     const preview_src = appwriteService.storage.getFilePreview(
       BUCKET_ID,
-      file_ID
+      file_ID,
+      undefined,
+      undefined,
+      undefined,
+      quality
     );
     return preview_src;
   } catch (error) {

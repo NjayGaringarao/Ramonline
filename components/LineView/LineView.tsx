@@ -56,15 +56,6 @@ const LineView = ({
   const [isBannerPreviewVisible, setIsBannerPreviewVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const renderImage = (image_id: string) => {
-    try {
-      return getImagePreview(image_id);
-    } catch (error) {
-      console.log(`ERROR (LineView.tsx => renderImage) :: ${error}`);
-      return "";
-    }
-  };
-
   const setupSubscriptionStatus = async () => {
     try {
       setIsLoading(true);
@@ -231,7 +222,7 @@ const LineView = ({
             resizeMode="cover"
           />
           <Image
-            source={{ uri: renderImage(line.banner_id) }}
+            source={{ uri: getImagePreview(line.banner_id, 30) }}
             className="w-full h-56"
             resizeMode="cover"
           />
@@ -301,7 +292,7 @@ const LineView = ({
           <WebView
             originWhitelist={["*"]}
             source={{
-              html: getHTMLImageRender(renderImage(line.banner_id)),
+              html: getHTMLImageRender(getImagePreview(line.banner_id)),
             }}
             scalesPageToFit={true}
             bounces={true}

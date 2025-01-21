@@ -22,6 +22,7 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
   const flatListRef = useRef<FlatList>(null);
 
   const queryLineFeed = async () => {
+    if (!isInternetConnection) return;
     try {
       setIsLinesLoading(true);
       let lines: LineType.Info[] = [];
@@ -61,6 +62,7 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
   }, [lineList]);
 
   const onRefreshFeedHandle = useCallback(async () => {
+    if (!isInternetConnection) return;
     scrollToLeft();
     setLineList([]);
     setHasMoreLines(true);
@@ -125,6 +127,7 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
                   }}
                   title="Refresh"
                   containerStyles=" w-2/3"
+                  isLoading={!isInternetConnection}
                 >
                   <Image
                     source={icons.refresh}

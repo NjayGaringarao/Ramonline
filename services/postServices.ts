@@ -150,7 +150,7 @@ export const getFeedPosts = async (lastId?: string) => {
         env.COLLECTION_POST_INFO,
         [
           Query.orderDesc("created_at"),
-          Query.limit(5),
+          Query.limit(20),
           Query.cursorAfter(lastId),
         ]
       );
@@ -159,7 +159,7 @@ export const getFeedPosts = async (lastId?: string) => {
       const posts = await _listDocuments(
         env.DATABASE_PRIMARY,
         env.COLLECTION_POST_INFO,
-        [Query.orderDesc("created_at"), Query.limit(5)]
+        [Query.orderDesc("created_at"), Query.limit(20)]
       );
       return toPostInfoList(posts.documents);
     }

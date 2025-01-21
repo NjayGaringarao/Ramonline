@@ -76,7 +76,7 @@ export const getFeedLines = async (lastId?: string) => {
         env.COLLECTION_LINE_INFO,
         [
           Query.orderDesc("created_at"),
-          Query.limit(8),
+          Query.limit(16),
           Query.cursorAfter(lastId),
         ]
       );
@@ -85,7 +85,7 @@ export const getFeedLines = async (lastId?: string) => {
       const line = await _listDocuments(
         env.DATABASE_PRIMARY,
         env.COLLECTION_LINE_INFO,
-        [Query.orderDesc("created_at"), Query.limit(8)]
+        [Query.orderDesc("created_at"), Query.limit(16)]
       );
       return toLineInfoList(line.documents);
     }

@@ -1,11 +1,11 @@
 import { env } from "@/constants/env";
 import { _getFilePreview } from "./appwrite";
 
-export const getImagePreview = (file_ID: string) => {
+export const getImagePreview = (file_ID: string, quality?: number) => {
   let fileUrl;
 
   try {
-    fileUrl = _getFilePreview(env.BUCKET_IMAGE, file_ID);
+    fileUrl = _getFilePreview(env.BUCKET_IMAGE, file_ID, quality);
 
     return fileUrl.toString();
   } catch (error) {

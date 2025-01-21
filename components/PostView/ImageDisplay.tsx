@@ -12,7 +12,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
     return (
       <TouchableOpacity onPress={onImagePress}>
         <Image
-          source={{ uri: getImagePreview(imageIds[0]) }}
+          source={{ uri: getImagePreview(imageIds[0], 1) }}
           className="w-full h-64 bg-panel"
           resizeMode="cover"
         />
@@ -27,7 +27,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
           {imageIds.map((imageId, key) => (
             <Image
               key={key}
-              source={{ uri: getImagePreview(imageId) }}
+              source={{ uri: getImagePreview(imageId, 1) }}
               className="w-1/2 h-64 bg-panel"
               resizeMode="cover"
             />
@@ -44,7 +44,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
           {imageIds.slice(0, 2).map((imageId, key) => (
             <Image
               key={key}
-              source={{ uri: getImagePreview(imageId) }}
+              source={{ uri: getImagePreview(imageId, 1) }}
               className="w-1/2 h-64 bg-panel"
               resizeMode="cover"
             />
@@ -65,7 +65,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
           {imageIds.map((imageId, key) => (
             <Image
               key={key}
-              source={{ uri: getImagePreview(imageId) }}
+              source={{ uri: getImagePreview(imageId, 1) }}
               className="w-1/2 h-32 bg-panel"
               resizeMode="cover"
             />
@@ -81,7 +81,7 @@ const ImageDisplay = ({ imageIds, onImagePress }: ImageDisplayProps) => {
         {imageIds.slice(0, 4).map((imageId, key) => (
           <Image
             key={key}
-            source={{ uri: getImagePreview(imageId) }}
+            source={{ uri: getImagePreview(imageId, 1) }}
             className="w-1/2 h-32 bg-panel"
             resizeMode="cover"
           />
