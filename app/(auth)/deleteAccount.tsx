@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import TextBox from "@/components/TextBox";
 import CustomButton from "@/components/CustomButton";
 import Collapsible from "@/components/Collapsible";
@@ -96,7 +96,7 @@ const DeleteAccount = () => {
           </View>
         </View>
 
-        <View className="w-full gap-2">
+        <View className="w-full gap-2 items-end">
           <TextBox
             title="Enter your password to continue"
             titleTextStyles="text-uGray text-xl font-semibold mb-2"
@@ -107,6 +107,21 @@ const DeleteAccount = () => {
             boxStyles="w-full py-2 bg-panel rounded-lg px-4"
           />
 
+          {!isLoading && (
+            <Link
+              href={{
+                pathname: "/(auth)/recovery/[email]",
+                params: {
+                  email: user?.email!,
+                  isFormDisabled: "true",
+                },
+              }}
+            >
+              <Text className="text-primary text-base text-end font-semibold mt-1">
+                Forget Password?
+              </Text>
+            </Link>
+          )}
           <CustomButton
             title="⚠️ Leave Ramonline ⚠️"
             handlePress={handleDeleteAccount}

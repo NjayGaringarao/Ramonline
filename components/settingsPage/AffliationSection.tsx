@@ -112,7 +112,7 @@ const AffliationSection = ({
             title="Update"
             handlePress={handleUpdate}
             containerStyles="py-1"
-            isLoading={isInternetConnection}
+            isLoading={!isInternetConnection}
           />
           <CustomButton
             title="Reset"
