@@ -58,22 +58,20 @@ export const createAccount = async (
   password: string
 ) => {
   try {
-    const userAccount = await _createAccount(username, email, password);
-
-    await _loginUser(email, password);
-
     const avatar_url = _generateAvatar(username);
 
-    await _createDocument(
-      env.DATABASE_PRIMARY,
-      env.COLLECTION_USER_INFO,
-      userAccount.$id,
+    const userAccount = await _executeFunction(
+      env.FUNCTION_ACCOUNT,
+      "createUserAccount",
       {
         username: username,
+        password: password,
+        email: email,
         avatar_url: avatar_url.toString(),
-        created_at: new Date(),
       }
     );
+
+    await _loginUser(email, password);
 
     return userAccount;
   } catch (error) {
