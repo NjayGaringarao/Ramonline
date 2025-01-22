@@ -33,6 +33,12 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
+                name="(content)"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
                 name="(auth)"
                 options={{
                   headerShown: false,
