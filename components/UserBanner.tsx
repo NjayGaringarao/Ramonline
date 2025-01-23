@@ -4,6 +4,7 @@ import { UserType } from "@/types/models";
 import { getImagePreview } from "@/services/commonServices";
 import { getDisplayName, getDisplayRole } from "@/lib/commonUtil";
 import { router } from "expo-router";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 interface IUserBannerType {
   userInfo: UserType.Info;
@@ -18,6 +19,7 @@ const UserBanner = ({
   nameStyle,
   roleStyle,
 }: IUserBannerType) => {
+  const { user } = useGlobalContext();
   const [pictureURL, setPictureURL] = useState("");
 
   useEffect(() => {
@@ -29,7 +31,11 @@ const UserBanner = ({
   }, [userInfo]);
 
   const handlePress = () => {
-    router.push(`/(content)/user/${userInfo.id}`);
+    if (user?.$id === userInfo.id) {
+      router.navigate("/(tabs)/profile");
+    } else {
+      router.push(`/(content)/user/${userInfo.id}`);
+    }
   };
 
   if (pictureURL) {
