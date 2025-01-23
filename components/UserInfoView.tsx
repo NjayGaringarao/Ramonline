@@ -97,7 +97,7 @@ const UserInfoView = ({
           containerStyle="h-32 w-32 rounded-3xl  overflow-hidden shadow-lg shadow-primary"
           imageStyle="flex-1 bg-primary"
           onPress={() => {
-            router.push(`/(content)/user/${userInfo.id}`);
+            router.push(`/(content)/user/image/${userInfo.id}`);
           }}
         />
         <Text className="mt-2 text-primary text-3xl font-semibold">

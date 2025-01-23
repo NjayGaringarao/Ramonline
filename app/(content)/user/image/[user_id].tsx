@@ -61,15 +61,6 @@ const userImage = () => {
   if (userInfo)
     return (
       <View className="flex-1">
-        <View className="absolute top-0 w-full h-16">
-          <View className="flex-1 bg-black opacity-70" />
-          <CustomButton
-            handlePress={() => router.back()}
-            containerStyles="absolute left-0 top-3 bg-transparent"
-          >
-            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
-          </CustomButton>
-        </View>
         <WebView
           originWhitelist={["*"]}
           source={{
@@ -80,6 +71,15 @@ const userImage = () => {
           bounces={true}
           showsVerticalScrollIndicator={false}
         />
+        <View className="absolute top-0 w-full h-16">
+          <View className="flex-1 bg-black opacity-70" />
+          <CustomButton
+            handlePress={() => router.back()}
+            containerStyles="absolute left-0 top-3 bg-transparent"
+          >
+            <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
+          </CustomButton>
+        </View>
         <View className="absolute bottom-0 w-full h-auto">
           <View className=" absolute h-full w-full bg-black opacity-70" />
           <View className="p-2">
