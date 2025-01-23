@@ -1,8 +1,9 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { UserType } from "@/types/models";
 import { getImagePreview } from "@/services/commonServices";
 import { getDisplayName, getDisplayRole } from "@/lib/commonUtil";
+import { router } from "expo-router";
 
 interface IUserBannerType {
   userInfo: UserType.Info;
@@ -27,9 +28,16 @@ const UserBanner = ({
     );
   }, [userInfo]);
 
+  const handlePress = () => {
+    router.push(`/(content)/user/${userInfo.id}`);
+  };
+
   if (pictureURL) {
     return (
-      <View className={`flex-row gap-2 ${containerStyle}`}>
+      <TouchableOpacity
+        className={`flex-row gap-2 ${containerStyle}`}
+        onPress={handlePress}
+      >
         <Image
           className="h-12 w-12 rounded-full"
           source={{ uri: pictureURL }}
@@ -42,7 +50,7 @@ const UserBanner = ({
             {getDisplayRole(userInfo)}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 };
