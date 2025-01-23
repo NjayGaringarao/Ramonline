@@ -275,14 +275,16 @@ export const _updateFile = async (
 export const _getFilePreview = (
   BUCKET_ID: string,
   file_ID: string,
-  quality?: number
+  quality?: number,
+  width?: number,
+  height?: number
 ) => {
   try {
     const preview_src = appwriteService.storage.getFilePreview(
       BUCKET_ID,
       file_ID,
-      undefined,
-      undefined,
+      width,
+      height,
       undefined,
       quality
     );

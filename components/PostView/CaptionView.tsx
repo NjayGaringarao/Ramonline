@@ -6,9 +6,14 @@ import { PostType } from "@/types/models";
 type ICaptionProps = {
   post: PostType.Info;
   isMiniPostView?: boolean;
+  textStyles?: string;
 };
 
-const CaptionView: React.FC<ICaptionProps> = ({ post, isMiniPostView }) => {
+const CaptionView: React.FC<ICaptionProps> = ({
+  post,
+  isMiniPostView,
+  textStyles,
+}) => {
   const hasImages = post.image_id && post.image_id.length > 0;
 
   if (!post.caption) return null;
@@ -27,7 +32,9 @@ const CaptionView: React.FC<ICaptionProps> = ({ post, isMiniPostView }) => {
           linkStyle={{ color: "#2980b9" }}
           onPress={(url, text) => Linking.openURL(url)}
         >
-          <Text className={`text-2xl text-center text-uBlack font-semibold`}>
+          <Text
+            className={`text-2xl text-center text-uBlack font-semibold ${textStyles}`}
+          >
             {post.caption}
           </Text>
         </Hyperlink>
@@ -40,7 +47,7 @@ const CaptionView: React.FC<ICaptionProps> = ({ post, isMiniPostView }) => {
         onPress={(url, text) => Linking.openURL(url)}
       >
         <Text
-          className="p-2 text-base text-left font-normal bg-panel rounded-b-lg"
+          className={`p-2 text-base text-left font-normal bg-panel rounded-b-lg ${textStyles}`}
           numberOfLines={isExpanded ? undefined : 4}
           onPress={() => setIsExpanded((prev) => !prev)}
         >
@@ -55,7 +62,7 @@ const CaptionView: React.FC<ICaptionProps> = ({ post, isMiniPostView }) => {
         onPress={(url, text) => Linking.openURL(url)}
       >
         <Text
-          className="p-2 text-base text-left font-normal bg-panel rounded-lg"
+          className={`p-2 text-base text-left font-normal bg-panel rounded-lg ${textStyles}`}
           numberOfLines={isExpanded ? undefined : 4}
           lineBreakMode="middle"
           onPress={() => {
@@ -70,13 +77,20 @@ const CaptionView: React.FC<ICaptionProps> = ({ post, isMiniPostView }) => {
     return (
       <ScrollView
         showsVerticalScrollIndicator={true}
-        className="m-2 border-t-4 border-primary max-h-32"
+        className={`m-2 border-t-2 border-primary ${
+          isExpanded ? "max-h-96" : "max-h-24"
+        }`}
       >
         <Hyperlink
           linkStyle={{ color: "#2980b9" }}
-          onPress={(url, text) => Linking.openURL(url)}
+          onPress={(url) => Linking.openURL(url)}
         >
-          <Text className="text-base text-left font-normal">
+          <Text
+            className={`text-base text-left font-normal ${textStyles}`}
+            onPress={() => {
+              setIsExpanded((prev) => !prev);
+            }}
+          >
             {post.caption}
           </Text>
         </Hyperlink>

@@ -24,6 +24,7 @@ import ImageDisplay from "./ImageDisplay";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { router } from "expo-router";
 type IPostViewProps = {
   post: PostType.Info;
   isModifyable?: boolean;
@@ -37,9 +38,8 @@ const PostView = ({
   isMiniture,
   isInModal,
 }: IPostViewProps) => {
-  const { setIsRefreshFeeds, refreshUserRecord, userInfo, userLine } =
+  const { setIsRefreshPostFeed, refreshUserRecord, userInfo, userLine } =
     useGlobalContext();
-  const [isModalImageVisible, setIsModalImageVisible] = useState(false);
   const [isModalOptionVisible, setIsModalOptionVisible] = useState(false);
   const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isModalNotifyVisible, setIsModalNotifyVisible] = useState(false);
@@ -79,7 +79,7 @@ const PostView = ({
         refreshUserRecord({
           post: true,
         });
-        setIsRefreshFeeds(true);
+        setIsRefreshPostFeed(true);
         setIsThisVisible(false);
         Toast.show(`Post deleted`, {
           duration: Toast.durations.LONG,
@@ -197,7 +197,9 @@ const PostView = ({
       <View className="rounded-t-lg overflow-hidden">
         <ImageDisplay
           imageIds={post.image_id}
-          onImagePress={() => setIsModalImageVisible(true)}
+          onImagePress={() =>
+            router.navigate(`/(content)/post/image/${post.id}`)
+          }
         />
       </View>
 
@@ -267,7 +269,7 @@ const PostView = ({
         </>
       ) : null}
 
-      {/* Full-Screen Modal to preview images */}
+      {/* // Full-Screen Modal to preview images
       <Modal
         visible={isModalImageVisible}
         transparent={false}
@@ -287,13 +289,13 @@ const PostView = ({
 
           <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
           <CustomButton
-            handlePress={() => setIsModalImageVisible(false)}
+            handlePress={() => router.push(`/(content)/post/image/${post.id}`)}
             containerStyles="absolute top-5 left-0 bg-transparent"
           >
             <Image source={icons.back} className="h-6 w-6" tintColor={"#fff"} />
           </CustomButton>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
