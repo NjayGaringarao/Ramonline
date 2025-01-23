@@ -1,24 +1,13 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Alert,
-  Modal,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, Alert, Image } from "react-native";
 import React, { useState } from "react";
 import { colors, icons, images } from "@/constants";
-import { UserType, LineType, PostType } from "@/types/models";
 import CustomButton from "./CustomButton";
 import {
   confirmAction,
   getDisplayName,
   getDisplayRole,
-  getHTMLImageRender,
 } from "@/lib/commonUtil";
-import { getImagePreview } from "@/services/commonServices";
 import { router } from "expo-router";
-import WebView from "react-native-webview";
 import ProfilePicture from "./ProfilePicture";
 import { deletePushTarget } from "@/services/notificationServices";
 import { logoutUser } from "@/services/userServices";
@@ -31,7 +20,6 @@ interface ProfileViewProps {
 
 const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
   const [_activeTab, set_ActiveTab] = useState("post");
-  const [isImagePreviewVisible, setIsImagePreviewVisible] = useState(false);
   const { user, resetGlobalState, userInfo, userLine, userPost } =
     useGlobalContext();
 
@@ -208,7 +196,7 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
           containerStyle="h-32 w-32 rounded-3xl  overflow-hidden shadow-lg shadow-primary"
           imageStyle="flex-1 bg-primary"
           onPress={() => {
-            setIsImagePreviewVisible(true);
+            router.push(`/(content)/user/image/${userInfo.id}`);
           }}
         />
         <Text className="mt-2 text-primary text-3xl font-semibold">
@@ -217,39 +205,6 @@ const ProfileView = ({ setActiveTab }: ProfileViewProps) => {
             : getDisplayName(userInfo)}
         </Text>
       </View>
-      {/* Modal to show the image in full screen */}
-      <Modal
-        visible={isImagePreviewVisible}
-        transparent={false}
-        animationType="slide"
-      >
-        <TouchableOpacity
-          className="flex-1 absolute items-center"
-          onPress={() => setIsImagePreviewVisible(false)}
-        />
-        <View className="bg-black w-full h-full relative">
-          <WebView
-            originWhitelist={["*"]}
-            source={{
-              html: getHTMLImageRender(
-                userInfo.picture_id
-                  ? getImagePreview(userInfo.picture_id)
-                  : userInfo.avatar_url!
-              ),
-            }}
-            scalesPageToFit={true}
-            bounces={true}
-            showsVerticalScrollIndicator={false}
-          />
-          <View className="absolute top-0 w-full h-16 bg-black opacity-70" />
-          <CustomButton
-            handlePress={() => setIsImagePreviewVisible(false)}
-            containerStyles="absolute top-5 left-0 bg-transparent"
-          >
-            <Image source={icons.back} tintColor={"#fff"} className="h-6 w-6" />
-          </CustomButton>
-        </View>
-      </Modal>
     </View>
   );
 };
