@@ -13,20 +13,8 @@ type MiniPostViewProps = {
 
 const MiniLineView = ({ line, user }: MiniPostViewProps) => {
   return (
-    <View className="w-full h-auto px-2 bg-background items-center justify-center rounded-md shadow-lg shadow-primary mb-4">
-      <View className="w-full h-auto  justify-center ">
-        <View className="flex-row gap-2 h-auto items-center ml-2 my-2">
-          <ProfilePicture userInfo={user} imageStyle="h-7 w-7 rounded-lg" />
-          <View className="justify-center">
-            <Text className="text-base font-semibold">
-              {getDisplayName(user)}
-            </Text>
-            <Text className="text-xs font-mono -mt-1">
-              {getDisplayRole(user)}
-            </Text>
-          </View>
-        </View>
-      </View>
+    <View className="w-full h-auto px-2 bg-panel items-center justify-center rounded-md shadow-lg shadow-primary mb-4">
+      <View className="w-full h-auto  justify-center "></View>
       <View className="overflow-hidden h-auto m-2 bg-primary w-full rounded-md">
         <Image
           source={{ uri: getImagePreview(line.banner_id) }}
@@ -35,10 +23,10 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
         />
       </View>
       <View className="h-auto w-full">
-        <Text className="text-xl text-primary font-semibold py-2 border-b border-primary">
+        <Text className="text-xl text-primary font-semibold px-4">
           {line.name}
         </Text>
-        <DescriptionView line={line} isInModal={true} />
+        <DescriptionView line={line} />
       </View>
     </View>
   );

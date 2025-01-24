@@ -4,11 +4,11 @@ import { useGlobalContext } from "@/context/GlobalProvider";
 import { LineType, PostType } from "@/types/models";
 import Loading from "@/components/Loading";
 import ProfileView from "@/components/ProfileView";
-import LineView from "@/components/LineView/LineView";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { sortByDate } from "@/lib/commonUtil";
 import EditablePostView from "@/components/PostView/EditablePostView";
+import EditableLineView from "@/components/LineView/EditableLineView";
 
 const profile = () => {
   const {
@@ -106,7 +106,7 @@ const profile = () => {
           horizontal={false}
           className="flex-1"
           renderItem={({ item, index }) => {
-            return <LineView line={item} isModifyable={true} />;
+            return <EditableLineView line={item} />;
           }}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}

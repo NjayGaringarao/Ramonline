@@ -95,6 +95,21 @@ export const getFeedLines = async (lastId?: string) => {
   }
 };
 
+export const countSubscribers = async (line_id: string) => {
+  try {
+    const subscribers = await _listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_LINE_SUBSCRIPTION,
+      [Query.equal("line_id", line_id)]
+    );
+
+    return subscribers.total;
+  } catch (error) {
+    console.log(`ERROR (lineServices.ts => countSubscribers) :: ${error}`);
+    throw error;
+  }
+};
+
 export const updateDescription = async (
   line_id: string,
   newDescription: string

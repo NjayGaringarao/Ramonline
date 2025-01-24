@@ -9,9 +9,9 @@ import { getUserLineList } from "@/services/lineServices";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
 import Loading from "@/components/Loading";
-import LineView from "@/components/LineView/LineView";
 import UserInfoView from "@/components/UserInfoView";
 import FeedPostView from "@/components/PostView/FeedPostView";
+import FeedLineView from "@/components/LineView/FeedLineView";
 
 const user = () => {
   const searchParams = useGlobalSearchParams();
@@ -44,7 +44,7 @@ const user = () => {
     }
   }, [searchParams]);
 
-  if (user)
+  if (user) {
     return (
       <View className="flex-1">
         <View className="h-14 w-full flex-row items-center bg-primary">
@@ -118,7 +118,7 @@ const user = () => {
               horizontal={false}
               className="flex-1"
               renderItem={({ item, index }) => {
-                return <LineView line={item} />;
+                return <FeedLineView line={item} userInfo={user} />;
               }}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
@@ -167,6 +167,13 @@ const user = () => {
         </View>
       </View>
     );
+  } else {
+    return (
+      <View className="flex-1 bg-black">
+        <Loading loadingPrompt="Please wait" color="#fff" />
+      </View>
+    );
+  }
 };
 
 export default user;

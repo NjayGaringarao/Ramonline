@@ -53,7 +53,7 @@ const ModalOptions = ({
         <CustomButton
           handlePress={onDelete}
           title="Delete Line"
-          containerStyles="h-10 border-2 border-primary bg-transparent"
+          containerStyles="h-10 border border-primary bg-transparent"
           textStyles="text-primary"
         />
       </View>

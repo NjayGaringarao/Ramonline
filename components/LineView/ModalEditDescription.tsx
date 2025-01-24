@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, Modal, TouchableOpacity, Image } from "react-native";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 import CustomButton from "../CustomButton";
-import FormField from "../FormField";
+import ParagraphBox from "../ParagraphBox";
 
 type ModalEditDescriptionProps = {
   visible: boolean;
@@ -9,6 +9,7 @@ type ModalEditDescriptionProps = {
   onClose: () => void;
   setDescriptionForm: (descriptionForm: string) => void;
   descriptionForm: string;
+  line_name: string;
 };
 
 const ModalEditDescription = ({
@@ -17,6 +18,7 @@ const ModalEditDescription = ({
   descriptionForm,
   onSave,
   onClose,
+  line_name,
 }: ModalEditDescriptionProps) => {
   return (
     <Modal visible={visible} transparent animationType="none">
@@ -25,25 +27,32 @@ const ModalEditDescription = ({
           className="h-full w-full flex-1 absolute items-center bg-black opacity-80"
           onPress={onClose}
         />
-        <View className="w-11/12 h-auto bg-background rounded-lg p-4 justify-center relative self-center space-y-4">
-          <Text className="font-semibold text-2xl text-primary">
-            Edit Description
+        <View className="w-11/12 h-auto bg-panel rounded-lg p-4 justify-center relative self-center space-y-4">
+          <Text
+            className="font-semibold text-2xl text-primary pb-4"
+            numberOfLines={1}
+          >
+            {line_name}
           </Text>
           <View className="items-end space-y-4">
-            <FormField
+            <ParagraphBox
               value={descriptionForm}
               placeholder={""}
               handleChangeText={(text) => setDescriptionForm(text)}
-              isMultiline={true}
+              containerStyles="bg-background"
             />
-            <View className="flex-row">
+            <View className="flex-row mt-4">
+              <CustomButton
+                title="Save"
+                handlePress={onSave}
+                containerStyles="w-24"
+              />
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                containerStyles="border-2 border-primary mx-2 h-10 bg-transparent"
+                containerStyles="w-24 border border-primary mx-2 h-10 bg-transparent"
                 textStyles="text-primary"
               ></CustomButton>
-              <CustomButton title="Save" handlePress={onSave} />
             </View>
           </View>
         </View>

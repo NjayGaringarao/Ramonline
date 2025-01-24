@@ -12,6 +12,7 @@ import UserBanner from "@/components/UserBanner";
 import { getUserInfo } from "@/services/userServices";
 import CaptionView from "@/components/PostView/CaptionView";
 import AdaptiveTime from "@/components/AdaptiveTime";
+import Loading from "@/components/Loading";
 
 const getHTMLImageRender = (image_id: string[]) => {
   if (image_id.length == 1) {
@@ -149,6 +150,12 @@ const postImage = () => {
             />
           </View>
         </View>
+      </View>
+    );
+  } else {
+    return (
+      <View className="flex-1 bg-black">
+        <Loading loadingPrompt="Please wait" color="#fff" />
       </View>
     );
   }
