@@ -8,11 +8,10 @@ import { getUserPostList } from "@/services/postServices";
 import { getUserLineList } from "@/services/lineServices";
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
-import PostView from "@/components/PostView/PostView";
-import ProfileView from "@/components/ProfileView";
 import Loading from "@/components/Loading";
 import LineView from "@/components/LineView/LineView";
 import UserInfoView from "@/components/UserInfoView";
+import FeedPostView from "@/components/PostView/FeedPostView";
 
 const user = () => {
   const searchParams = useGlobalSearchParams();
@@ -67,7 +66,7 @@ const user = () => {
               horizontal={false}
               className="flex-1"
               renderItem={({ item, index }) => {
-                return <PostView post={item} />;
+                return <FeedPostView post={item} />;
               }}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}

@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { PostType } from "@/types/models";
-import PostView from "@/components/PostView/PostView";
 import { getFeedPosts } from "@/services/postServices";
 import Loading from "@/components/Loading";
 import CustomButton from "@/components/CustomButton";
@@ -16,6 +15,7 @@ import { colors, icons } from "@/constants";
 import { router } from "expo-router";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import LineGrid from "@/components/homeComponents/LineGrid";
+import FeedPostView from "@/components/PostView/FeedPostView";
 
 const Home = () => {
   const { isRefreshPostFeed, setIsRefreshPostFeed, isInternetConnection } =
@@ -98,7 +98,7 @@ const Home = () => {
         data={postList}
         keyExtractor={(item, index) => index.toString()}
         horizontal={false}
-        renderItem={({ item }) => <PostView post={item} />}
+        renderItem={({ item }) => <FeedPostView post={item} />}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
