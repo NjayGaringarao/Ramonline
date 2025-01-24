@@ -74,9 +74,9 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         setUserNotification(notifications);
 
         if (currentUser.emailVerification) {
-          router.navigate("/home");
+          router.replace("/home");
         } else {
-          router.navigate("/(auth)/verification");
+          router.replace("/(auth)/verification");
         }
       } else {
         setUser(null);
