@@ -11,6 +11,7 @@ interface IUserBannerType {
   containerStyle?: string;
   nameStyle?: string;
   roleStyle?: string;
+  handlePress?: () => void;
 }
 
 const UserBanner = ({
@@ -18,6 +19,7 @@ const UserBanner = ({
   containerStyle,
   nameStyle,
   roleStyle,
+  handlePress,
 }: IUserBannerType) => {
   const { user } = useGlobalContext();
   const [pictureURL, setPictureURL] = useState("");
@@ -30,19 +32,11 @@ const UserBanner = ({
     );
   }, [userInfo]);
 
-  const handlePress = () => {
-    if (user?.$id === userInfo.id) {
-      router.navigate("/(tabs)/profile");
-    } else {
-      router.push(`/(content)/user/${userInfo.id}`);
-    }
-  };
-
   if (pictureURL) {
     return (
       <TouchableOpacity
         className={`flex-row gap-2 ${containerStyle}`}
-        onPress={handlePress}
+        onPress={handlePress ? handlePress : () => {}}
       >
         <Image
           className="h-12 w-12 rounded-full"

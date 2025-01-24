@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Modal, TouchableOpacity } from "react-native";
 import CustomButton from "../CustomButton";
 import FormField from "../FormField";
+import ParagraphBox from "../ParagraphBox";
 
 type ModalEditCaptionProps = {
   visible: boolean;
@@ -26,25 +27,22 @@ const ModalEditCaption = ({
           className="h-full w-full flex-1 absolute items-center bg-black opacity-80"
           onPress={onClose}
         />
-        <View className="w-11/12 h-auto bg-background rounded-lg p-4 justify-center relative self-center space-y-4">
-          <Text className="font-semibold text-2xl text-primary">
-            Edit Caption
-          </Text>
+        <View className="w-11/12 h-auto bg-panel rounded-lg p-4 justify-center relative self-center space-y-4">
           <View className="items-end space-y-4">
-            <FormField
+            <ParagraphBox
               value={captionForm}
               placeholder={""}
               handleChangeText={(text) => setCaptionForm(text)}
-              isMultiline={true}
+              containerStyles="bg-background"
             />
-            <View className="flex-row">
+            <View className="flex-row mt-2">
+              <CustomButton title="Save" handlePress={onSave} />
               <CustomButton
                 title="Cancel"
                 handlePress={onClose}
-                containerStyles="border-2 border-primary mx-2 h-10 bg-transparent"
+                containerStyles="border border-primary mx-2 h-10 bg-transparent"
                 textStyles="text-primary"
               />
-              <CustomButton title="Save" handlePress={onSave} />
             </View>
           </View>
         </View>

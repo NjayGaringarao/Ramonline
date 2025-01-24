@@ -9,6 +9,7 @@ import LineView from "@/components/LineView/LineView";
 import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { sortByDate } from "@/lib/commonUtil";
+import EditablePostView from "@/components/PostView/EditablePostView";
 
 const profile = () => {
   const {
@@ -61,7 +62,7 @@ const profile = () => {
           horizontal={false}
           className="flex-1"
           renderItem={({ item, index }) => {
-            return <PostView post={item} isModifyable={true} />;
+            return <EditablePostView post={item} />;
           }}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
