@@ -26,7 +26,7 @@ const MiniLineView = ({ line, user }: MiniPostViewProps) => {
         <Text className="text-xl text-primary font-semibold px-4">
           {line.name}
         </Text>
-        <DescriptionView line={line} />
+        <DescriptionView line={line} isMiniView />
       </View>
     </View>
   );
