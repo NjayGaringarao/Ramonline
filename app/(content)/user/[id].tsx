@@ -12,6 +12,7 @@ import Loading from "@/components/Loading";
 import UserInfoView from "@/components/UserInfoView";
 import FeedPostView from "@/components/PostView/FeedPostView";
 import FeedLineView from "@/components/LineView/FeedLineView";
+import { sortByDate } from "@/lib/commonUtil";
 
 const user = () => {
   const searchParams = useGlobalSearchParams();
@@ -26,8 +27,8 @@ const user = () => {
       setIsRefreshing(true);
       const _user = await getUserInfo(user_id);
       setUser(_user);
-      setPostList(await getUserPostList(_user.id));
-      setLineList(await getUserLineList(_user.id));
+      setPostList(sortByDate(await getUserPostList(_user.id)));
+      setLineList(sortByDate(await getUserLineList(_user.id)));
     } catch (error) {
       Toast.show("There was an error loading user info");
     } finally {
