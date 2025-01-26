@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ramonline",
     "slug": "ramonline",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/images/ramonline-icon.png",
     "scheme": "ramonline",
@@ -33,10 +33,14 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/ramonline-icon.png",
-          "imageWidth": 200,
+          "image": "./assets/images/ramonline-logo.png",
+          "imageWidth": 256,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/images/ramonline-logo.png",
+            "backgroundColor": "#000000"
+          }
         }
       ],
       "@react-native-firebase/app",
