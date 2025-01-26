@@ -177,8 +177,6 @@ export const logoutUser = async (session_id?: string) => {
 export const getUserSessions = async () => {
   try {
     const sessions = await _listSession();
-
-    console.log(JSON.stringify(sessions, null, 2));
     return toSessionList(sessions);
   } catch (error) {
     console.log(`ERROR : (userServices.ts => getUserSessions) :: ${error}`);
