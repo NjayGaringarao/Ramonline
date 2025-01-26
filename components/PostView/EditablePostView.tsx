@@ -141,7 +141,13 @@ const EditablePostView = ({ post }: IEditablePostViewProps) => {
         onClose={() => setIsModalOptionVisible(false)}
         post={post}
         onEditPress={() => setIsModalEditVisible(true)}
-        onNotifyPress={() => {}}
+        onNotifyPress={() => {
+          setIsModalOptionVisible(false);
+          router.push({
+            pathname: "/create/notification",
+            params: { messageType: "post", contentId: post.id },
+          });
+        }}
         onDelete={deletePostHandle}
       />
     </View>

@@ -33,6 +33,12 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
+                name="create/notification"
+                options={{
+                  headerShown: false,
+                }}
+              />
+              <Stack.Screen
                 name="(content)"
                 options={{
                   headerShown: false,
