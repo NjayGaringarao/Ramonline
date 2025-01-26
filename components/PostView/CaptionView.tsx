@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Hyperlink from "react-native-hyperlink";
+import Autolink from "react-native-autolink";
 import { Text, View, ScrollView, Linking } from "react-native";
 import { PostType } from "@/types/models";
 
@@ -28,50 +28,35 @@ const CaptionView: React.FC<ICaptionProps> = ({
       <View
         className={`px-4 py-12 bg-panel shadow-lg shadow-primary rounded-lg items-center justify-center `}
       >
-        <Hyperlink
-          linkStyle={{ color: "#2980b9" }}
-          onPress={(url, text) => Linking.openURL(url)}
+        <Text
+          className={`text-2xl text-center text-uBlack font-semibold ${textStyles}`}
         >
-          <Text
-            className={`text-2xl text-center text-uBlack font-semibold ${textStyles}`}
-          >
-            {post.caption}
-          </Text>
-        </Hyperlink>
+          <Autolink text={post.caption} />
+        </Text>
       </View>
     );
   } else if (hasImages && !isMiniPostView) {
     return (
-      <Hyperlink
-        linkStyle={{ color: "#2980b9" }}
-        onPress={(url, text) => Linking.openURL(url)}
+      <Text
+        className={`p-2 text-base text-left font-normal bg-panel rounded-b-lg ${textStyles}`}
+        numberOfLines={isExpanded ? undefined : 4}
+        onPress={() => setIsExpanded((prev) => !prev)}
       >
-        <Text
-          className={`p-2 text-base text-left font-normal bg-panel rounded-b-lg ${textStyles}`}
-          numberOfLines={isExpanded ? undefined : 4}
-          onPress={() => setIsExpanded((prev) => !prev)}
-        >
-          {post.caption}
-        </Text>
-      </Hyperlink>
+        <Autolink text={post.caption} />
+      </Text>
     );
   } else if (!isMiniPostView) {
     return (
-      <Hyperlink
-        linkStyle={{ color: "#2980b9" }}
-        onPress={(url, text) => Linking.openURL(url)}
+      <Text
+        className={`p-2 text-base text-left font-normal bg-panel rounded-lg ${textStyles}`}
+        numberOfLines={isExpanded ? undefined : 4}
+        lineBreakMode="middle"
+        onPress={() => {
+          setIsExpanded((prev) => !prev);
+        }}
       >
-        <Text
-          className={`p-2 text-base text-left font-normal bg-panel rounded-lg ${textStyles}`}
-          numberOfLines={isExpanded ? undefined : 4}
-          lineBreakMode="middle"
-          onPress={() => {
-            setIsExpanded((prev) => !prev);
-          }}
-        >
-          {post.caption}
-        </Text>
-      </Hyperlink>
+        <Autolink text={post.caption} />
+      </Text>
     );
   } else if (isMiniPostView) {
     return (
@@ -81,19 +66,14 @@ const CaptionView: React.FC<ICaptionProps> = ({
           isExpanded ? "max-h-64" : "max-h-24"
         }`}
       >
-        <Hyperlink
-          linkStyle={{ color: "#2980b9" }}
-          onPress={(url) => Linking.openURL(url)}
+        <Text
+          className={`text-sm text-left font-normal ${textStyles}`}
+          onPress={() => {
+            setIsExpanded((prev) => !prev);
+          }}
         >
-          <Text
-            className={`text-sm text-left font-normal ${textStyles}`}
-            onPress={() => {
-              setIsExpanded((prev) => !prev);
-            }}
-          >
-            {post.caption}
-          </Text>
-        </Hyperlink>
+          <Autolink text={post.caption} />
+        </Text>
       </ScrollView>
     );
   }
