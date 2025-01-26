@@ -29,7 +29,7 @@ const DescriptionView: React.FC<IDescriptionProps> = ({
         }}
       >
         <Text
-          className="text-base text-uBlack text-justify"
+          className="text-sm text-uBlack text-justify"
           onPress={() => setIsExpanded((prev) => !prev)}
         >
           {line.description}

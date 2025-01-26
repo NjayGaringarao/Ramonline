@@ -78,7 +78,7 @@ const CaptionView: React.FC<ICaptionProps> = ({
       <ScrollView
         showsVerticalScrollIndicator={true}
         className={`m-2 border-t-2 border-primary ${
-          isExpanded ? "max-h-96" : "max-h-24"
+          isExpanded ? "max-h-64" : "max-h-24"
         }`}
       >
         <Hyperlink
@@ -86,7 +86,7 @@ const CaptionView: React.FC<ICaptionProps> = ({
           onPress={(url) => Linking.openURL(url)}
         >
           <Text
-            className={`text-base text-left font-normal ${textStyles}`}
+            className={`text-sm text-left font-normal ${textStyles}`}
             onPress={() => {
               setIsExpanded((prev) => !prev);
             }}

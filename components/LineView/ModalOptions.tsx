@@ -29,10 +29,8 @@ const ModalOptions = ({
         onPress={onClose}
       />
       <View className="absolute bottom-0 w-full bg-background rounded-t-lg p-4 self-center space-y-1">
-        <View className="flex-row items-center justify-between">
-          <Text className="text-2xl text-gray-950 font-bold pb-4">
-            Manage Line
-          </Text>
+        <View className="flex-row items-center justify-between pb-4">
+          <Text className="text-2xl text-gray-950 font-bold">Manage Line</Text>
           <CustomButton
             handlePress={onClose}
             containerStyles="-mr-4 bg-transparent"
