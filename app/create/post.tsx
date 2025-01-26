@@ -11,6 +11,7 @@ import { confirmAction } from "@/lib/commonUtil";
 import { router } from "expo-router";
 import Toast from "react-native-root-toast";
 import { icons } from "@/constants";
+import ParagraphBox from "@/components/ParagraphBox";
 
 const createPostPage = () => {
   const {
@@ -79,33 +80,44 @@ const createPostPage = () => {
         </CustomButton>
         <Text className="text-gray-200 text-2xl font-bold">Create Post</Text>
       </View>
-      <ScrollView className="flex-1 px-2 pt-4">
-        <FormField
-          value={caption}
-          placeholder="Type caption here ..."
-          handleChangeText={setCaption}
-          isMultiline={true}
-          maxLines={6}
-          containerStyles="mb-4 bg-panel"
-        />
-        <PhotoPicker
-          selectedImages={images}
-          setSelectedImages={setImages}
-          containerStyles="mb-4"
-        />
+      <ScrollView
+        className="flex-1 px-2 pt-4"
+        contentContainerStyle={{
+          alignItems: "flex-start",
+          flexDirection: "column",
+          gap: 8,
+        }}
+      >
+        <View className="w-full h-auto">
+          <Text className="text-uGray text-xl font-semibold">Caption</Text>
+          <ParagraphBox
+            value={caption}
+            placeholder="Make it creative, descriptive, or even formal. Avoid explicit content to keep the environment neat but importantly, write according to your style!"
+            handleChangeText={setCaption}
+            containerStyles="flex-1 bg-panel border border-primary rounded-lg min-h-72"
+          />
+        </View>
+        <View className="w-full h-auto">
+          <Text className="text-uGray text-xl font-semibold">Image</Text>
+          <PhotoPicker
+            selectedImages={images}
+            setSelectedImages={setImages}
+            containerStyles="mb-4"
+          />
+        </View>
       </ScrollView>
-      <View className="flex-row self-end w-full px-2 gap-2">
+      <View className="w-full flex-row justify-end gap-2 px-4 py-2 bg-panel">
+        <CustomButton
+          handlePress={createPostHandle}
+          title="Done"
+          containerStyles="h-10 w-24"
+          isLoading={!!!isInternetConnection}
+        />
         <CustomButton
           handlePress={clearInputs}
           title="Clear"
           textStyles="text-primary"
-          containerStyles="flex-1 h-12 my-2 border-2 border-primary bg-transparent"
-        />
-        <CustomButton
-          handlePress={createPostHandle}
-          title="Done"
-          containerStyles="flex-1 h-12 w-full my-2"
-          isLoading={!!!isInternetConnection}
+          containerStyles="h-10 w-24 border border-primary bg-transparent"
         />
       </View>
       <View

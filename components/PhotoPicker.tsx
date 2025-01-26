@@ -64,7 +64,7 @@ const PhotoPicker: React.FC<IPhotoPickerProps> = ({
   return (
     <>
       <View
-        className={`flex-row h-auto w-full border-2 border-primary bg-panel rounded-lg p-2 space-y-2 ${containerStyles}`}
+        className={`flex-row h-auto w-full border border-primary bg-panel rounded-lg p-2 space-y-2 ${containerStyles}`}
       >
         <ScrollView
           horizontal

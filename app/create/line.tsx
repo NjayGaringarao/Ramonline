@@ -1,7 +1,9 @@
 import CustomButton from "@/components/CustomButton";
 import FormField from "@/components/FormField";
 import Loading from "@/components/Loading";
+import ParagraphBox from "@/components/ParagraphBox";
 import PhotoPicker from "@/components/PhotoPicker";
+import TextBox from "@/components/TextBox";
 import icons from "@/constants/icons";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { confirmAction } from "@/lib/commonUtil";
@@ -98,41 +100,57 @@ const createLinePage = () => {
         </CustomButton>
         <Text className="text-gray-200 text-2xl font-bold">Create Line</Text>
       </View>
-      <ScrollView className="flex-1 px-2 pt-4">
-        <FormField
-          value={lineName}
-          placeholder="Line Name"
+      <ScrollView
+        className="flex-1 px-2 pt-4"
+        contentContainerStyle={{
+          alignItems: "flex-start",
+          flexDirection: "column",
+          gap: 8,
+        }}
+      >
+        <TextBox
+          title="Name"
+          titleTextStyles="text-uGray text-xl font-semibold"
+          textValue={lineName}
+          placeholder="Ramonline"
           handleChangeText={setLineName}
-          containerStyles="mb-4"
           maxLength={30}
+          boxStyles="border border-primary rounded-lg bg-panel"
+          containerStyles="w-full"
         />
-        <FormField
-          value={lineDescription}
-          placeholder="Description ..."
-          handleChangeText={setLineDescription}
-          isMultiline={true}
-          maxLines={6}
-          containerStyles="mb-4"
-        />
-        <PhotoPicker
-          selectedImages={image}
-          setSelectedImages={setImage}
-          containerStyles="mb-4"
-          isBanner={true}
-        />
+        <View className="w-full h-auto">
+          <Text className="text-uGray text-xl font-semibold">Description</Text>
+          <ParagraphBox
+            value={lineDescription}
+            placeholder="A good description of the ____ Line should answer the related questions that starts with `what`, `why`, and possibly `when`,`where`, and `how`. "
+            handleChangeText={setLineDescription}
+            containerStyles="flex-1 bg-panel border border-primary rounded-lg min-h-72"
+          />
+        </View>
+        <View className="w-full h-auto">
+          <Text className="text-uGray text-xl font-semibold">Banner</Text>
+
+          <PhotoPicker
+            selectedImages={image}
+            setSelectedImages={setImage}
+            containerStyles="mb-4"
+            isBanner={true}
+          />
+        </View>
       </ScrollView>
-      <View className="flex-row self-end w-full px-2">
+
+      <View className="w-full flex-row justify-end gap-2 px-4 py-2 bg-panel">
+        <CustomButton
+          handlePress={createLineHandle}
+          title="Done"
+          containerStyles="h-10 w-24"
+          isLoading={!!!isInternetConnection}
+        />
         <CustomButton
           handlePress={clearInputHandle}
           title="Clear"
           textStyles="text-primary"
-          containerStyles="h-12 w-1/2 my-2 border-2 border-primary bg-transparent"
-        />
-        <CustomButton
-          handlePress={createLineHandle}
-          title="Done"
-          containerStyles="h-12 w-1/2 my-2"
-          isLoading={!!!isInternetConnection}
+          containerStyles="h-10 w-24 border border-primary bg-transparent"
         />
       </View>
       <View
