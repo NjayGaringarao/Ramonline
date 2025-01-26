@@ -8,6 +8,7 @@ import { router } from "expo-router";
 import CaptionView from "./CaptionView";
 import AdaptiveTime from "../AdaptiveTime";
 import { getUserInfo } from "@/services/userServices";
+import Toast from "react-native-root-toast";
 
 type IFeedPostViewProps = {
   post: PostType.Info;
@@ -33,7 +34,7 @@ const FeedPostView = ({ post }: IFeedPostViewProps) => {
   if (owner) {
     const HandleUserBanner = () => {
       if (userInfo.id === owner.id) {
-        router.navigate("/(tabs)/profile");
+        Toast.show("That was you.");
       } else {
         router.push(`/(content)/user/${post.user_id}`);
       }
