@@ -10,6 +10,7 @@ import { updateProfile } from "@/services/userServices";
 import Toast from "react-native-root-toast";
 import { confirmAction } from "@/lib/commonUtil";
 import { useGlobalContext } from "@/context/GlobalProvider";
+import { Ionicons } from "@expo/vector-icons";
 
 interface IProfileSectionType {
   isInternetConnection: boolean;
@@ -103,9 +104,12 @@ const ProfileSection = ({ isInternetConnection }: IProfileSectionType) => {
 
   return (
     <View className="mb-8 gap-2">
-      <Text className="text-xl font-semibold text-uBlack">
-        User Information
-      </Text>
+      <View className="flex-row items-center">
+        <Ionicons name="chevron-down" size={18} color={"light"} />
+        <Text className="text-xl font-semibold text-uGray">
+          User Information
+        </Text>
+      </View>
       <View>
         <View className="w-full flex-row gap-4">
           <View className="justify-center items-center">

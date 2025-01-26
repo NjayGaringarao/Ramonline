@@ -151,9 +151,9 @@ export const toSessionList = (rawSession: Models.SessionList) => {
     const session: SessionType = {
       id: rawSession.sessions[i].$id,
       current: rawSession.sessions[i].current,
-      deviceModel: rawSession.sessions[i].deviceModel,
+      created_at: new Date(rawSession.sessions[i].$createdAt),
       osName: rawSession.sessions[i].osName,
-      countryName: rawSession.sessions[i].countryName,
+      country: rawSession.sessions[i].countryCode,
       ip: rawSession.sessions[i].ip,
     };
 

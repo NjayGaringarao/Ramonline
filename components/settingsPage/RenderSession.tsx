@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 import { colors, icons } from "@/constants";
 import { SessionType } from "@/types/utils";
-import { confirmAction } from "@/lib/commonUtil";
+import { confirmAction, formatDateToLocal } from "@/lib/commonUtil";
 import Toast from "react-native-root-toast";
 import { logoutUser } from "@/services/userServices";
 import CustomButton from "../CustomButton";
@@ -46,13 +46,13 @@ const RenderSession = ({
             className="h-8 w-8"
           />
           <View>
-            <Text className="text-lg text-uBlack font-medium">{`${
-              session.deviceModel.length
-                ? session.deviceModel
-                : "Development Build"
-            } ${session.current ? "(Current)" : ""}`}</Text>
+            <Text className="text-lg text-uBlack font-medium">{`${session.ip} ${
+              session.current ? "(Current)" : ""
+            }`}</Text>
             <Text className="text-gray-800 text-sm font-mono -mt-1">
-              {`${session.countryName} ${session.ip}`}
+              {`${session.country.toUpperCase()} ${formatDateToLocal(
+                session.created_at.toISOString()
+              )}`}
             </Text>
           </View>
         </View>

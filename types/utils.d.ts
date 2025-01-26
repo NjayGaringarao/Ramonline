@@ -10,9 +10,9 @@ export interface AffiliationType {
 export interface SessionType {
   id: string;
   current: boolean;
-  deviceModel: string;
+  created_at: Date;
   osName: string;
-  countryName: string;
+  country: string;
   ip: string;
 }
 

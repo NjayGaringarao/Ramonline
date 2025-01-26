@@ -64,7 +64,7 @@ const SessionSection = ({ isInternetConnection }: ISessionSectionType) => {
       {isLoading && (
         <View className="absolute items-center justify-center h-full w-full">
           <View className="absolute h-full w-full bg-panel opacity-90"></View>
-          <Loading loadingPrompt="Fetching" containerStyles="absolute" />
+          <Loading loadingPrompt="Fetching" containerStyles="absolute py-4" />
         </View>
       )}
     </View>
