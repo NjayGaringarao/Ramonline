@@ -68,7 +68,6 @@ const createLinePage = () => {
         refreshUserRecord({
           line: true,
         });
-        setIsRefreshLineFeed(true);
       } else {
         Toast.show(`There might be a problem creating you line.`, {
           duration: Toast.durations.LONG,
