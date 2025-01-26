@@ -1,6 +1,5 @@
 import { View, Text, Modal, TouchableOpacity, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import PostView from "../PostView/PostView";
 import { LineType, NotificationType, PostType } from "@/types/models";
 import { getPost } from "@/services/postServices";
 import { getLine } from "@/services/lineServices";
@@ -8,6 +7,9 @@ import Loading from "../Loading";
 import CustomButton from "../CustomButton";
 import { colors, icons } from "@/constants";
 import { formatDateToLocal } from "@/lib/commonUtil";
+import ImageDisplay from "../PostView/ImageDisplay";
+import CaptionView from "../PostView/CaptionView";
+import { router } from "expo-router";
 
 interface ModalLinePostType {
   notification: NotificationType.Info;
@@ -44,14 +46,16 @@ const ModalLinePost = ({
           className="h-full w-full flex-1 absolute items-center bg-black opacity-80"
           onPress={onClose}
         />
-        <View className="w-11/12 h-auto bg-background rounded-lg justify-center relative self-center px-2 py-4 overflow-hidden">
-          <View className="flex-row justify-between items-center w-full px-2 mb-4">
-            <Text
-              className="text-xl font-semibold text-primary"
-              numberOfLines={1}
-            >
-              {notification.title}
-            </Text>
+        <View className="w-11/12 h-auto bg-background rounded-lg justify-center relative self-center px-2 pb-4 overflow-hidden">
+          <View className="flex-row justify-between items-center w-full px-2 py-2">
+            <View className="flex-1 overflow-hidden">
+              <Text
+                className="text-2xl font-semibold text-primary"
+                numberOfLines={1}
+              >
+                {notification.title}
+              </Text>
+            </View>
             <CustomButton
               handlePress={onClose}
               containerStyles="-mr-2 bg-transparent"
@@ -65,7 +69,18 @@ const ModalLinePost = ({
           </View>
           <View className="w-full bg-background shadow-lg shadow-primary items-center mb-2">
             {post ? (
-              <PostView post={post} isInModal={true} />
+              <View className={`w-full h-auto bg-background p-2 `}>
+                <View className="rounded-t-lg overflow-hidden -mb-2 mx-2">
+                  <ImageDisplay
+                    imageIds={post.image_id}
+                    onImagePress={() =>
+                      router.push(`/(content)/post/image/${post.id}`)
+                    }
+                  />
+                </View>
+
+                <CaptionView post={post} isMiniPostView />
+              </View>
             ) : isLoading ? (
               <Loading loadingPrompt="Loading" containerStyles="m-4" />
             ) : (
@@ -74,14 +89,20 @@ const ModalLinePost = ({
               </Text>
             )}
           </View>
-          <View className="px-1">
-            <Text className="text-sm text-gray-900">
+          <View className="px-1 overflow-hidden">
+            <Text className="text-base text-gray-900">
               {"Recieve from\t: "}
-              <Text className="font-semibold">
-                {line?.name.concat(" Line")}
+              <Text
+                className="font-semibold"
+                onPress={() => {
+                  onClose();
+                  router.push(`/(content)/line/${notification.origin[1]}`);
+                }}
+              >
+                {line?.name}
               </Text>
             </Text>
-            <Text className="text-sm text-gray-900">
+            <Text className="text-base text-gray-900">
               {"Recieve time\t: "}
               <Text className="font-semibold">
                 {formatDateToLocal(notification.created_at.toISOString())}
