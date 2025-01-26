@@ -32,7 +32,7 @@ const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
             children
           ) : (
             <Image
-              source={{ uri: getImagePreview(line?.banner_id!, 10) }}
+              source={{ uri: getImagePreview(line?.banner_id!, 10, 256, 256) }}
               tintColor={line ? undefined : colors.background}
               className={` ${
                 line ? "h-14 w-14 opacity-100" : "h-14 w-14 opacity-100"
