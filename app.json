@@ -34,7 +34,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/ramonline-logo.png",
-          "imageWidth": 256,
+          "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
           "dark": {
