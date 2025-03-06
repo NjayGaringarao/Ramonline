@@ -12,14 +12,17 @@ import { getFeedPosts } from "@/services/postServices";
 import Loading from "@/components/Loading";
 import CustomButton from "@/components/CustomButton";
 import { colors, icons } from "@/constants";
-import { router } from "expo-router";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import LineGrid from "@/components/homeComponents/LineGrid";
 import FeedPostView from "@/components/PostView/FeedPostView";
 
 const Home = () => {
-  const { isRefreshPostFeed, setIsRefreshPostFeed, isInternetConnection } =
-    useGlobalContext();
+  const {
+    isRefreshPostFeed,
+    setIsRefreshPostFeed,
+    isInternetConnection,
+    setIsRefreshLineFeed,
+  } = useGlobalContext();
   const [postList, setPostList] = useState<PostType.Info[]>([]);
   const [isPostsLoading, setIsPostsLoading] = useState(false);
   const [hasMorePosts, setHasMorePosts] = useState(true);
@@ -56,16 +59,17 @@ const Home = () => {
     }
   };
 
-  const scrollToLeft = () => {
+  const scrollToTop = () => {
     flatListRef.current?.scrollToOffset({ animated: true, offset: 0 });
   };
 
   const onRefreshFeedHandle = useCallback(async () => {
     if (!isInternetConnection) return;
-    scrollToLeft();
+    scrollToTop();
     setIsPostsLoading(true);
     setPostList([]);
     setHasMorePosts(true);
+    setIsRefreshLineFeed(true);
     await queryPostFeed();
     setIsPostsLoading(false);
   }, []);
@@ -81,13 +85,23 @@ const Home = () => {
     }
   }, [isPostsLoading, hasMorePosts]);
 
+  const onRefreshPostFeedHandle = async () => {
+    if (!isInternetConnection) return;
+    scrollToTop();
+    setIsPostsLoading(true);
+    setPostList([]);
+    setHasMorePosts(true);
+    await queryPostFeed();
+    setIsPostsLoading(false);
+  };
+
   useEffect(() => {
-    onRefreshFeedHandle();
+    onRefreshPostFeedHandle();
   }, []);
 
   useEffect(() => {
     if (setIsRefreshPostFeed) {
-      onRefreshFeedHandle();
+      onRefreshPostFeedHandle();
       setIsRefreshPostFeed(false);
     }
   }, [isRefreshPostFeed]);

@@ -1,11 +1,6 @@
+import { LineType } from "@/types/models";
 import { Models } from "react-native-appwrite";
-
-export interface RefreshUserRecordType {
-  info?: boolean;
-  line?: boolean;
-  post?: boolean;
-  notification?: boolean;
-}
+import { RefreshUserRecordType } from "@/types/utils";
 
 export interface GlobalContextInterface {
   setUser: Dispatch<
@@ -15,7 +10,7 @@ export interface GlobalContextInterface {
   setUserPost: Dispatch<React.SetStateAction<PostType.Info[]>>;
   setUserLine: Dispatch<React.SetStateAction<LineType.Info[]>>;
   setUserNotification: Dispatch<React.SetStateAction<NotificationType.Info[]>>;
-  refreshUserRecord: (update: RefreshUserRecordType) => void;
+  refreshUserRecord: (update: RefreshUserRecordType) => Promise<void>;
   setIsRefreshLineFeed: Dispatch<React.SetStateAction<boolean>>;
   setIsRefreshPostFeed: Dispatch<React.SetStateAction<boolean>>;
   resetGlobalState: () => void;
@@ -24,6 +19,7 @@ export interface GlobalContextInterface {
   userInfo: UserType.Info;
   userPost: PostType.Info[];
   userLine: LineType.Info[];
+  userSubscription: LineType.Subscription[];
   userNotification: NotificationType.Info[];
   fcmToken?: string;
   isRefreshLineFeed: boolean;

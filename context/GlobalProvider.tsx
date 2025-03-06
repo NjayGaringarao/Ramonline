@@ -14,14 +14,18 @@ import {
 import { Models } from "react-native-appwrite";
 import { useNetInfo } from "@react-native-community/netinfo";
 import { getCurrentUser, getUserInfo } from "@/services/userServices";
-import { getUserLineList } from "@/services/lineServices";
+import {
+  getUserLineList,
+  getUserSubscriptionList,
+} from "@/services/lineServices";
 import { getUserPostList } from "@/services/postServices";
 import { UserType, PostType, LineType, NotificationType } from "@/types/models";
 import handleNotification from "./NotificationHandler";
-import { GlobalContextInterface, RefreshUserRecordType } from "./context";
+import { GlobalContextInterface } from "./context";
 import { defaultValue, emptyUserInfo } from "./values";
 import Toast from "react-native-root-toast";
 import { router } from "expo-router";
+import { RefreshUserRecordType } from "@/types/utils";
 
 export const GlobalContext =
   createContext<GlobalContextInterface>(defaultValue);
@@ -38,6 +42,9 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<UserType.Info>(emptyUserInfo);
   const [userPost, setUserPost] = useState<PostType.Info[]>([]);
   const [userLine, setUserLine] = useState<LineType.Info[]>([]);
+  const [userSubscription, setUserSubscription] = useState<
+    LineType.Subscription[]
+  >([]);
   const [userNotification, setUserNotification] = useState<
     NotificationType.Info[]
   >([]);
@@ -61,16 +68,19 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         handleNotification(async () => {
           setUserNotification(await getUserNotificationList(currentUser.$id));
         });
-        const [info, lines, posts, notifications] = await Promise.all([
-          getUserInfo(currentUser.$id),
-          getUserLineList(currentUser.$id),
-          getUserPostList(currentUser.$id),
-          getUserNotificationList(currentUser.$id),
-        ]);
+        const [info, lines, posts, userSubscription, notifications] =
+          await Promise.all([
+            getUserInfo(currentUser.$id),
+            getUserLineList(currentUser.$id),
+            getUserPostList(currentUser.$id),
+            getUserSubscriptionList(currentUser.$id),
+            getUserNotificationList(currentUser.$id),
+          ]);
 
         setUserInfo(info);
         setUserLine(lines);
         setUserPost(posts);
+        setUserSubscription(userSubscription);
         setUserNotification(notifications);
 
         if (currentUser.emailVerification) {
@@ -112,6 +122,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     info,
     line,
     post,
+    subscription,
     notification,
   }: RefreshUserRecordType) => {
     if (!user?.$id) return;
@@ -121,6 +132,8 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     if (info) updates.push(getUserInfo(user.$id).then(setUserInfo));
     if (line) updates.push(getUserLineList(user.$id).then(setUserLine));
     if (post) updates.push(getUserPostList(user.$id).then(setUserPost));
+    if (subscription)
+      updates.push(getUserSubscriptionList(user.$id).then(setUserSubscription));
     if (notification) {
       updates.push(getUserNotificationList(user.$id).then(setUserNotification));
     }
@@ -133,6 +146,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
     setUserInfo(emptyUserInfo);
     setUserPost([]);
     setUserLine([]);
+    setUserSubscription([]);
     setUserNotification([]);
     setIsRefreshLineFeed(false);
     setIsRefreshPostFeed(false);
@@ -157,6 +171,7 @@ export const GlobalProvider = ({ children }: { children: ReactNode }) => {
         userInfo,
         userPost,
         userLine,
+        userSubscription,
         userNotification,
         fcmToken,
         isRefreshLineFeed,

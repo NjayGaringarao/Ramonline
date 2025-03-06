@@ -21,4 +21,5 @@ export interface RefreshUserRecordType {
   line?: boolean;
   post?: boolean;
   notification?: boolean;
+  subscription?: boolean;
 }

@@ -15,7 +15,11 @@ import {
 } from "./appwrite";
 import { Models, Query } from "react-native-appwrite";
 import { env } from "@/constants/env";
-import { toLineInfo, toLineInfoList } from "@/lib/typeConverter";
+import {
+  toLineInfo,
+  toLineInfoList,
+  toLineSubscriptionList,
+} from "@/lib/typeConverter";
 import { compressIds } from "@/lib/commonUtil";
 
 export const uploadBanner = async (ImagePickerResults: ImagePickerAsset) => {
@@ -246,6 +250,23 @@ export const getUserLineList = async (user_id: string) => {
     return toLineInfoList(lineDoc.documents);
   } catch (error) {
     console.log(`ERROR (lineServices.ts => getUserLine) :: ${error}`);
+    throw error;
+  }
+};
+
+export const getUserSubscriptionList = async (user_id: string) => {
+  try {
+    const lineDoc = await _listDocuments(
+      env.DATABASE_PRIMARY,
+      env.COLLECTION_LINE_SUBSCRIPTION,
+      [Query.equal("user_id", user_id)]
+    );
+
+    return toLineSubscriptionList(lineDoc.documents);
+  } catch (error) {
+    console.log(
+      `ERROR (lineServices.ts => getUserSubscriptionList) :: ${error}`
+    );
     throw error;
   }
 };

@@ -148,7 +148,7 @@ const Notification = () => {
           <Text className="text-base self-center">
             Selected: {selectedNotification.length}
           </Text>
-          <View className="flex-row w-fit place-self-end">
+          <View className="flex-row w-fit place-self-end gap-2">
             <CustomButton
               title="Delete"
               handlePress={deleteNotificationHandle}
@@ -160,7 +160,7 @@ const Notification = () => {
                 setSelectedNotification([]);
                 setIsSelectionOn(false);
               }}
-              containerStyles="border-2 border-primary h-10 w-24 bg-transparent"
+              containerStyles="border border-primary h-10 w-24 bg-transparent"
               textStyles="text-primary"
             />
           </View>

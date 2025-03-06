@@ -13,8 +13,12 @@ interface ILineGridType {
 }
 
 const LineGrid = ({ isInternetConnection }: ILineGridType) => {
-  const { isRefreshLineFeed, setIsRefreshLineFeed } = useGlobalContext();
-  const [displayList, setDisplayList] = useState<LineType.Info[][]>([]);
+  const {
+    isRefreshLineFeed,
+    setIsRefreshLineFeed,
+    userSubscription,
+    refreshUserRecord,
+  } = useGlobalContext();
   const [lineList, setLineList] = useState<LineType.Info[]>([]);
   const [isLinesLoading, setIsLinesLoading] = useState(false);
   const [hasMoreLines, setHasMoreLines] = useState(true);
@@ -25,13 +29,7 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
     if (!isInternetConnection) return;
     try {
       setIsLinesLoading(true);
-      let lines: LineType.Info[] = [];
-
-      if (lastId) {
-        lines = await getFeedLines(lastId);
-      } else {
-        lines = await getFeedLines();
-      }
+      const lines = lastId ? await getFeedLines(lastId) : await getFeedLines();
 
       if (lines.length > 0) {
         setLineList((prevLines) => [...prevLines, ...lines]);
@@ -51,15 +49,14 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
   };
 
   useEffect(() => {
-    // Divide the lineList into chunks of 4 (representing rows in each column)
-    if (lineList.length > 0) {
-      setDisplayList(
-        Array.from({ length: Math.ceil(lineList.length / 4) }, (_, i) =>
-          lineList.slice(i * 4, i * 4 + 4)
-        )
-      );
-    }
+    refreshUserRecord({ subscription: true });
   }, [lineList]);
+
+  const formatToDisplayList = (lines: LineType.Info[]) => {
+    return Array.from({ length: Math.ceil(lines.length / 4) }, (_, i) =>
+      lines.slice(i * 4, i * 4 + 4)
+    );
+  };
 
   const onRefreshFeedHandle = useCallback(async () => {
     if (!isInternetConnection) return;
@@ -94,13 +91,29 @@ const LineGrid = ({ isInternetConnection }: ILineGridType) => {
   return (
     <View className="bg-primary w-full h-72">
       <FlatList
-        data={displayList}
+        data={formatToDisplayList(
+          [...lineList].sort((a, b) => {
+            const subscribedLineIds = new Set(
+              userSubscription.map((sub) => sub.line_id)
+            );
+            return (
+              (subscribedLineIds.has(b.id) ? 1 : 0) -
+              (subscribedLineIds.has(a.id) ? 1 : 0)
+            );
+          })
+        )}
         horizontal
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item: column, index: colIndex }) => (
           <View key={colIndex} className="flex flex-col w-[50vw]">
             {column.map((line: LineType.Info, rowIndex: number) => (
-              <LineCard key={rowIndex} line={line} />
+              <LineCard
+                key={rowIndex}
+                line={line}
+                isSubscribe={userSubscription.some(
+                  (sub) => sub.line_id === line.id
+                )}
+              />
             ))}
           </View>
         )}

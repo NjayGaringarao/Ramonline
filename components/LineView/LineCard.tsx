@@ -4,6 +4,8 @@ import { TouchableOpacity, View, Text, Image } from "react-native";
 import { LineType } from "@/types/models";
 import { getImagePreview } from "@/services/commonServices";
 import { router } from "expo-router";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { FontAwesome } from "@expo/vector-icons";
 
 type UserInterfaceType = {
   onPress?: () => void;
@@ -14,11 +16,17 @@ type ILineCardProps = {
   userInterface?: UserInterfaceType;
   line: LineType.Info;
   children?: React.ReactNode;
+  isSubscribe?: boolean;
 };
 
-const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
+const LineCard = ({
+  userInterface,
+  line,
+  children,
+  isSubscribe,
+}: ILineCardProps) => {
   return (
-    <View className="p-1 w-full">
+    <View className="py-1 px-2 w-full">
       <TouchableOpacity
         onPress={() => router.push(`/(content)/line/${line.id}`)}
         className="rounded-lg overflow-hidden bg-panel"
@@ -47,6 +55,14 @@ const LineCard = ({ userInterface, line, children }: ILineCardProps) => {
             >
               {line ? line.name : userInterface?.text}
             </Text>
+            {isSubscribe && (
+              <FontAwesome
+                name="star"
+                size={18}
+                className="absolute bottom-1 -right-1"
+                color={colors.primary}
+              />
+            )}
           </View>
         </View>
       </TouchableOpacity>

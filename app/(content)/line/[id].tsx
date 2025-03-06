@@ -29,7 +29,7 @@ import AdaptiveTime from "@/components/AdaptiveTime";
 
 const line = () => {
   const searchParams = useGlobalSearchParams();
-  const { userInfo } = useGlobalContext();
+  const { userInfo, setIsRefreshLineFeed } = useGlobalContext();
   const [line, setLine] = useState<LineType.Info>();
   const [owner, setOwner] = useState<UserType.Info>();
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -76,6 +76,7 @@ const line = () => {
 
     const subscriptionHandle = async () => {
       try {
+        setIsLoading(true);
         if (isSubscribed) {
           const result = await unsubscribeLine(userInfo.id, line.id);
           if (result) setIsSubscribed(false);
@@ -98,6 +99,8 @@ const line = () => {
           );
           setSubscriberCount((prev) => prev + 1);
         }
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await setIsRefreshLineFeed(true);
       } catch (error) {
         Alert.alert(
           "Failed",
@@ -106,6 +109,8 @@ const line = () => {
         console.log(
           `app/line/id.tsx => subscriptionHandle :: ERROR : ${error}`
         );
+      } finally {
+        setIsLoading(false);
       }
     };
 
