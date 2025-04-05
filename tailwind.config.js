@@ -5,12 +5,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#6A5ACD",
-        primaryLight: "#A89EF5",
-        background: "#EFEAE2",
-        panel: "#E2DBD0",
-        uBlack: "#2D2D2D",
-        uGray: "#676767",
+        primary: "#c49a12",
+        primaryLight: "#F5DB7A",
+        background: "#FAF3DC",
+        panel: "#F0E6C5",
+        uBlack: "#1E1E1E",
+        uGray: "#5F6368",
       },
     },
   },
