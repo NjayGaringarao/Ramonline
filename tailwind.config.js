@@ -5,14 +5,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#e14954",
-        primaryLight: "#f0a4a9",
-        background: "#f4ecd0",
-        panel: "#f0e5be",
-        uBlack: "#1f2937",
-        uGray: "#4b5563"
-      }
-    }
+        primary: "#6C9A8B",
+        primaryLight: "#B3C6BD",
+        background: "#E6E2D7",
+        panel: "#D8D3C2",
+        uBlack: "#2F2F2F",
+        uGray: "#6B7280",
+      },
+    },
   },
   plugins: [],
-}
+};
