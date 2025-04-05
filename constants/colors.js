@@ -1,10 +1,9 @@
 export default {
-  primary: "#e14954",
-  primaryLight: "#f0a4a9",
-  background: "#f4ecd0",
-  secondary: "#3A6586",
-  panel: "#f0e5be",
-  uBlack: "#1f2937",
-  uGray: "#4b5563",
-  uGrayLight : "#9ca3af"
+  primary: "#6A5ACD",
+  primaryLight: "#A89EF5",
+  background: "#EFEAE2",
+  panel: "#E2DBD0",
+  uBlack: "#2D2D2D",
+  uGray: "#676767",
+  uGrayLight: "#9ca3af",
 };
